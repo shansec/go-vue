@@ -1,0 +1,47 @@
+//{
+//  "compilerOptions": {
+////    设置编译后代码使用的模块化系统
+//    "module": "ES2022",
+//    "moduleResolution": "Node",
+//    "types": ["node"],
+//    "baseUrl": "src",
+//    "paths": {
+//      "@/*": ["./*"]
+//    },
+//    // 代码运行所包含的库
+//    "lib": ["ES2017", "DOM"],
+//    "esModuleInterop": true,
+//    "allowSyntheticDefaultImports": true,
+//    "isolatedModules": true
+//  },
+//  "include": [
+//    "src/**/*"
+//  ],
+//  "exclude": [
+//    "node_modules"
+//  ]
+//}
+{
+  "compilerOptions": {
+    "target": "ESNext",
+    "useDefineForClassFields": true,
+    "module": "ESNext",
+    "moduleResolution": "Node",
+    "strict": false,
+    "jsx": "preserve",
+    "sourceMap": true,
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "esModuleInterop": true,
+    "lib": ["ESNext", "DOM"],
+    // 跳过库检查，解决打包失败
+    "skipLibCheck": true,
+    // 解析非相对模块名的基准目录
+        "baseUrl": "src",
+        "paths": {
+          "@/*": ["./*"]
+        },
+  },
+  "include": ["src/**/*.ts", "src/**/*.d.ts", "src/**/*.tsx", "src/**/*.vue"],
+  "exclude": ["node_modules","dist","**/*.js"]
+}

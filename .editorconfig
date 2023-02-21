@@ -1,0 +1,24 @@
+# 表示最上层的 EditorConfig 文件
+root = true
+
+# 表示所有文件起作用
+[*]
+# 缩进风格（tab | space）
+indent_style = space
+# 控制换行类型（lf | cr | crlf）
+end_of_line = lf
+# 设置文件集为 utf-8
+charset = utf-8
+# 去除首行任意空白字符
+trim_trailing_whitespace = true
+# 始终在文件末尾插入空行
+insert_final_newline = true
+
+# 以下规则对 md 文件有效
+[*.md]
+max_line_length = off
+trim_trailing_whitespace = true
+
+# 表示只对ts/js/vue/css文件适用以下规则
+[*.{ts, js, vue, css}]
+indent_size = 2
