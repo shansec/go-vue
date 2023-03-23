@@ -1,48 +1,53 @@
-import axios from 'axios'
+import axios, { AxiosError, AxiosRequestConfig, AxiosResponse } from 'axios'
+import { useUserStore } from '@/store/modules/user'
+import { ElMessage } from 'element-plus'
 
-// 创建请求实例
-const instance = axios.create({
-  baseURL: '/api',
-  // 指定请求超时的毫秒数
-  timeout: 5000,
-  // 表示跨域请求是否需要凭证
+const service = axios.create({
+  baseURL: import.meta.env.VITE_URL,
+  timeout: 99999,
   withCredentials: false,
 })
 
-// 前置拦截器
-instance.interceptors.request.use(
-  (config) => {
-    /**
-     * 在这里一般会携带前端的参数发送给后台，比如下面的代码：
-     * const token = getToken();
-     * if(token) {
-     *     config.Header.token = token
-     * }
-     */
+// request interceptors 接口请求拦截
+service.interceptors.request.use(
+  (config: AxiosRequestConfig) => {
+    const userStore = useUserStore()
+    const token: string = userStore.token
+
+    if (token) {
+      config.headers['Authorization'] = token
+    }
     return config
   },
-  (error) => {
+  (error: AxiosError) => {
     return Promise.reject(error)
   },
 )
 
-// 后置拦截器
-instance.interceptors.request.use(
-  (response) => {
+// response interceptors 响应拦截
+service.interceptors.response.use(
+  (response: AxiosResponse) => {
     return response
   },
-  (error) => {
-    const { response } = error
-    if (response && response.data) {
-      return Promise.reject(error)
-    }
-    const { message } = error
-    console.error(message)
+  (error: AxiosError) => {
     return Promise.reject(error)
   },
 )
 
-// 导出常用的函数
+/**
+ * @description 显示错误消息
+ * @param opt 传入参数
+ * @param err 错误消息
+ * @param type  消息信息
+ * @param duration  消息持续时间
+ */
+function showERRMessage(opt, err, type: any = 'error', duration = 5000) {
+  ElMessage({
+    message: err.msg,
+    type: type,
+    duration: duration,
+  })
+}
 
 /**
  *
@@ -52,7 +57,7 @@ instance.interceptors.request.use(
  * @returns {Promise<axios.AxiosResponse<any>>}
  */
 export function post(url, data = {}, params = {}) {
-  return instance({
+  return service({
     method: 'post',
     url,
     data,
@@ -67,7 +72,7 @@ export function post(url, data = {}, params = {}) {
  * @returns {Promise<axios.AxiosResponse<any>>}
  */
 export function get(url, params = {}) {
-  return instance({
+  return service({
     method: 'get',
     url,
     params,
@@ -82,7 +87,7 @@ export function get(url, params = {}) {
  * @returns {Promise<axios.AxiosResponse<any>>}
  */
 export function put(url, data = {}, params = {}) {
-  return instance({
+  return service({
     method: 'put',
     url,
     data,
@@ -98,11 +103,11 @@ export function put(url, data = {}, params = {}) {
  * @private
  */
 export function _delete(url, params = {}) {
-  return instance({
+  return service({
     method: 'delete',
     url,
     params,
   })
 }
 
-export default instance
+export default service

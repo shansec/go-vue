@@ -40,13 +40,13 @@ export default defineConfig({
     // 是否开启 https
     https: false,
     // 端口号
-    port: 3001,
+    port: 8080,
     // 端口被占用直接退出
     strictPort: true,
     // 监听所有地址
     host: '0.0.0.0',
     // 是否自动打开浏览器
-    open: true,
+    open: false,
     // 是否允许跨域
     cors: false,
     // 自定义代理规则

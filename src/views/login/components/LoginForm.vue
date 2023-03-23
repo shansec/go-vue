@@ -31,6 +31,8 @@
   import { ElNotification } from 'element-plus'
   import { Avatar, Lock } from '@element-plus/icons-vue'
 
+  import User from '@/api/User'
+
   interface FormState {
     account: string
     password: string
@@ -38,8 +40,8 @@
   const ruleFormRef = ref<FormInstance>()
   const loading = ref(false)
   const ruleForm = reactive<FormState>({
-    account: 'admin',
-    password: '123456',
+    account: '',
+    password: '',
   })
   const router = useRouter()
   const rules = reactive<FormRules>({
@@ -51,20 +53,22 @@
     await formEl.validate((valid, fields) => {
       if (valid) {
         loading.value = true
-        if (ruleForm.account === 'admin' && ruleForm.password === '123456') {
-          ElNotification({
-            type: 'success',
-            title: '登录成功',
-            message: '欢迎回来',
-          })
-          router.replace('/')
-        } else {
-          ElNotification({
-            type: 'error',
-            title: '登录失败',
-            message: '账户或密码有误',
-          })
-        }
+        const res = User.login(ruleForm.account, ruleForm.password)
+        console.log(res)
+        // if (ruleForm.account === 'admin' && ruleForm.password === '123456') {
+        //   ElNotification({
+        //     type: 'success',
+        //     title: '登录成功',
+        //     message: '欢迎回来',
+        //   })
+        //   router.replace('/')
+        // } else {
+        //   ElNotification({
+        //     type: 'error',
+        //     title: '登录失败',
+        //     message: '账户或密码有误',
+        //   })
+        // }
       } else {
         console.log('error submit!', fields)
       }
