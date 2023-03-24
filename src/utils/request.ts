@@ -3,11 +3,10 @@ import { useUserStore } from '@/store/modules/user'
 import { ElMessage } from 'element-plus'
 
 const service = axios.create({
-  baseURL: import.meta.env.VITE_URL,
+  baseURL: '/api',
   timeout: 99999,
-  withCredentials: false,
 })
-
+// axios.defaults.baseURL = '/api'
 // request interceptors 接口请求拦截
 service.interceptors.request.use(
   (config: AxiosRequestConfig) => {

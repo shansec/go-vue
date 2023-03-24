@@ -8,13 +8,19 @@ export const useUserStore = defineStore({
   }),
   getters: {},
   actions: {
-    login(userInfo) {
-      const { username, password } = userInfo
-      return new Promise((resolve, reject) => {
-        this.token = username
-        this.userInfo = userInfo
-        resolve(username)
-      })
+    /**
+     * 登陆成功，存储token
+     * @param token
+     */
+    setToken(token: string): void {
+      this.token = token
+    },
+    /**
+     * 登陆成功，存储用户信息
+     * @param userData
+     */
+    setUserInfo(userData: any): void {
+      this.userInfo = userData
     },
   },
 })

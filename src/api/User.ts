@@ -6,5 +6,13 @@ export default class User {
       username,
       password,
     })
+    // return service({
+    //   url: '/base/login',
+    //   method: 'post',
+    //   data: {
+    //     username: username,
+    //     password: password,
+    //   },
+    // })
   }
 }
