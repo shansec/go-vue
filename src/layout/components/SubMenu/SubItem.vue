@@ -4,7 +4,8 @@
       <router-link :to="props.basePath">
         <el-menu-item :index="resolvePath(onlyChild.path)">
           <el-icon :size="20">
-            <component :is="onlyChild.meta.icon"></component>
+            <!--            <component :is="onlyChild.meta.icon"></component>-->
+            <i class="iconfont" :class="onlyChild.meta.icon"></i>
           </el-icon>
           <template #title>{{ onlyChild.meta.title }}</template>
         </el-menu-item>
@@ -13,7 +14,8 @@
     <el-sub-menu v-else :index="resolvePath(item.path)">
       <template #title>
         <el-icon :size="20">
-          <component :is="item.meta.icon"></component>
+          <!--          <component :is="item.meta.icon"></component>-->
+          <i class="iconfont" :class="item.meta.icon"></i>
         </el-icon>
         <span>{{ item.meta && item.meta.title }}</span>
       </template>

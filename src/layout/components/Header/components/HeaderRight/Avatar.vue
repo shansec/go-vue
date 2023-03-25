@@ -2,14 +2,18 @@
   <div class="avatar">
     <el-dropdown>
       <span class="avatar-show">
-        <el-avatar :size="30" class="avatar-content" :src="avatar" />
-        Admin
+        <el-avatar :size="30" class="avatar-content" :src="userInfo.headerImg" />
+        {{ userInfo.nickName }}
         <el-icon><ArrowDown /></el-icon>
       </span>
       <template #dropdown>
         <el-dropdown-menu>
+          <el-dropdown-item>
+            <i class="iconfont icon-xiugaimima"></i>
+            <span>修改密码</span>
+          </el-dropdown-item>
           <el-dropdown-item @click="logout">
-            <el-icon><SwitchButton /></el-icon>
+            <i class="iconfont icon-guanbi"></i>
             <span>退出登录</span>
           </el-dropdown-item>
         </el-dropdown-menu>
@@ -20,10 +24,15 @@
 
 <script lang="ts" setup>
   import { useRouter } from 'vue-router'
-  import avatar from '@/assets/bacg.png'
   import { ElMessage, ElMessageBox } from 'element-plus'
 
+  import { useUserStore } from '@/store/modules/user'
+  import { ref } from 'vue'
+
   const router = useRouter()
+  const userStore = useUserStore()
+
+  const userInfo = ref(userStore.userInfo)
   const logout = () => {
     ElMessageBox.confirm('你是否确认退出登录?', '温馨提示', {
       confirmButtonText: '确定',

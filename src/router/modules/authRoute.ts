@@ -2,7 +2,7 @@ import Layout from '@/layout/index.vue'
 
 export default [
   {
-    path: '/',
+    path: '/home',
     name: 'layout',
     component: Layout,
     redirect: '/home',
@@ -13,7 +13,7 @@ export default [
         component: () => import('@/views/home/index.vue'),
         meta: {
           title: '首页',
-          icon: 'House',
+          icon: 'icon-shezhi',
           permission: ['1', '2', '3'],
           affix: true,
         },
@@ -28,7 +28,7 @@ export default [
     meta: {
       permission: ['1', '2', '3'],
       title: '安全监控',
-      icon: 'CameraFilled',
+      icon: 'icon-shezhi',
     },
     children: [
       {
@@ -37,7 +37,7 @@ export default [
         meta: {
           permission: ['1', '2', '3'],
           title: '安全指数监控',
-          icon: 'VideoCameraFilled',
+          icon: 'icon-shezhi',
         },
         component: () => import('@/views/dashboard/index.vue'),
       },
@@ -51,7 +51,7 @@ export default [
     meta: {
       permission: ['1', '2', '3'],
       title: '资产管理',
-      icon: 'Folder',
+      icon: 'icon-shezhi',
     },
     children: [
       {
@@ -60,7 +60,7 @@ export default [
         meta: {
           permission: ['1', '2', '3'],
           title: '资产列表',
-          icon: 'Collection',
+          icon: 'icon-shezhi',
         },
         component: () => import('@/views/assetManagement/assetList.vue'),
       },
@@ -70,7 +70,7 @@ export default [
         meta: {
           permission: ['1', '2', '3'],
           title: '资产详情',
-          icon: 'Tickets',
+          icon: 'icon-shezhi',
         },
         component: () => import('@/views/assetManagement/assetDetail.vue'),
       },

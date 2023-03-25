@@ -12,6 +12,10 @@ import router from './router/index.js'
 import pinia from './store'
 import App from './App.vue'
 
+// 引入 iconfont 图标
+import '@/assets/iconfont/iconfont.css'
+import '@/assets/iconfont/iconfont.js'
+
 const app = createApp(App)
 registerEleIcon(app)
 

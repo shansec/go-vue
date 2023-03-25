@@ -31,6 +31,9 @@
   import { ElNotification } from 'element-plus'
   import { Avatar, Lock } from '@element-plus/icons-vue'
 
+  import User from '@/api/User'
+  import { useUserStore } from '@/store/modules/user'
+
   interface FormState {
     account: string
     password: string
@@ -38,10 +41,11 @@
   const ruleFormRef = ref<FormInstance>()
   const loading = ref(false)
   const ruleForm = reactive<FormState>({
-    account: 'admin',
-    password: '123456',
+    account: '',
+    password: '',
   })
   const router = useRouter()
+  const userStore = useUserStore()
   const rules = reactive<FormRules>({
     account: [{ required: true, message: '请输入账号', trigger: 'blur' }],
     password: [{ required: true, message: '请输入密码', trigger: 'blur' }],
@@ -51,20 +55,35 @@
     await formEl.validate((valid, fields) => {
       if (valid) {
         loading.value = true
-        if (ruleForm.account === 'admin' && ruleForm.password === '123456') {
-          ElNotification({
-            type: 'success',
-            title: '登录成功',
-            message: '欢迎回来',
+        User.login(ruleForm.account, ruleForm.password)
+          .then((res) => {
+            if (res.data.code == 0) {
+              const userData = res.data.data
+              userStore.setToken(userData.token)
+              userStore.setUserInfo(userData.user)
+              ElNotification({
+                type: 'success',
+                title: '登录成功',
+                message: res.data.msg,
+              })
+              router.replace('/home')
+            } else {
+              ElNotification({
+                type: 'error',
+                title: '登录失败',
+                message: res.data.msg,
+              })
+              loading.value = false
+            }
           })
-          router.replace('/')
-        } else {
-          ElNotification({
-            type: 'error',
-            title: '登录失败',
-            message: '账户或密码有误',
+          .catch((err) => {
+            ElNotification({
+              type: 'error',
+              title: '登录失败',
+              message: err.message,
+            })
+            loading.value = false
           })
-        }
       } else {
         console.log('error submit!', fields)
       }

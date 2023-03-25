@@ -2,7 +2,8 @@
   <div class="screen-full">
     <el-tooltip content="全屏" placement="bottom">
       <el-icon style="font-size: 20px" @click="toggle">
-        <FullScreen />
+        <i v-if="!isFullscreen" class="iconfont icon-fangda"></i>
+        <i v-else class="iconfont icon-suoxiao"></i>
       </el-icon>
     </el-tooltip>
   </div>
