@@ -1,4 +1,4 @@
-import { defineStore } from 'pinia';
+import { defineStore } from 'pinia'
 
 export const useUserStore = defineStore({
   id: 'userStore',
@@ -6,6 +6,18 @@ export const useUserStore = defineStore({
     token: null,
     userInfo: {},
   }),
+  persist: {
+    // 开启数据缓存
+    enabled: true,
+    strategies: [
+      {
+        // 本地存储的名称
+        key: 'userStore',
+        // 本地存储的位置
+        storage: localStorage,
+      },
+    ],
+  },
   getters: {},
   actions: {
     /**

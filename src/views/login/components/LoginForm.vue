@@ -57,8 +57,7 @@
         loading.value = true
         User.login(ruleForm.account, ruleForm.password)
           .then((res) => {
-            // console.log(res)
-            if (res.status == 200) {
+            if (res.data.code == 0) {
               const userData = res.data.data
               userStore.setToken(userData.token)
               userStore.setUserInfo(userData.user)
@@ -67,7 +66,7 @@
                 title: '登录成功',
                 message: res.data.msg,
               })
-              router.replace('/')
+              router.replace('/home')
             } else {
               ElNotification({
                 type: 'error',

@@ -1,7 +1,9 @@
 <template>
   <div class="search">
     <el-tooltip content="菜单搜索" placement="bottom">
-      <el-icon style="font-size: 20px"><Search @click="handleSearch" /></el-icon>
+      <el-icon style="font-size: 20px">
+        <i class="iconfont icon-sousuo" @click="handleSearch"></i>
+      </el-icon>
     </el-tooltip>
     <el-dialog
       v-model="isShowSearch"

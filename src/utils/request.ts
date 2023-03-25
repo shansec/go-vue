@@ -40,7 +40,7 @@ service.interceptors.response.use(
  * @param type  消息信息
  * @param duration  消息持续时间
  */
-function showERRMessage(opt, err, type: any = 'error', duration = 5000) {
+function showErrorMessage(opt, err, type: any = 'error', duration = 5000) {
   ElMessage({
     message: err.msg,
     type: type,

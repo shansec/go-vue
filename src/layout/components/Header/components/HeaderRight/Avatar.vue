@@ -8,8 +8,12 @@
       </span>
       <template #dropdown>
         <el-dropdown-menu>
+          <el-dropdown-item>
+            <i class="iconfont icon-xiugaimima"></i>
+            <span>修改密码</span>
+          </el-dropdown-item>
           <el-dropdown-item @click="logout">
-            <el-icon><SwitchButton /></el-icon>
+            <i class="iconfont icon-guanbi"></i>
             <span>退出登录</span>
           </el-dropdown-item>
         </el-dropdown-menu>
