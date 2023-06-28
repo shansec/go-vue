@@ -66,7 +66,9 @@
                 title: '登录成功',
                 message: res.data.msg,
               })
-              router.replace('/home')
+              router.push({
+                path: '/',
+              })
             } else {
               ElNotification({
                 type: 'error',
