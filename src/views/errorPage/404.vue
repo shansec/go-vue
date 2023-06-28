@@ -1,7 +1,7 @@
 <template>
   <div class="error-404-container">
     <div class="img-prompt">
-      <img src="@/assets/errorpage/404_bg.png" alt="404"/>
+      <img src="@/assets/errorpage/404_bg.png" alt="404" />
     </div>
     <div class="text-prompt">
       <div class="text-prompt-text">页面不存在！</div>
