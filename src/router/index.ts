@@ -1,5 +1,6 @@
 import { RouteRecordRaw, createRouter, createWebHistory } from 'vue-router'
 import Layout from '@/layout/index.vue'
+import {useUserStore} from '@/store/modules/user';
 interface extendRoute {
   hidden?:boolean
 }
@@ -50,10 +51,20 @@ const router = createRouter({
 })
 
 router.beforeEach((to, from, next) => {
+  const userStore = useUserStore()
+  const token = userStore.getToken()
   if (typeof to.meta.title === 'string') {
     document.title = to.meta.title
   }
-  next()
+  if (to.path === '/login') {
+    next()
+  } else {
+    if (!token) {
+      next({ path: '/login' })
+    } else {
+      next()
+    }
+  }
 })
 
 export default router

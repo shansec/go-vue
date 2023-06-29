@@ -3,14 +3,27 @@
     <img src="../../../assets/go-vue.png" alt="头像" />
     <h2 class="title">Go-Vue</h2>
   </div>
-  <el-form ref="ruleFormRef" :model="ruleForm" label-width="0" :rules="rules" class="form">
+  <el-form
+    ref="ruleFormRef"
+    :model="loginForm"
+    label-width="0"
+    :rules="rules"
+    class="form"
+    @keyup.enter.native="submitForm(ruleFormRef)"
+  >
     <el-form-item prop="account">
       <!-- 用户名-->
-      <el-input v-model="ruleForm.account" :prefix-icon="Avatar" />
+      <el-input v-model="loginForm.account" :prefix-icon="Avatar" placeholder="请输入用户名" />
     </el-form-item>
     <!-- 密码-->
     <el-form-item prop="password">
-      <el-input v-model="ruleForm.password" :prefix-icon="Lock" type="password" show-password />
+      <el-input
+        v-model="loginForm.password"
+        :prefix-icon="Lock"
+        type="password"
+        placeholder="请输入密码"
+        show-password
+      />
     </el-form-item>
     <el-form-item style="width: 100%">
       <el-button
@@ -18,8 +31,8 @@
         type="primary"
         class="login_btn"
         @click="submitForm(ruleFormRef)"
-        >登录</el-button
-      >
+        >登录
+      </el-button>
     </el-form-item>
   </el-form>
 </template>
@@ -34,19 +47,20 @@
   import User from '@/api/User'
   import { useUserStore } from '@/store/modules/user'
 
-  interface FormState {
+  interface LoginForm {
     account: string
     password: string
   }
+
   const ruleFormRef = ref<FormInstance>()
   const loading = ref(false)
-  const ruleForm = reactive<FormState>({
+  const loginForm = reactive<LoginForm>({
     account: '',
     password: '',
   })
   const router = useRouter()
   const userStore = useUserStore()
-  const rules = reactive<FormRules>({
+  const rules = reactive<FormRules<LoginForm>>({
     account: [{ required: true, message: '请输入账号', trigger: 'blur' }],
     password: [{ required: true, message: '请输入密码', trigger: 'blur' }],
   })
@@ -55,7 +69,7 @@
     await formEl.validate((valid, fields) => {
       if (valid) {
         loading.value = true
-        User.login(ruleForm.account, ruleForm.password)
+        User.login(loginForm.account, loginForm.password)
           .then((res) => {
             if (res.data.code == 0) {
               const userData = res.data.data

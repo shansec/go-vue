@@ -13,7 +13,7 @@
         :collapse="collapsed"
       >
         <SubItem
-          v-for="route in authRoute"
+          v-for="route in constantRoutes"
           :key="route.path"
           :item="route"
           :base-path="route.path"
@@ -26,7 +26,7 @@
 <script lang="ts" setup>
   import { computed } from 'vue'
   import { useRoute } from 'vue-router'
-  import authRoute from '@/router/modules/authRoute'
+  import { constantRoutes } from '@/router'
   import { useSettingStore } from '@/store/modules/settings'
   import SubItem from '@/layout/components/SubMenu/SubItem.vue'
   import Logo from '@/layout/components/SideBar/components/Logo.vue'
