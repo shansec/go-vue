@@ -73,7 +73,8 @@
           .then((res) => {
             if (res.data.code == 0) {
               const userData = res.data.data
-              userStore.setToken(userData.token)
+              userStore.setToken(userData.AToken)
+              window.localStorage.setItem('RToken', userData.RToken)
               userStore.setUserInfo(userData.user)
               ElNotification({
                 type: 'success',

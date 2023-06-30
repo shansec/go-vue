@@ -11,10 +11,12 @@ const service = axios.create({
 service.interceptors.request.use(
   (config: AxiosRequestConfig) => {
     const userStore = useUserStore()
-    const token: string = userStore.token
+    const aToken: string = userStore.token
+    const rToken: string = window.localStorage.getItem('RToken')
 
-    if (token) {
-      config.headers['Authorization'] = token
+    if (aToken && rToken) {
+      config.headers['Authorization-aToken'] = aToken
+      config.headers['Authorization-rToken'] = rToken
     }
     return config
   },

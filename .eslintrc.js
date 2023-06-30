@@ -1,4 +1,4 @@
-{
+module.export = {
   "env": {
     "browser": true,
     "es2021": true,
@@ -10,12 +10,14 @@
     "plugin:@typescript-eslint/recommended",
     "plugin:prettier/recommended"
   ],
-  "parser": "vue-eslint-parser",
+  // 解析器
+
   "parserOptions": {
+    "sourceType": "module",
     "ecmaVersion": "latest",
-    "parser": "@typescript-eslint/parser",
-    "sourceType": "module"
+    "parser": "@typescript-eslint/parser"
   },
+  // 配置插件
   "plugins": [
     "vue",
     "@typescript-eslint"
