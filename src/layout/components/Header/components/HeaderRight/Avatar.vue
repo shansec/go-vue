@@ -123,7 +123,24 @@ const submitForm = async (formEl: FormInstance | undefined) => {
   await formEl.validate((valid, fields) => {
     if (valid) {
       User.modifyPassword(modifyForm).then((res) => {
-        console.log(res)
+        if (res.data.code == 0) {
+          ElNotification({
+            type: 'success',
+            title: '修改成功',
+            message: res.data.msg,
+          })
+          // 退出登录清除存储的数据
+          window.localStorage.clear()
+          // 设置 token 为空
+          userStore.setInfoToNUll()
+          router.replace('/login')
+        } else {
+          ElNotification({
+            type: 'error',
+            title: '修改失败',
+            message: res.data.msg,
+          })
+        }
       })
     } else {
       console.log('error submit!', fields)

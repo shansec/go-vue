@@ -11,12 +11,10 @@ const service = axios.create({
 service.interceptors.request.use(
   (config: AxiosRequestConfig) => {
     const userStore = useUserStore()
-    const aToken: string = userStore.token
-    const rToken: string = window.localStorage.getItem('RToken')
 
-    if (aToken && rToken) {
-      config.headers['Authorization-aToken'] = aToken
-      config.headers['Authorization-rToken'] = rToken
+    config.headers = {
+      'x-token': userStore.token,
+      ...config.headers
     }
     return config
   },
@@ -28,6 +26,10 @@ service.interceptors.request.use(
 // response interceptors 响应拦截
 service.interceptors.response.use(
   (response: AxiosResponse) => {
+    const userStore = useUserStore()
+    if(response.headers['new-token']) {
+      userStore.setToken(response.headers['new-token'])
+    }
     return response
   },
   (error: AxiosError) => {
