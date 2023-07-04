@@ -1,6 +1,7 @@
 import axios, { AxiosError, AxiosRequestConfig, AxiosResponse } from 'axios'
 import { useUserStore } from '@/store/modules/user'
-import { ElMessage } from 'element-plus'
+import { ElMessage, ElNotification } from 'element-plus'
+import { log } from 'console'
 
 const service = axios.create({
   baseURL: '/api',
@@ -30,27 +31,23 @@ service.interceptors.response.use(
     if(response.headers['new-token']) {
       userStore.setToken(response.headers['new-token'])
     }
-    return response
+    if (response.data.code === 0) {
+      ElMessage({
+        message: response.data.msg,
+        type: 'success'
+      })
+    } else {
+      ElMessage({
+        message: response.data.msg,
+        type: 'error'
+      })
+    }
+    return response.data
   },
   (error: AxiosError) => {
     return Promise.reject(error)
   },
 )
-
-/**
- * @description 显示错误消息
- * @param opt 传入参数
- * @param err 错误消息
- * @param type  消息信息
- * @param duration  消息持续时间
- */
-function showErrorMessage(opt, err, type: any = 'error', duration = 5000) {
-  ElMessage({
-    message: err.msg,
-    type: type,
-    duration: duration,
-  })
-}
 
 /**
  *

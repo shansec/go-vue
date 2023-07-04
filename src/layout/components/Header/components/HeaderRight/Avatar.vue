@@ -2,9 +2,11 @@
   <div class="avatar">
     <el-dropdown>
       <span class="avatar-show">
-        <el-avatar :size="30" class="avatar-content" :src="userInfo.headerImg"/>
+        <el-avatar :size="30" class="avatar-content" :src="userInfo.headerImg" />
         {{ userInfo.nickName }}
-        <el-icon><ArrowDown/></el-icon>
+        <el-icon>
+          <ArrowDown />
+        </el-icon>
       </span>
       <template #dropdown>
         <el-dropdown-menu>
@@ -20,34 +22,18 @@
       </template>
     </el-dropdown>
     <el-dialog v-model="modifyDialogVisible" :title="modifyDialogTitle" width="40%">
-      <el-form
-          ref="modifyFormRef"
-          :model="modifyForm"
-          label-width="0"
-          :rules="modifyRules"
-          class="form"
-      >
+      <el-form ref="modifyFormRef" :model="modifyForm" label-width="0" :rules="modifyRules" class="form">
         <el-form-item prop="account" label="用户名" label-width="100px">
           <!-- 用户名-->
-          <el-input v-model="modifyForm.account" disabled placeholder="请输入用户名"/>
+          <el-input v-model="modifyForm.account" disabled placeholder="请输入用户名" />
         </el-form-item>
         <!-- 旧密码-->
         <el-form-item prop="password" label="旧密码" label-width="100px">
-          <el-input
-              v-model="modifyForm.password"
-              type="password"
-              placeholder="请输入旧密码"
-              show-password
-          />
+          <el-input v-model="modifyForm.password" type="password" placeholder="请输入旧密码" show-password />
         </el-form-item>
         <!-- 新密码 -->
         <el-form-item prop="newPassword" label="新密码" label-width="100px">
-          <el-input
-              v-model="modifyForm.newPassword"
-              type="password"
-              placeholder="请输入新密码"
-              show-password
-          />
+          <el-input v-model="modifyForm.newPassword" type="password" placeholder="请输入新密码" show-password />
         </el-form-item>
       </el-form>
       <template #footer>
@@ -61,11 +47,11 @@
 </template>
 
 <script lang="ts" setup>
-import {useRouter} from 'vue-router'
-import {ElMessage, ElMessageBox, ElNotification, FormInstance, FormRules} from 'element-plus'
+import { useRouter } from 'vue-router'
+import { ElMessage, ElMessageBox, ElNotification, FormInstance, FormRules } from 'element-plus'
 
-import {useUserStore} from '@/store/modules/user'
-import {reactive, ref} from 'vue'
+import { useUserStore } from '@/store/modules/user'
+import { reactive, ref } from 'vue'
 import User from '@/api/User';
 
 interface ModifyForm {
@@ -89,8 +75,8 @@ const modifyForm = reactive<ModifyForm>({
   newPassword: '',
 })
 const modifyRules = reactive<FormRules<ModifyForm>>({
-  password: [{required: true, message: '请输入旧密码', trigger: 'blur'}],
-  newPassword: [{required: true, message: '请输入新密码', trigger: 'blur'}],
+  password: [{ required: true, message: '请输入旧密码', trigger: 'blur' }],
+  newPassword: [{ required: true, message: '请输入新密码', trigger: 'blur' }],
 })
 // 退出登录并清除缓存
 const logout = () => {
@@ -99,20 +85,20 @@ const logout = () => {
     cancelButtonText: '取消',
     type: 'warning',
   })
-      .then(() => {
-        // 退出登录清除存储的数据
-        window.localStorage.clear()
-        // 设置 token 为空
-        userStore.setInfoToNUll()
-        router.replace('/login')
-        ElMessage({
-          type: 'success',
-          message: '退出登录成功！',
-        })
+    .then(() => {
+      // 退出登录清除存储的数据
+      window.localStorage.clear()
+      // 设置 token 为空
+      userStore.setInfoToNUll()
+      router.replace('/login')
+      ElMessage({
+        type: 'success',
+        message: '退出登录成功！',
       })
-      .catch(() => {
-        console.log('取消退出登录')
-      })
+    })
+    .catch(() => {
+      console.log('取消退出登录')
+    })
 }
 // 弹出修改密码弹出层
 const modifyDialogShow = () => {
@@ -123,24 +109,13 @@ const submitForm = async (formEl: FormInstance | undefined) => {
   await formEl.validate((valid, fields) => {
     if (valid) {
       User.modifyPassword(modifyForm).then((res) => {
-        if (res.data.code == 0) {
-          ElNotification({
-            type: 'success',
-            title: '修改成功',
-            message: res.data.msg,
-          })
-          // 退出登录清除存储的数据
-          window.localStorage.clear()
-          // 设置 token 为空
-          userStore.setInfoToNUll()
-          router.replace('/login')
-        } else {
-          ElNotification({
-            type: 'error',
-            title: '修改失败',
-            message: res.data.msg,
-          })
-        }
+        // 退出登录清除存储的数据
+        window.localStorage.clear()
+        // 设置 token 为空
+        userStore.setInfoToNUll()
+        router.replace('/login')
+      }).catch((err) => {
+        console.log('修改密码失败')
       })
     } else {
       console.log('error submit!', fields)
