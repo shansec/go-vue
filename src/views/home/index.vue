@@ -19,7 +19,7 @@
             <h5>个性标签</h5>
             <div class="label-list">
               <template v-for="label in labelList">
-                <el-tag>{{label}}</el-tag>
+                <el-tag>{{ label }}</el-tag>
               </template>
             </div>
           </div>
@@ -39,7 +39,7 @@
 </template>
 
 <script lang="ts" setup>
-  import { useUserStore } from '@/store/modules/user'
+import { useUserStore } from '@/store/modules/user'
 import { reactive, ref } from 'vue';
 
   const userStore = useUserStore()

@@ -7,12 +7,20 @@
       <div class="text-prompt-text">页面不存在！</div>
       <div class="text-prompt-permissions">您没有操作权限...</div>
       <div class="text-prompt-info">请检查URL地址是否正确，或者点击回到首页。</div>
-      <div class="text-prompt-return">回到首页</div>
+      <div class="text-prompt-return" @click="goHome">回到首页</div>
     </div>
   </div>
 </template>
 
-<script lang="ts" setup></script>
+<script lang="ts" setup>
+  import { useRouter } from 'vue-router';
+
+  const router = useRouter()
+
+  const goHome = () => {
+    router.push({path: '/home'})
+  }
+</script>
 
 <style lang="scss" scoped>
   .error-404-container {
