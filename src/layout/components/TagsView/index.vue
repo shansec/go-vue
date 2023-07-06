@@ -85,7 +85,7 @@ watch(route, () => {
 </script>
 
 <style lang="scss" scoped>
-@import url("@/style/variables.scss");
+@import url('@/style/variables.module.scss');
 
 .tag-container {
   // box-sizing: border-box;
@@ -116,8 +116,8 @@ watch(route, () => {
       }
 
       .el-tabs__header .el-tabs__item.is-active {
-        color: $primaryColor;
-        border-bottom: 2px solid $primaryColor;
+        color: var(--el-color-primary);
+        border-bottom: 2px solid var(--el-color-primary);
       }
     }
 
@@ -131,7 +131,7 @@ watch(route, () => {
         height: 8px;
         background: #ccc;
         border-radius: 50%;
-        content: "";
+        content: '';
       }
     }
 
@@ -147,7 +147,7 @@ watch(route, () => {
         height: 8px;
         background: var(--el-color-primary);
         border-radius: 50%;
-        content: "";
+        content: '';
       }
     }
 

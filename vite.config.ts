@@ -11,7 +11,7 @@ export default defineConfig({
     preprocessorOptions: {
       less: {
         modifyVars: {
-          hack: `true; @import (reference) "${resolve('src/style/variables.scss')}";`
+          hack: `true; @import (reference) "${resolve('src/style/variables.module.scss')}";`
         },
         math: 'strict',
         javascriptEnabled: true

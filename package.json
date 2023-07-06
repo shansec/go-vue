@@ -30,6 +30,7 @@
     "pinia-plugin-persist": "^1.0.0",
     "pinia-plugin-persistedstate": "^3.0.2",
     "pnpm": "^8.6.6",
+    "rimraf": "^5.0.1",
     "sass": "^1.57.1",
     "vite": "^4.0.3",
     "vue": "^3.2.45",
