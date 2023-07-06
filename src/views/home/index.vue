@@ -18,7 +18,7 @@
           <div class="people-info-label">
             <h5>个性标签</h5>
             <div class="label-list">
-              <template v-for="label in labelList">
+              <template v-for="(label, index) in labelList" :key="index">
                 <el-tag>{{ label }}</el-tag>
               </template>
             </div>
@@ -40,29 +40,29 @@
 
 <script lang="ts" setup>
 import { useUserStore } from '@/store/modules/user'
-import { reactive, ref } from 'vue';
+import { reactive, ref } from 'vue'
 
-  const userStore = useUserStore()
-  const userInfo = reactive<object>(userStore.getUserInfo())
-  const labelList = ref<Array<string>>(['读书', '敲代码', '听音乐', '冥想'])
+const userStore = useUserStore()
+const userInfo = reactive<object>(userStore.getUserInfo())
+const labelList = ref<Array<string>>(['读书', '敲代码', '听音乐', '冥想'])
 </script>
 
 <style lang="scss" scoped>
 .home-container {
-  height: 100%;
-  width: 100%;
   padding: 16px;
-  box-sizing: border-box;
+  width: 100%;
+  height: 100%;
   background-color: #f0f2f5;
+  box-sizing: border-box;
 
   .people-info {
-    height: 100%;
-    width: 100%;
-    background-color: #fff;
-    box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
-    box-sizing: border-box;
     padding: 16px;
+    width: 100%;
+    height: 100%;
+    background-color: #fff;
     border-radius: 4px;
+    box-shadow: rgb(99 99 99 / 20%) 0 2px 8px 0;
+    box-sizing: border-box;
 
     div {
       margin-bottom: 5px;
@@ -78,8 +78,8 @@ import { reactive, ref } from 'vue';
   }
 
   .project-info {
-    height: 100%;
     width: 100%;
+    height: 100%;
   }
 }
 </style>

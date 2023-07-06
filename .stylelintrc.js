@@ -1,90 +1,42 @@
 module.exports = {
-  overrides: [
-      {
-          files: ['*.vue', '**/*.vue', '*.html', '**/*.html'],
-          extends: ['stylelint-config-html'],
-          rules: {
-              // 指定关键帧名称的模式
-              'keyframes-name-pattern': null,
-              // 禁止未知的伪类选择器
-              'selector-pseudo-class-no-unknown': [
-                  true,
-                  {
-                      ignorePseudoClasses: ['deep', 'global'],
-                  },
-              ],
-              // 禁止未知的伪元素选择器
-              'selector-pseudo-element-no-unknown': [
-                  true,
-                  {
-                      ignorePseudoElements: ['v-deep', 'v-global', 'v-slotted'],
-                  },
-              ],
-          },
-      },
-      {
-          files: ['*.less', '**/*.less'],
-          customSyntax: 'postcss-less',
-          extends: ['stylelint-config-standard', 'stylelint-config-recommended-vue'],
-      }
-  ],
-  root: true,
-  defaultSeverity: 'error',
   extends: [
     'stylelint-config-standard',
-    'stylelint-config-prettier'
+    'stylelint-config-prettier',
+    'stylelint-config-recommended-less',
+    'stylelint-config-standard-vue'
   ],
   plugins: ['stylelint-order'],
+  // 不同格式的文件指定自定义语法
+  overrides: [
+    {
+      files: ['**/*.(css|vue|html)'],
+      customSyntax: 'postcss-scss'
+    },
+    {
+      files: ['**/*.(html|vue)'],
+      customSyntax: 'postcss-html'
+    }
+  ],
+  ignoreFiles: ['**/*.js', '**/*.jsx', '**/*.tsx', '**/*.ts', '**/*.json', '**/*.md', '**/*.yaml'],
   rules: {
-    // 不允许未知函数
-    'function-no-unknown': null,
-    // 指定类选择器的模式
-    'selector-class-pattern': null,
-    // 禁止空源码
+    'no-descending-specificity': null, // 禁止在具有较高优先级的选择器后出现被其覆盖的较低优先级的选择器
+    'selector-anb-no-unmatchable': null,
     'no-empty-source': null,
-    // 指定字符串使用单引号
-    'string-quotes': 'single',
-    // 禁止未知的@规则
-    'at-rule-no-unknown': [
+    'media-query-no-invalid': null,
+    'property-no-unknown': null,
+    'selector-pseudo-element-no-u nknown': [
       true,
       {
-        ignoreAtRules: [
-          'tailwind',
-          'apply',
-          'variants',
-          'responsive',
-          'screen',
-          'function',
-          'if',
-          'each',
-          'include',
-          'mixin',
-        ],
-      },
+        ignorePseudoElements: ['v-deep']
+      }
     ],
-    // 指定@规则名的大小写
-    'at-rule-name-case': 'lower',
-    // 指定缩进
-    indentation: [
-      2,
-      {
-        severity: 'warning',
-      },
-    ],
-    // 禁止未知的伪类选择器
     'selector-pseudo-class-no-unknown': [
       true,
       {
-        ignorePseudoClasses: ['global'],
-      },
+        ignorePseudoClasses: ['deep']
+      }
     ],
-    // 禁止未知的伪元素选择器
-    'selector-pseudo-element-no-unknown': [
-      true,
-      {
-        ignorePseudoElements: ['v-deep'],
-      },
-    ],
+    // 指定样式的排序
     'order/properties-order': [
       'position',
       'top',
@@ -100,16 +52,16 @@ module.exports = {
       'overflow',
       'overflow-x',
       'overflow-y',
-      'margin',
-      'margin-top',
-      'margin-right',
-      'margin-bottom',
-      'margin-left',
       'padding',
       'padding-top',
       'padding-right',
       'padding-bottom',
       'padding-left',
+      'margin',
+      'margin-top',
+      'margin-right',
+      'margin-bottom',
+      'margin-left',
       'width',
       'min-width',
       'max-width',
@@ -118,28 +70,6 @@ module.exports = {
       'max-height',
       'font-size',
       'font-family',
-      'font-weight',
-      'border',
-      'border-style',
-      'border-width',
-      'border-color',
-      'border-top',
-      'border-top-style',
-      'border-top-width',
-      'border-top-color',
-      'border-right',
-      'border-right-style',
-      'border-right-width',
-      'border-right-color',
-      'border-bottom',
-      'border-bottom-style',
-      'border-bottom-width',
-      'border-bottom-color',
-      'border-left',
-      'border-left-style',
-      'border-left-width',
-      'border-left-color',
-      'border-radius',
       'text-align',
       'text-justify',
       'text-indent',
@@ -153,6 +83,23 @@ module.exports = {
       'background-size',
       'background-color',
       'background-clip',
+      'border',
+      'border-style',
+      'border-width',
+      'border-color',
+      'border-top-style',
+      'border-top-width',
+      'border-top-color',
+      'border-right-style',
+      'border-right-width',
+      'border-right-color',
+      'border-bottom-style',
+      'border-bottom-width',
+      'border-bottom-color',
+      'border-left-style',
+      'border-left-width',
+      'border-left-color',
+      'border-radius',
       'opacity',
       'filter',
       'list-style',
@@ -161,7 +108,7 @@ module.exports = {
       'box-shadow',
       'text-shadow',
       'resize',
-      'transition',
-    ],
-  },
+      'transition'
+    ]
+  }
 }

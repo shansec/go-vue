@@ -22,8 +22,8 @@ export const useSettingStore = defineStore({
       // 色弱模式
       weakColor: false,
       // 主题颜色
-      themeColor: THRME_COLOR,
-    },
+      themeColor: THRME_COLOR
+    }
   }),
   actions: {
     /**
@@ -33,6 +33,6 @@ export const useSettingStore = defineStore({
      */
     changeThemeSetting(key, val) {
       this.themeConfig[key] = val
-    },
-  },
+    }
+  }
 })

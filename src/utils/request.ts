@@ -1,11 +1,10 @@
 import axios, { AxiosError, AxiosRequestConfig, AxiosResponse } from 'axios'
 import { useUserStore } from '@/store/modules/user'
-import { ElMessage, ElNotification } from 'element-plus'
-import { log } from 'console'
+import { ElMessage } from 'element-plus'
 
 const service = axios.create({
   baseURL: '/api',
-  timeout: 99999,
+  timeout: 99999
 })
 // axios.defaults.baseURL = '/api'
 // request interceptors 接口请求拦截
@@ -21,14 +20,14 @@ service.interceptors.request.use(
   },
   (error: AxiosError) => {
     return Promise.reject(error)
-  },
+  }
 )
 
 // response interceptors 响应拦截
 service.interceptors.response.use(
   (response: AxiosResponse) => {
     const userStore = useUserStore()
-    if(response.headers['new-token']) {
+    if (response.headers['new-token']) {
       userStore.setToken(response.headers['new-token'])
     }
     if (response.data.code === 0) {
@@ -46,7 +45,7 @@ service.interceptors.response.use(
   },
   (error: AxiosError) => {
     return Promise.reject(error)
-  },
+  }
 )
 
 /**
@@ -61,7 +60,7 @@ export function post(url, data = {}, params = {}) {
     method: 'post',
     url,
     data,
-    params,
+    params
   })
 }
 
@@ -75,7 +74,7 @@ export function get(url, params = {}) {
   return service({
     method: 'get',
     url,
-    params,
+    params
   })
 }
 
@@ -91,7 +90,7 @@ export function put(url, data = {}, params = {}) {
     method: 'put',
     url,
     data,
-    params,
+    params
   })
 }
 
@@ -106,7 +105,7 @@ export function _delete(url, params = {}) {
   return service({
     method: 'delete',
     url,
-    params,
+    params
   })
 }
 

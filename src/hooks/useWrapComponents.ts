@@ -14,7 +14,7 @@ export const useWrapComponents = (Component, route) => {
         name: wrapperName,
         render() {
           return h('div', { className: 'app-main-inner' }, Component)
-        },
+        }
       }
       wrapperMap.set(wrapperName, wrapper)
     }

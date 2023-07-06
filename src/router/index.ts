@@ -1,8 +1,8 @@
 import { RouteRecordRaw, createRouter, createWebHistory } from 'vue-router'
 import Layout from '@/layout/index.vue'
-import {useUserStore} from '@/store/modules/user';
+import { useUserStore } from '@/store/modules/user'
 interface extendRoute {
-  hidden?:boolean
+  hidden?: boolean
 }
 
 export const routesSet = []
@@ -15,18 +15,18 @@ export const routesSet = []
 //   });
 //   return router
 // }
-export const constantRoutes: Array<RouteRecordRaw&extendRoute> = [
+export const constantRoutes: Array<RouteRecordRaw & extendRoute> = [
   {
     path: '/404',
     component: () => import('@/views/errorPage/404.vue'),
-    hidden: true,
+    hidden: true
   },
   {
     path: '/login',
     name: 'Login',
     component: () => import('@/views/login/index.vue'),
     hidden: true,
-    meta: { title: '登录' },
+    meta: { title: '登录' }
   },
   {
     path: '/',
@@ -38,16 +38,16 @@ export const constantRoutes: Array<RouteRecordRaw&extendRoute> = [
         path: '/home',
         component: () => import('@/views/home/index.vue'),
         name: 'home',
-        meta: { title: '首页', icon: 'icon-shezhi', affix: true },
-      },
-    ],
+        meta: { title: '首页', icon: 'icon-shezhi', affix: true }
+      }
+    ]
   },
-  { path: '/:catchAll(.*)', redirect: '/404', hidden: true },
+  { path: '/:catchAll(.*)', redirect: '/404', hidden: true }
 ]
 const router = createRouter({
   // 创建一个 HTML5 历史，即单页面应用程序中最常见的历史记录
   history: createWebHistory(),
-  routes: constantRoutes,
+  routes: constantRoutes
 })
 
 router.beforeEach((to, from, next) => {

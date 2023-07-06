@@ -10,23 +10,23 @@
   </div>
 </template>
 <script lang="ts" setup>
-  import { useWrapComponents } from '@/hooks/useWrapComponents'
+import { useWrapComponents } from '@/hooks/useWrapComponents'
 </script>
 <style lang="scss" scoped>
-  .app-main {
+.app-main {
+  flex: 1;
+  display: flex;
+  overflow-x: hidden;
+  width: 100%;
+  box-sizing: border-box;
+  height: calc(100% - 90px);
+
+  .app-main-inner {
     flex: 1;
     display: flex;
     overflow-x: hidden;
     width: 100%;
     box-sizing: border-box;
-    height: calc(100% - 90px);
-
-    .app-main-inner {
-      flex: 1;
-      display: flex;
-      overflow-x: hidden;
-      width: 100%;
-      box-sizing: border-box;
-    }
   }
+}
 </style>

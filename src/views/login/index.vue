@@ -13,10 +13,10 @@
 </template>
 
 <script lang="ts" setup>
-  import LoginForm from '@/views/login/components/LoginForm.vue'
-  import SwitchDark from '@/components/SwitchDark/index.vue'
+import LoginForm from '@/views/login/components/LoginForm.vue'
+import SwitchDark from '@/components/SwitchDark/index.vue'
 </script>
 
 <style lang="scss" scoped>
-  @import './index.scss';
+@import url("./index.scss");
 </style>

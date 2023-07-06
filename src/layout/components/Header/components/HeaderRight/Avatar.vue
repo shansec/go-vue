@@ -48,11 +48,11 @@
 
 <script lang="ts" setup>
 import { useRouter } from 'vue-router'
-import { ElMessage, ElMessageBox, ElNotification, FormInstance, FormRules } from 'element-plus'
+import { ElMessage, ElMessageBox, FormInstance, FormRules } from 'element-plus'
 
 import { useUserStore } from '@/store/modules/user'
 import { reactive, ref } from 'vue'
-import User from '@/api/User';
+import User from '@/api/User'
 
 interface ModifyForm {
   uid: number
@@ -72,18 +72,18 @@ const modifyForm = reactive<ModifyForm>({
   uid: userInfo.value.ID,
   account: userInfo.value.userName,
   password: '',
-  newPassword: '',
+  newPassword: ''
 })
 const modifyRules = reactive<FormRules<ModifyForm>>({
   password: [{ required: true, message: '请输入旧密码', trigger: 'blur' }],
-  newPassword: [{ required: true, message: '请输入新密码', trigger: 'blur' }],
+  newPassword: [{ required: true, message: '请输入新密码', trigger: 'blur' }]
 })
 // 退出登录并清除缓存
 const logout = () => {
   ElMessageBox.confirm('你是否确认退出登录?', '温馨提示', {
     confirmButtonText: '确定',
     cancelButtonText: '取消',
-    type: 'warning',
+    type: 'warning'
   })
     .then(() => {
       // 退出登录清除存储的数据
@@ -93,7 +93,7 @@ const logout = () => {
       router.replace('/login')
       ElMessage({
         type: 'success',
-        message: '退出登录成功！',
+        message: '退出登录成功！'
       })
     })
     .catch(() => {
@@ -108,15 +108,17 @@ const submitForm = async (formEl: FormInstance | undefined) => {
   if (!formEl) return
   await formEl.validate((valid, fields) => {
     if (valid) {
-      User.modifyPassword(modifyForm).then((res) => {
-        // 退出登录清除存储的数据
-        window.localStorage.clear()
-        // 设置 token 为空
-        userStore.setInfoToNUll()
-        router.replace('/login')
-      }).catch((err) => {
-        console.log('修改密码失败')
-      })
+      User.modifyPassword(modifyForm)
+        .then(() => {
+          // 退出登录清除存储的数据
+          window.localStorage.clear()
+          // 设置 token 为空
+          userStore.setInfoToNUll()
+          router.replace('/login')
+        })
+        .catch(() => {
+          console.log('修改密码失败')
+        })
     } else {
       console.log('error submit!', fields)
     }
@@ -129,9 +131,9 @@ const submitForm = async (formEl: FormInstance | undefined) => {
   cursor: pointer;
 
   .avatar-show {
-    height: 50px;
     display: flex;
     align-items: center;
+    height: 50px;
 
     .avatar-content {
       margin-right: 6px;
@@ -140,7 +142,7 @@ const submitForm = async (formEl: FormInstance | undefined) => {
 }
 
 .form {
-  width: 80%;
   margin: 0 auto;
+  width: 80%;
 }
 </style>

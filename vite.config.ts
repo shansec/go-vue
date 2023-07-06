@@ -11,21 +11,21 @@ export default defineConfig({
     preprocessorOptions: {
       less: {
         modifyVars: {
-          hack: `true; @import (reference) "${resolve('src/style/variables.scss')}";`,
+          hack: `true; @import (reference) "${resolve('src/style/variables.scss')}";`
         },
         math: 'strict',
-        javascriptEnabled: true,
-      },
-    },
+        javascriptEnabled: true
+      }
+    }
   },
   plugins: [
     vue(),
     AutoImport({
-      resolvers: [ElementPlusResolver()],
+      resolvers: [ElementPlusResolver()]
     }),
     Components({
-      resolvers: [ElementPlusResolver()],
-    }),
+      resolvers: [ElementPlusResolver()]
+    })
   ],
   // 公共基础路径
   base: './',
@@ -33,8 +33,8 @@ export default defineConfig({
   publicDir: 'public',
   resolve: {
     alias: {
-      '@': join(__dirname, './src'),
-    },
+      '@': join(__dirname, './src')
+    }
   },
   server: {
     // 是否开启 https
@@ -54,17 +54,17 @@ export default defineConfig({
       '/api': {
         target: 'http://localhost:8080',
         changeOrigin: true,
-        rewrite: (path) => path.replace(/^\/api/, ''),
-      },
+        rewrite: (path) => path.replace(/^\/api/, '')
+      }
     },
     // Vite 服务器默认会忽略对 .git/ 和 node_modules/ 目录的监听。
-    watch: {},
+    watch: {}
   },
   build: {
     rollupOptions: {
       input: {
-        main: resolve(__dirname, 'index.html'),
-      },
+        main: resolve(__dirname, 'index.html')
+      }
     },
     // 设置最终构建的浏览器兼容目标
     target: 'es2015',
@@ -75,6 +75,6 @@ export default defineConfig({
     // 启用/禁用 gzip 压缩大小报告
     reportCompressedSize: false,
     // 指定输出路径（相对于项目根目录）
-    outDir: 'customDist',
-  },
+    outDir: 'customDist'
+  }
 })

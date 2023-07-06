@@ -1,27 +1,24 @@
-module.export = {
-  "env": {
-    "browser": true,
-    "es2021": true,
-    "node":true
+module.exports = {
+  env: {
+    browser: true,
+    es2021: true,
+    node: true
   },
-  "extends": [
-    "eslint:recommended",
-    "plugin:vue/vue3-essential",
-    "plugin:@typescript-eslint/recommended",
-    "plugin:prettier/recommended"
+  extends: [
+    'eslint:recommended',
+    'plugin:vue/vue3-essential',
+    'plugin:@typescript-eslint/recommended',
+    'plugin:prettier/recommended'
   ],
-  // 解析器
-
-  "parserOptions": {
-    "sourceType": "module",
-    "ecmaVersion": "latest",
-    "parser": "@typescript-eslint/parser"
+  parser: 'vue-eslint-parser',
+  parserOptions: {
+    ecmaVersion: 'latest',
+    parser: '@typescript-eslint/parser',
+    sourceType: 'module'
   },
-  // 配置插件
-  "plugins": [
-    "vue",
-    "@typescript-eslint"
-  ],
-  "rules": {
+  plugins: ['vue', '@typescript-eslint'],
+  rules: {
+    'vue/multi-word-component-names': 'off',
+    'vue/no-deprecated-v-on-native-modifier': 'off'
   }
 }

@@ -13,68 +13,68 @@
 </template>
 
 <script lang="ts" setup>
-  import { useRouter } from 'vue-router';
+import { useRouter } from 'vue-router'
 
-  const router = useRouter()
+const router = useRouter()
 
-  const goHome = () => {
-    router.push({path: '/home'})
-  }
+const goHome = () => {
+  router.push({ path: '/home' })
+}
 </script>
 
 <style lang="scss" scoped>
-  .error-404-container {
-    width: 100%;
-    height: 100%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+.error-404-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100%;
 
-    .img-prompt {
-      width: 600px;
+  .img-prompt {
+    width: 600px;
 
-      img {
-        width: 100%;
-      }
-    }
-
-    .text-prompt {
-      .text-prompt-text {
-        font-size: 32px;
-        font-weight: 700;
-        line-height: 40px;
-        color: #1482f0;
-        margin-bottom: 20px;
-      }
-
-      .text-prompt-permissions {
-        font-size: 20px;
-        line-height: 24px;
-        color: #222;
-        font-weight: 700;
-        margin-bottom: 10px;
-      }
-
-      .text-prompt-info {
-        font-size: 13px;
-        line-height: 21px;
-        color: gray;
-        margin-bottom: 30px;
-      }
-
-      .text-prompt-return {
-        display: block;
-        float: left;
-        width: 110px;
-        height: 36px;
-        background: #1482f0;
-        border-radius: 100px;
-        text-align: center;
-        color: #fff;
-        font-size: 14px;
-        line-height: 36px;
-        cursor: pointer;
-      }
+    img {
+      width: 100%;
     }
   }
+
+  .text-prompt {
+    .text-prompt-text {
+      margin-bottom: 20px;
+      font-size: 32px;
+      color: #1482f0;
+      font-weight: 700;
+      line-height: 40px;
+    }
+
+    .text-prompt-permissions {
+      margin-bottom: 10px;
+      font-size: 20px;
+      color: #222;
+      line-height: 24px;
+      font-weight: 700;
+    }
+
+    .text-prompt-info {
+      margin-bottom: 30px;
+      font-size: 13px;
+      color: gray;
+      line-height: 21px;
+    }
+
+    .text-prompt-return {
+      display: block;
+      float: left;
+      width: 110px;
+      height: 36px;
+      font-size: 14px;
+      text-align: center;
+      color: #fff;
+      background: #1482f0;
+      border-radius: 100px;
+      line-height: 36px;
+      cursor: pointer;
+    }
+  }
+}
 </style>

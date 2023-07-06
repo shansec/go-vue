@@ -4,7 +4,7 @@ export const useUserStore = defineStore({
   id: 'userStore',
   state: () => ({
     token: '',
-    userInfo: {},
+    userInfo: {}
   }),
   persist: {
     // 开启数据缓存
@@ -14,9 +14,9 @@ export const useUserStore = defineStore({
         // 本地存储的名称
         key: 'userStore',
         // 本地存储的位置
-        storage: localStorage,
-      },
-    ],
+        storage: localStorage
+      }
+    ]
   },
   getters: {},
   actions: {
@@ -44,7 +44,7 @@ export const useUserStore = defineStore({
      * 登陆成功，存储用户信息
      * @param userData
      */
-    setUserInfo(userData: any): void {
+    setUserInfo(userData: object): void {
       this.userInfo = userData
     },
     /**
@@ -52,6 +52,6 @@ export const useUserStore = defineStore({
      */
     getUserInfo(): object {
       return this.userInfo
-    },
-  },
+    }
+  }
 })
