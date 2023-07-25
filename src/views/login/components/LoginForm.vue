@@ -25,7 +25,7 @@
         show-password
       />
     </el-form-item>
-    <el-form-item style="width: 100%">
+    <el-form-item style="width: 100%;">
       <el-button :loading="loading" type="primary" class="login_btn" @click="submitForm(ruleFormRef)">登录 </el-button>
     </el-form-item>
   </el-form>
@@ -84,5 +84,5 @@ const submitForm = async (formEl: FormInstance | undefined) => {
 </script>
 
 <style lang="scss" scoped>
-@import url('../index.scss');
+@import url("../index.scss");
 </style>

@@ -1,13 +1,13 @@
 <template>
   <div class="search">
     <el-tooltip content="菜单搜索" placement="bottom">
-      <el-icon style="font-size: 20px">
+      <el-icon style="font-size: 20px;">
         <i class="iconfont icon-sousuo" @click="handleSearch"></i>
       </el-icon>
     </el-tooltip>
     <el-dialog v-model="isShowSearch" class="header_dialog" width="600px" destroy-on-close :show-close="false">
       <el-select
-        style="width: 100%"
+        style="width: 100%;"
         ref="headerSearchSelect"
         v-model="search"
         :remote-method="query"

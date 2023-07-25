@@ -9,12 +9,8 @@ import { resolve, join } from 'path'
 export default defineConfig({
   css: {
     preprocessorOptions: {
-      less: {
-        modifyVars: {
-          hack: `true; @import (reference) "${resolve('src/style/variables.module.scss')}";`
-        },
-        math: 'strict',
-        javascriptEnabled: true
+      scss: {
+        additionalData: `@import '@/style/variables.module.scss';`
       }
     }
   },

@@ -1,3 +1,4 @@
+@import "./common.scss";
 .sidebar-container {
   position: fixed;
   top: 0;
@@ -9,7 +10,7 @@
   width: $sideBarWidth;
   height: 100%;
   background-color: $menuBackground;
-  transition: width 0.28s;
+  transition: width 0.28s ease;
   flex-direction: column;
 
   .el-menu-vertical-demo {

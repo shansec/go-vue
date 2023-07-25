@@ -1,7 +1,7 @@
 <template>
   <div class="setting">
     <el-tooltip content="主题设置" placement="bottom">
-      <el-icon style="font-size: 20px" @click="showSetting">
+      <el-icon style="font-size: 20px;" @click="showSetting">
         <i class="iconfont icon-shezhi"></i>
       </el-icon>
     </el-tooltip>
