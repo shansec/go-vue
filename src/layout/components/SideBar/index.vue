@@ -1,7 +1,7 @@
 <template>
   <div class="sidebar-container">
     <Logo :collapsed="collapsed" v-if="showLogo" />
-    <el-scrollbar style="height: calc(100% - 50px);" wrap-class="scrollbar-wrapper">
+    <el-scrollbar style="height: calc(100% - 50px)" wrap-class="scrollbar-wrapper">
       <el-menu
         :default-active="activeMenu"
         background-color="#191a23"

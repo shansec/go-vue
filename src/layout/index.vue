@@ -23,7 +23,7 @@ const classObj = computed(() => {
 })
 </script>
 <style lang="scss" scoped>
-@import url('@/style/index.scss');
+@import '@/style/index.scss';
 
 .container-layout {
   width: 100%;
