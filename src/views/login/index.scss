@@ -61,7 +61,7 @@
         }
       }
 
-      ::v-deep(.el-input__inner) {
+      :deep .el-input__inner {
         height: 40px;
       }
 

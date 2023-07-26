@@ -33,6 +33,7 @@
     "resolveJsonModule": true,
     "isolatedModules": true,
     "esModuleInterop": true,
+	"noImplicitAny": false,
     "lib": ["ESNext", "DOM"],
     // 不报告执行不到的代码错误
     "allowUnreachableCode": false,

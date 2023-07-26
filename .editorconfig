@@ -4,7 +4,7 @@ root = true
 # 表示所有文件起作用
 [*]
 # 缩进风格（tab | space）
-indent_style = space
+indent_style = tab
 # 控制换行类型（lf | cr | crlf）
 end_of_line = lf
 # 设置文件集为 utf-8
@@ -20,5 +20,5 @@ max_line_length = off
 trim_trailing_whitespace = true
 
 # 表示只对ts/js/vue/css文件适用以下规则
-[*.{ts, js, vue, css}]
+[*.{ts,js,vue,css,scss}]
 indent_size = 2

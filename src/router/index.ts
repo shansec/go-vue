@@ -1,11 +1,18 @@
 import { RouteRecordRaw, createRouter, createWebHistory } from 'vue-router'
 import Layout from '@/layout/index.vue'
 import { useUserStore } from '@/store/modules/user'
+import jwt_decode from 'jwt-decode'
+import { echartsRouter } from '@/router/modules/echarts'
+
 interface extendRoute {
   hidden?: boolean
 }
 
-export const routesSet = []
+interface isJwt {
+  exp: number
+}
+
+export const asyncRouter = [...echartsRouter]
 // const roleType = '1'
 
 // function permissionRouter(router = routesSet) {
@@ -42,6 +49,29 @@ export const constantRoutes: Array<RouteRecordRaw & extendRoute> = [
       }
     ]
   },
+  {
+    path: '/echarts',
+    component: Layout,
+    redirect: '/echarts/pie',
+    name: 'echarts',
+    meta: {
+      tile: 'Echarts',
+      icon: 'icon-shezhi',
+      affix: false
+    },
+    children: [
+      {
+        path: '/echarts/pie',
+        component: () => import('@/views/echarts/pieChart/index.vue'),
+        name: '饼图',
+        meta: {
+          tile: '饼图',
+          icon: 'icon-shezhi',
+          affix: false
+        }
+      }
+    ]
+  },
   { path: '/:catchAll(.*)', redirect: '/404', hidden: true }
 ]
 const router = createRouter({
@@ -62,7 +92,16 @@ router.beforeEach((to, from, next) => {
     if (!token) {
       next({ path: '/login' })
     } else {
-      next()
+      // 如果包含 token 检查其是否过期
+      const decoded_token: isJwt = jwt_decode(token)
+      const now = Date.now() / 1000
+      if (decoded_token.exp < now) {
+        // token 过期跳转到登录页面
+        window.localStorage.clear()
+        next({ path: '/login' })
+      } else {
+        next()
+      }
     }
   }
 })
