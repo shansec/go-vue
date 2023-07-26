@@ -1,32 +1,47 @@
-@import 'variables';
 .sidebar-container {
-  transition: width 0.28s;
-  width: $sideBarWidth;
-  background-color: $menuBackground;
-  height: 100%;
   position: fixed;
   top: 0;
   bottom: 0;
   left: 0;
   z-index: 98;
-  overflow: hidden;
   display: flex;
+  overflow: hidden;
+  width: $sideBarWidth;
+  height: 100%;
+  background-color: $menuBackground;
+  transition: width 0.28s ease;
   flex-direction: column;
 
-  .el-menu-vertical-demo {
-    border-right: 0 solid !important;
+
+
+  :deep .el-menu-vertical-demo {
+    border-right: none !important;
+  }
+
+  :deep .el-menu-item.is-active {
+    background-color: #001528!important;
+
+    &::before {
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      left: 0;
+      width: 4px;
+      content: '';
+      background: var(--el-color-primary);
+    }
   }
 }
 
 .main-container {
+  position: relative;
   display: flex;
+  margin-left: $sideBarWidth;
+  min-height: 100%;
+  transition: margin-left 0.28s;
   flex: 1;
   flex-direction: column;
   box-sizing: border-box;
-  margin-left: $sideBarWidth;
-  min-height: 100%;
-  position: relative;
-  transition: margin-left 0.28s;
 }
 
 .hideSidebar {
@@ -36,6 +51,7 @@
   .sidebar-container {
     width: 60px !important;
   }
+
   .main-container {
     margin-left: 60px !important;
   }

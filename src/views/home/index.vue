@@ -1,143 +1,85 @@
-<!--<template>-->
-<!--  <div class="home-container">首页</div>-->
-<!--</template>-->
-
-<!--<script setup></script>-->
-
-<!--<style lang="scss" scoped>-->
-<!--  .home-container {-->
-<!--    width: 100%;-->
-<!--    height: 100%;-->
-<!--    padding: 16px;-->
-<!--    box-sizing: border-box;-->
-<!--    box-shadow: rgba(0, 0, 0, 0.1) 0px 10px 50px;-->
-<!--  }-->
-<!--</style>-->
 <template>
-  <el-table ref="table" :data="getTableData[0]" style="width: 100%">
-    <template v-for="item in getTableData[1]">
-      <el-table-column
-        :label="item.unit ? `${item.label}（${item.unit}）` : item.label"
-        :prop="item.value"
-        :header-align="item.headerAlign || 'center'"
-        :min-width="item.minWidth || 80"
-        :align="item.align || 'center'"
-      >
-        <template v-slot="scope">
-          {{ tableFormatter(item.value, scope.row) }}
-        </template>
-      </el-table-column>
-    </template>
-  </el-table>
+  <div class="home-container">
+    <el-row :gutter="20">
+      <el-col :span="8">
+        <div class="people-info">
+          <div class="people-info-detail">
+            <el-avatar :size="50" :src="userInfo.headerImg" />
+            <div>昵称：{{ userInfo.userName }}</div>
+            <div>职业：前端小白</div>
+            <div>公司：小公司</div>
+            <div>年龄：未知</div>
+            <div>性别：男</div>
+            <div>现住址：中国-河南-郑州</div>
+            <div>邮箱：x201906140415h@163.com</div>
+            <div>技术栈：JavaScript、Vue、Node、JQuery、CSS、HTML</div>
+          </div>
+          <el-divider />
+          <div class="people-info-label">
+            <h5>个性标签</h5>
+            <div class="label-list">
+              <template v-for="(label, index) in labelList" :key="index">
+                <el-tag>{{ label }}</el-tag>
+              </template>
+            </div>
+          </div>
+          <el-divider />
+          <div class="people-info-motto">
+            <h5>favorite words</h5>
+            <div class="favorite-words">知之真切笃实处，即是行；行之明觉精察处，即是知。</div>
+          </div>
+          <el-divider />
+        </div>
+      </el-col>
+      <el-col :span="16">
+        <div class="project-info"></div>
+      </el-col>
+    </el-row>
+  </div>
 </template>
 
-<script>
-  export default {
-    data() {
-      return {
-        headerList: [
-          {
-            label: '班级',
-            value: 'class',
-            unit: '',
-            headerAlign: 'center',
-            minWidth: '110',
-            align: 'center',
-          },
-          {
-            label: '姓名',
-            value: 'name',
-            unit: '',
-            headerAlign: 'center',
-            minWidth: '80',
-            align: 'center',
-          },
-          {
-            label: '成绩',
-            value: 'grade',
-            unit: '分',
-            headerAlign: 'center',
-            minWidth: '90',
-            align: 'center',
-          },
-        ],
-        tableData: [
-          {
-            class: '九年级1班',
-            name: '张三',
-            grade: '80',
-          },
-          {
-            class: '九年级2班',
-            name: '李四',
-            grade: '85',
-          },
-          {
-            class: '九年级2班',
-            name: '王二',
-            grade: '99',
-          },
-          {
-            class: '九年级3班',
-            name: '麻子',
-            grade: '113',
-          },
-        ],
-      }
-    },
-    computed: {
-      getTableData() {
-        return this.fotmatterTableData(this.tableData, this.headerList)
-      },
-    },
-    methods: {
-      // 对 tableData 和 headerList 进行处理，关键代码
-      fotmatterTableData(data, header) {
-        let enddata = []
-        let endheader = []
-        header.forEach((item, index) => {
-          if (index === 0) {
-            endheader.push({
-              label: header[index].label,
-              value: 'mainIndex',
-              unit: header[index].unit,
-              headerAlign: header[index].headerAlign,
-              minWidth: header[index].minWidth,
-              align: header[index].align,
-            })
-            data.forEach((ele, idx) => {
-              endheader.push({
-                label: ele[header[index].value],
-                value: `type${idx}`,
-              })
-            })
-          } else {
-            let obj = {
-              mainIndex: header[index].label,
-              unit: header[index].unit,
-            }
-            data.forEach((ele, ind) => {
-              obj[`type${ind}`] = ele[header[index].value]
-            })
-            enddata.push(obj)
-          }
-        })
-        return [enddata, endheader]
-      },
+<script lang="ts" setup>
+import { useUserStore } from '@/store/modules/user'
+import { reactive, ref } from 'vue'
 
-      // 列表格式化
-      tableFormatter(prop, row) {
-        if (row[prop] || row[prop] == 0) {
-          if (prop === 'mainIndex') {
-            if (row.unit) {
-              return `${row[prop]}（${row.unit}）`
-            }
-            return row[prop]
-          }
-          return row[prop]
-        }
-        return '--'
-      },
-    },
-  }
+const userStore = useUserStore()
+const userInfo = reactive<object>(userStore.getUserInfo())
+const labelList = ref<Array<string>>(['读书', '敲代码', '听音乐', '冥想'])
 </script>
+
+<style lang="scss" scoped>
+.home-container {
+  padding: 16px;
+  width: 100%;
+  height: 100%;
+  background-color: #f0f2f5;
+  box-sizing: border-box;
+
+  .people-info {
+    padding: 16px;
+    width: 100%;
+    height: 100%;
+    background-color: #fff;
+    border-radius: 4px;
+    box-shadow: rgb(99 99 99 / 20%) 0 2px 8px 0;
+    box-sizing: border-box;
+
+    div {
+      margin-bottom: 5px;
+    }
+
+    .people-info-label {
+      .label-list {
+        span {
+          margin-right: 10px;
+        }
+      }
+    }
+  }
+
+  .project-info {
+    width: 100%;
+    height: 100%;
+  }
+}
+</style>

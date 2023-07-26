@@ -34,14 +34,16 @@
     "isolatedModules": true,
     "esModuleInterop": true,
     "lib": ["ESNext", "DOM"],
+    // 不报告执行不到的代码错误
+    "allowUnreachableCode": false,
     // 跳过库检查，解决打包失败
     "skipLibCheck": true,
     // 解析非相对模块名的基准目录
-        "baseUrl": "src",
-        "paths": {
-          "@/*": ["./*"]
-        },
+    "baseUrl": "src",
+    "paths": {
+      "@/*": ["./*"]
+    }
   },
   "include": ["src/**/*.ts", "src/**/*.d.ts", "src/**/*.tsx", "src/**/*.vue"],
-  "exclude": ["node_modules","dist","**/*.js"]
+  "exclude": ["node_modules", "dist", "**/*.js"]
 }

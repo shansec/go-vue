@@ -1,3 +1,5 @@
 dist
 node_modules
-!.prettierrc.cjs
+src/assets
+!.prettierrc.json
+src/style/**

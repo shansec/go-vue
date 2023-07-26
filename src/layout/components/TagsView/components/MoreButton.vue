@@ -23,24 +23,24 @@
 </template>
 
 <script lang="ts" setup>
-  import { useRoute } from 'vue-router'
-  import { useTagsSetting } from '@/store/modules/tags'
+import { useRoute } from 'vue-router'
+import { useTagsSetting } from '@/store/modules/tags'
 
-  const route = useRoute()
-  const tagsSetting = useTagsSetting()
+const route = useRoute()
+const tagsSetting = useTagsSetting()
 
-  const delCurrent = () => {
-    tagsSetting.toLastView(route.path)
-  }
+const delCurrent = () => {
+  tagsSetting.toLastView(route.path)
+}
 
-  const delOther = () => {
-    tagsSetting.delOtherView(route.path)
-  }
+const delOther = () => {
+  tagsSetting.delOtherView(route.path)
+}
 
-  const delAllTag = () => {
-    tagsSetting.delAllView()
-    tagsSetting.goHome()
-  }
+const delAllTag = () => {
+  tagsSetting.delAllView()
+  tagsSetting.goHome()
+}
 </script>
 
 <style lang="scss" scoped></style>

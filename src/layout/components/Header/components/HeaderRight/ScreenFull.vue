@@ -9,14 +9,15 @@
   </div>
 </template>
 <script lang="ts" setup>
-  import { useFullscreen } from '@vueuse/core'
-  const { toggle, isFullscreen } = useFullscreen()
+import { useFullscreen } from '@vueuse/core'
+const { toggle, isFullscreen } = useFullscreen()
 </script>
 <style lang="scss" scoped>
-  .screen-full {
-    height: 100%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }</style
->·
+.screen-full {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+}
+</style>
+·

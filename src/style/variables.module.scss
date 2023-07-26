@@ -1,4 +1,4 @@
-// sidebar
+/* sidebar */
 $sideBarWidth: 210px;
 $menuText: #bfcbd9;
 $menuActiveMenu: #409eff;
@@ -7,6 +7,7 @@ $menuBackground: #191a23;
 
 /* 全局 css 变量 */
 $primaryColor: var(--el-color-primary);
+
 
 :export {
   sideBarWidth: $sideBarWidth;

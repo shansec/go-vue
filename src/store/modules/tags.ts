@@ -5,7 +5,7 @@ export const useTagsSetting = defineStore({
   id: 'tagsSetting',
   state: () => ({
     tagViewValue: '/home',
-    tagViews: [],
+    tagViews: []
   }),
   persist: {
     // 开启数据缓存
@@ -15,9 +15,9 @@ export const useTagsSetting = defineStore({
         // 本地存储的名称
         key: 'tagsSetting',
         // 本地存储的位置
-        storage: localStorage,
-      },
-    ],
+        storage: localStorage
+      }
+    ]
   },
   getters: {},
   actions: {
@@ -70,6 +70,6 @@ export const useTagsSetting = defineStore({
     goHome() {
       this.tagViewValue = '/home'
       router.push('/home')
-    },
-  },
+    }
+  }
 })

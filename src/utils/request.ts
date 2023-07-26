@@ -4,49 +4,49 @@ import { ElMessage } from 'element-plus'
 
 const service = axios.create({
   baseURL: '/api',
-  timeout: 99999,
+  timeout: 99999
 })
 // axios.defaults.baseURL = '/api'
 // request interceptors 接口请求拦截
 service.interceptors.request.use(
   (config: AxiosRequestConfig) => {
     const userStore = useUserStore()
-    const token: string = userStore.token
 
-    if (token) {
-      config.headers['Authorization'] = token
+    config.headers = {
+      'x-token': userStore.token,
+      ...config.headers
     }
     return config
   },
   (error: AxiosError) => {
     return Promise.reject(error)
-  },
+  }
 )
 
 // response interceptors 响应拦截
 service.interceptors.response.use(
   (response: AxiosResponse) => {
-    return response
+    const userStore = useUserStore()
+    if (response.headers['new-token']) {
+      userStore.setToken(response.headers['new-token'])
+    }
+    if (response.data.code === 0) {
+      ElMessage({
+        message: response.data.msg,
+        type: 'success'
+      })
+    } else {
+      ElMessage({
+        message: response.data.msg,
+        type: 'error'
+      })
+    }
+    return response.data
   },
   (error: AxiosError) => {
     return Promise.reject(error)
-  },
+  }
 )
-
-/**
- * @description 显示错误消息
- * @param opt 传入参数
- * @param err 错误消息
- * @param type  消息信息
- * @param duration  消息持续时间
- */
-function showErrorMessage(opt, err, type: any = 'error', duration = 5000) {
-  ElMessage({
-    message: err.msg,
-    type: type,
-    duration: duration,
-  })
-}
 
 /**
  *
@@ -60,7 +60,7 @@ export function post(url, data = {}, params = {}) {
     method: 'post',
     url,
     data,
-    params,
+    params
   })
 }
 
@@ -74,7 +74,7 @@ export function get(url, params = {}) {
   return service({
     method: 'get',
     url,
-    params,
+    params
   })
 }
 
@@ -90,7 +90,7 @@ export function put(url, data = {}, params = {}) {
     method: 'put',
     url,
     data,
-    params,
+    params
   })
 }
 
@@ -105,7 +105,7 @@ export function _delete(url, params = {}) {
   return service({
     method: 'delete',
     url,
-    params,
+    params
   })
 }
 

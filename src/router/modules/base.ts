@@ -1,7 +1,7 @@
 export default [
   {
     path: '/',
-    redirect: '/login',
+    redirect: '/login'
   },
   {
     path: '/login',
@@ -10,7 +10,7 @@ export default [
     hidden: true,
     meta: {
       title: '登录',
-      permission: ['1', '2', '3'],
-    },
-  },
+      permission: ['1', '2', '3']
+    }
+  }
 ]
