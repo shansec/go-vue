@@ -48,8 +48,8 @@ interface LoginForm {
 const ruleFormRef = ref<FormInstance>()
 const loading = ref(false)
 const loginForm = reactive<LoginForm>({
-  account: '',
-  password: ''
+  account: 'admin',
+  password: 'admin'
 })
 const router = useRouter()
 const userStore = useUserStore()

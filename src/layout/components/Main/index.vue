@@ -27,6 +27,8 @@ import { useWrapComponents } from '@/hooks/useWrapComponents'
     overflow-x: hidden;
     width: 100%;
     box-sizing: border-box;
+    padding: 20px;
+    background: #f0f2f5;
   }
 }
 </style>

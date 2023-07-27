@@ -35,9 +35,10 @@ declare module '@vue/runtime-core' {
     ElTabs: typeof import('element-plus/es')['ElTabs']
     ElTag: typeof import('element-plus/es')['ElTag']
     ElTooltip: typeof import('element-plus/es')['ElTooltip']
+    MigrateChart: typeof import('./src/components/echarts/migrateChart/index.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
-    SwitchDark: typeof import('./src/components/SwitchDark/index.vue')['default']
-    ThemeSetting: typeof import('./src/components/ThemeSetting/index.vue')['default']
+    SwitchDark: typeof import('./src/components/switchDark/index.vue')['default']
+    ThemeSetting: typeof import('./src/components/themeSetting/index.vue')['default']
   }
 }

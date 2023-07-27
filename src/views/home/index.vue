@@ -49,7 +49,6 @@ const labelList = ref<Array<string>>(['读书', '敲代码', '听音乐', '冥�
 
 <style lang="scss" scoped>
 .home-container {
-  padding: 16px;
   width: 100%;
   height: 100%;
   background-color: #f0f2f5;

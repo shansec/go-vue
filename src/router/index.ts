@@ -30,14 +30,14 @@ export const constantRoutes: Array<RouteRecordRaw & extendRoute> = [
   },
   {
     path: '/login',
-    name: 'Login',
+    name: 'login',
     component: () => import('@/views/login/index.vue'),
     hidden: true,
     meta: { title: '登录' }
   },
   {
     path: '/',
-    name: 'layout',
+    name: 'home',
     component: Layout,
     redirect: '/home',
     children: [
@@ -45,34 +45,12 @@ export const constantRoutes: Array<RouteRecordRaw & extendRoute> = [
         path: '/home',
         component: () => import('@/views/home/index.vue'),
         name: 'home',
-        meta: { title: '首页', icon: 'icon-shezhi', affix: true }
+        meta: { title: '首页', icon: 'icon-yuzhiyibiaopan', affix: true }
       }
     ]
   },
-  {
-    path: '/echarts',
-    component: Layout,
-    redirect: '/echarts/pie',
-    name: 'echarts',
-    meta: {
-      tile: 'Echarts',
-      icon: 'icon-shezhi',
-      affix: false
-    },
-    children: [
-      {
-        path: '/echarts/pie',
-        component: () => import('@/views/echarts/pieChart/index.vue'),
-        name: '饼图',
-        meta: {
-          tile: '饼图',
-          icon: 'icon-shezhi',
-          affix: false
-        }
-      }
-    ]
-  },
-  { path: '/:catchAll(.*)', redirect: '/404', hidden: true }
+  { path: '/:catchAll(.*)', redirect: '/404', hidden: true },
+  ...asyncRouter
 ]
 const router = createRouter({
   // 创建一个 HTML5 历史，即单页面应用程序中最常见的历史记录

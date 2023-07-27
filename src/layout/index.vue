@@ -11,7 +11,7 @@
 <script lang="ts" setup>
 import { computed } from 'vue'
 import { MyHeader, Sidebar, Main } from './components'
-import ThemeSetting from '@/components/ThemeSetting/index.vue'
+import ThemeSetting from '@/components/themeSetting/index.vue'
 import { useSettingStore } from '@/store/modules/settings'
 
 const settingStore = useSettingStore()

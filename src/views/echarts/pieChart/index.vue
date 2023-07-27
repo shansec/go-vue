@@ -5,15 +5,15 @@ import * as echarts from 'echarts'
 const pieChartsRef = ref<HTMLElement | null>()
 
 const legend = {
-  top: 'bottom'
+  bottom: '20'
 }
 const toolbox = {
   show: true,
   feature: {
     mark: { show: true },
-    dataView: { show: true, readOnly: false },
-    restore: { show: true },
-    saveAsImage: { show: true }
+    dataView: { show: false, readOnly: true },
+    restore: { show: false },
+    saveAsImage: { show: false }
   }
 }
 let option = {
@@ -30,14 +30,14 @@ let option = {
         borderRadius: 8
       },
       data: [
-        { value: 40, name: 'rose 1' },
-        { value: 38, name: 'rose 2' },
-        { value: 32, name: 'rose 3' },
-        { value: 30, name: 'rose 4' },
-        { value: 28, name: 'rose 5' },
-        { value: 26, name: 'rose 6' },
-        { value: 22, name: 'rose 7' },
-        { value: 18, name: 'rose 8' }
+        { value: 40, name: '红色' },
+        { value: 38, name: '粉色' },
+        { value: 32, name: '黄色' },
+        { value: 30, name: '白色' },
+        { value: 28, name: '紫色' },
+        { value: 26, name: '单层花瓣' },
+        { value: 22, name: '重瓣' },
+        { value: 18, name: '蔷薇形' }
       ]
     }
   ]
@@ -53,9 +53,18 @@ onMounted(() => {
   </div>
 </template>
 <style lang="scss" scoped>
-.echarts-box {
+.echarts-container {
   width: 100%;
   height: 100%;
-  background: white;
+  box-sizing: border-box;
+
+  .echarts-box {
+    width: 100%;
+    height: 100%;
+    background: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
 }
 </style>

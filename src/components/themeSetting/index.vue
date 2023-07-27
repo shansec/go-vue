@@ -52,7 +52,7 @@ import { computed, ref } from 'vue'
 import { useSettingStore } from '@/store/modules/settings'
 import { THRME_COLOR } from '@/config'
 
-import SwitchDark from '@/components/SwitchDark/index.vue'
+import SwitchDark from '@/components/switchDark/index.vue'
 
 const settingStore = useSettingStore()
 // 保持一个子菜单打开

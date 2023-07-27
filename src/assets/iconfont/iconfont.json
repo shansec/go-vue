@@ -1,17 +1,10 @@
 {
-  "id": "3976454",
+  "id": "4185362",
   "name": "go-vue",
   "font_family": "iconfont",
   "css_prefix_text": "icon-",
   "description": "",
   "glyphs": [
-    {
-      "icon_id": "577365",
-      "name": "搜索",
-      "font_class": "sousuo",
-      "unicode": "e752",
-      "unicode_decimal": 59218
-    },
     {
       "icon_id": "715863",
       "name": "关闭",
@@ -20,25 +13,11 @@
       "unicode_decimal": 58891
     },
     {
-      "icon_id": "1975869",
-      "name": "全屏",
-      "font_class": "fangda",
-      "unicode": "e66a",
-      "unicode_decimal": 58986
-    },
-    {
-      "icon_id": "2480673",
-      "name": "修改密码",
-      "font_class": "xiugaimima",
-      "unicode": "e633",
-      "unicode_decimal": 58931
-    },
-    {
-      "icon_id": "6999203",
+      "icon_id": "5203295",
       "name": "缩小",
       "font_class": "suoxiao",
-      "unicode": "e620",
-      "unicode_decimal": 58912
+      "unicode": "e633",
+      "unicode_decimal": 58931
     },
     {
       "icon_id": "11372694",
@@ -46,6 +25,55 @@
       "font_class": "shezhi",
       "unicode": "e8b7",
       "unicode_decimal": 59575
+    },
+    {
+      "icon_id": "11372706",
+      "name": "搜索",
+      "font_class": "sousuo",
+      "unicode": "e8b9",
+      "unicode_decimal": 59577
+    },
+    {
+      "icon_id": "12097431",
+      "name": "放大",
+      "font_class": "fangda",
+      "unicode": "e650",
+      "unicode_decimal": 58960
+    },
+    {
+      "icon_id": "12939979",
+      "name": "预置仪表盘",
+      "font_class": "yuzhiyibiaopan",
+      "unicode": "e644",
+      "unicode_decimal": 58948
+    },
+    {
+      "icon_id": "12959364",
+      "name": "修改密码",
+      "font_class": "xiugaimima",
+      "unicode": "e634",
+      "unicode_decimal": 58932
+    },
+    {
+      "icon_id": "17606330",
+      "name": "雷达图",
+      "font_class": "leidatu",
+      "unicode": "e6a9",
+      "unicode_decimal": 59049
+    },
+    {
+      "icon_id": "22139030",
+      "name": "pie-chart-sharp",
+      "font_class": "pie-chart-sharp",
+      "unicode": "ea04",
+      "unicode_decimal": 59908
+    },
+    {
+      "icon_id": "29356885",
+      "name": "outline-chart-square",
+      "font_class": "outline-chart-square",
+      "unicode": "e6f5",
+      "unicode_decimal": 59125
     }
   ]
 }
