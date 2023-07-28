@@ -58,8 +58,8 @@ html.dark {
   }
 
   .sidebar-logo-container {
-    background: none;
     box-sizing: border-box;
+    background: none;
     border: var(--zb-border-light);
   }
 
@@ -115,11 +115,11 @@ html.dark {
 
     /* tagviews */
     .tag-container {
-      background: var(--el-bg-color) !important;
-      border-bottom: var(--zb-border-light);
-      border-top: none;
-      border-left: none;
       box-sizing: border-box;
+      background: var(--el-bg-color) !important;
+      border-top: none;
+      border-bottom: var(--zb-border-light);
+      border-left: none;
     }
   }
 

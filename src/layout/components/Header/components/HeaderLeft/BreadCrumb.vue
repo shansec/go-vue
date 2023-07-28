@@ -28,5 +28,3 @@ const handleLink = (item) => {
   })
 }
 </script>
-
-<style scoped></style>

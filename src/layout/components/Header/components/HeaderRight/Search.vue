@@ -154,8 +154,8 @@ const change = (val) => {
 <style lang="scss" scoped>
 .search {
   display: flex;
-  justify-content: center;
   align-items: center;
+  justify-content: center;
   height: 100%;
 
   :deep(.el-dialog) {

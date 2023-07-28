@@ -42,5 +42,3 @@ const delAllTag = () => {
   tagsSetting.goHome()
 }
 </script>
-
-<style lang="scss" scoped></style>

@@ -15,7 +15,7 @@ const props = defineProps({
   },
   config: {
     type: Object,
-    default: () => {}
+    default: null
   },
   id: {
     type: String,
@@ -72,7 +72,7 @@ let value = {
 }
 let colors = '#f9b207'
 
-let year = ['长春', '长春', '青岛', '青岛', '成都', '成都']
+// let year = ['长春', '长春', '青岛', '青岛', '成都', '成都']
 let mapData = []
 
 /* 柱子Y名称 */
@@ -137,7 +137,7 @@ const options = {
   tooltip: {
     trigger: 'item',
     formatter(val) {
-      // console.log('val==========',val)
+      console.log('val==========', val)
     }
   },
   // backgroundColor: '#001540',// 设置背景色

@@ -22,32 +22,32 @@ defineProps({
 <style lang="scss" scoped>
 .logo {
   display: flex;
-  justify-content: center;
   align-items: center;
-  padding: 0 20px;
+  justify-content: center;
   height: 50px;
+  padding: 0 20px;
   background-color: #191a23;
 
   img {
-    margin-right: 10px;
     width: 40px;
     height: 40px;
+    margin-right: 10px;
     border-radius: 50%;
   }
 
   span {
     font-size: 20px;
-    color: white;
     font-weight: bold;
+    color: white;
   }
 }
 
 .collapsed_logo {
   display: flex;
-  justify-content: center;
   align-items: center;
-  padding: 0 20px;
+  justify-content: center;
   height: 50px;
+  padding: 0 20px;
   background-color: #191a23;
 
   img {

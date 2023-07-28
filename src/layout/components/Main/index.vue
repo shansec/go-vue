@@ -14,20 +14,20 @@ import { useWrapComponents } from '@/hooks/useWrapComponents'
 </script>
 <style lang="scss" scoped>
 .app-main {
-  flex: 1;
-  display: flex;
-  overflow-x: hidden;
-  width: 100%;
   box-sizing: border-box;
+  display: flex;
+  flex: 1;
+  width: 100%;
   height: calc(100% - 90px);
+  overflow-x: hidden;
 
   .app-main-inner {
-    flex: 1;
-    display: flex;
-    overflow-x: hidden;
-    width: 100%;
     box-sizing: border-box;
+    display: flex;
+    flex: 1;
+    width: 100%;
     padding: 20px;
+    overflow-x: hidden;
     background: #f0f2f5;
   }
 }

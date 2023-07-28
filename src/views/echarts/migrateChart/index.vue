@@ -11,17 +11,18 @@ import MigrationChart from '@/components/echarts/migrateChart/index.vue'
 <style lang="scss" scoped>
 .echarts-box {
   position: relative;
+  box-sizing: border-box;
   width: 100%;
   height: 100%;
   overflow: hidden;
   background: #001540;
-  box-sizing: border-box;
+
   .info {
     position: absolute;
     left: 0;
+    z-index: 9;
     width: 100%;
     font-weight: bold;
-    z-index: 9;
   }
 }
 </style>

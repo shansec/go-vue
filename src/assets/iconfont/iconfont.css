@@ -1,55 +1,55 @@
 @font-face {
-  font-family: "iconfont"; /* Project id 4185362 */
+  font-family: iconfont; /* Project id 4185362 */
   src: url('iconfont.woff2?t=1690425155763') format('woff2'),
        url('iconfont.woff?t=1690425155763') format('woff'),
        url('iconfont.ttf?t=1690425155763') format('truetype');
 }
 
 .iconfont {
-  font-family: "iconfont" !important;
+  font-family: iconfont !important;
   font-size: 16px;
   font-style: normal;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-.icon-guanbi:before {
+.icon-guanbi::before {
   content: "\e60b";
 }
 
-.icon-suoxiao:before {
+.icon-suoxiao::before {
   content: "\e633";
 }
 
-.icon-shezhi:before {
+.icon-shezhi::before {
   content: "\e8b7";
 }
 
-.icon-sousuo:before {
+.icon-sousuo::before {
   content: "\e8b9";
 }
 
-.icon-fangda:before {
+.icon-fangda::before {
   content: "\e650";
 }
 
-.icon-yuzhiyibiaopan:before {
+.icon-yuzhiyibiaopan::before {
   content: "\e644";
 }
 
-.icon-xiugaimima:before {
+.icon-xiugaimima::before {
   content: "\e634";
 }
 
-.icon-leidatu:before {
+.icon-leidatu::before {
   content: "\e6a9";
 }
 
-.icon-pie-chart-sharp:before {
+.icon-pie-chart-sharp::before {
   content: "\ea04";
 }
 
-.icon-outline-chart-square:before {
+.icon-outline-chart-square::before {
   content: "\e6f5";
 }
 

@@ -142,33 +142,33 @@ const changeThemeColor = (val) => {
     z-index: 999;
     padding: 10px;
     text-align: center;
+    cursor: pointer;
     background: #fff;
     border: 1px solid #dcdfe6;
     border-radius: 5.5px;
     box-shadow: 0 0 50px 0 rgb(82 63 105 / 15%);
-    cursor: pointer;
     transform: translateY(-50%);
 
     .item {
       display: flex;
-      justify-content: center;
+      flex-direction: column;
       align-items: center;
-      padding: 4px;
-      margin: 0;
+      justify-content: center;
       width: 60px;
       height: 60px;
+      padding: 4px;
+      margin: 0;
       color: #3698fd;
+      list-style: none;
       background: #ebf5ff;
       border-radius: 5.5px;
-      list-style: none;
-      flex-direction: column;
     }
   }
 
   .theme-item {
     display: flex;
-    justify-content: space-between;
     align-items: center;
+    justify-content: space-between;
     margin-bottom: 15px;
     color: black;
   }

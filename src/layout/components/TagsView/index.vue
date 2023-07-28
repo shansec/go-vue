@@ -90,18 +90,20 @@ watch(route, () => {
 .tag-container {
   // box-sizing: border-box;
   display: flex;
-  justify-content: space-between;
   align-items: center;
+  justify-content: space-between;
   // width: 100%;
   // height: 40px;
   padding: 0 10px;
 
   .tag-view {
+    flex: 1;
+
     .el-tabs--card :deep(.el-tabs__header) {
+      box-sizing: border-box;
+      height: 40px;
       padding: 0 10px;
       margin: 0;
-      height: 40px;
-      box-sizing: border-box;
       border-bottom: none !important;
     }
 
@@ -126,12 +128,12 @@ watch(route, () => {
 
       &::before {
         display: inline-block;
-        margin-right: 6px;
         width: 8px;
         height: 8px;
+        margin-right: 6px;
+        content: '';
         background: #ccc;
         border-radius: 50%;
-        content: '';
       }
     }
 
@@ -142,20 +144,18 @@ watch(route, () => {
 
       &::before {
         display: inline-block;
-        margin-right: 6px;
         width: 8px;
         height: 8px;
+        margin-right: 6px;
+        content: '';
         background: var(--el-color-primary);
         border-radius: 50%;
-        content: '';
       }
     }
 
-    flex: 1;
-
     .tabs {
-      height: 100%;
       flex-shrink: 0;
+      height: 100%;
     }
   }
 }

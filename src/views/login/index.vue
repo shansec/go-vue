@@ -18,5 +18,5 @@ import SwitchDark from '@/components/switchDark/index.vue'
 </script>
 
 <style lang="scss" scoped>
-@import './index.scss';
+@import url('./index.scss');
 </style>

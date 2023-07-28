@@ -13,7 +13,7 @@ import CollapseIcon from '@/layout/components/Header/components/HeaderLeft/Colla
 <style lang="scss" scoped>
 .m-tool-left {
   display: flex;
-  justify-content: flex-start;
   align-items: center;
+  justify-content: flex-start;
 }
 </style>

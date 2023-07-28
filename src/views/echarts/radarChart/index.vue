@@ -49,17 +49,17 @@ onMounted(() => {
 </template>
 <style lang="scss" scoped>
 .echarts-container {
+  box-sizing: border-box;
   width: 100%;
   height: 100%;
-  box-sizing: border-box;
 
   .echarts-box {
+    display: flex;
+    align-items: center;
+    justify-content: center;
     width: 100%;
     height: 100%;
     background: white;
-    display: flex;
-    justify-content: center;
-    align-items: center;
   }
 }
 </style>

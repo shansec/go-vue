@@ -25,8 +25,8 @@ const goHome = () => {
 <style lang="scss" scoped>
 .error-404-container {
   display: flex;
-  justify-content: center;
   align-items: center;
+  justify-content: center;
   width: 100%;
   height: 100%;
 
@@ -42,24 +42,24 @@ const goHome = () => {
     .text-prompt-text {
       margin-bottom: 20px;
       font-size: 32px;
-      color: #1482f0;
       font-weight: 700;
       line-height: 40px;
+      color: #1482f0;
     }
 
     .text-prompt-permissions {
       margin-bottom: 10px;
       font-size: 20px;
-      color: #222;
-      line-height: 24px;
       font-weight: 700;
+      line-height: 24px;
+      color: #222;
     }
 
     .text-prompt-info {
       margin-bottom: 30px;
       font-size: 13px;
-      color: gray;
       line-height: 21px;
+      color: gray;
     }
 
     .text-prompt-return {
@@ -68,12 +68,12 @@ const goHome = () => {
       width: 110px;
       height: 36px;
       font-size: 14px;
-      text-align: center;
+      line-height: 36px;
       color: #fff;
+      text-align: center;
+      cursor: pointer;
       background: #1482f0;
       border-radius: 100px;
-      line-height: 36px;
-      cursor: pointer;
     }
   }
 }

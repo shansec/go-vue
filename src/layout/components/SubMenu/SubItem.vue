@@ -72,4 +72,3 @@ const resolvePath = (routePath) => {
   return resolve(props.basePath, routePath)
 }
 </script>
-<style lang="scss" scoped></style>

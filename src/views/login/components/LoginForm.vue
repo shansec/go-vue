@@ -84,5 +84,5 @@ const submitForm = async (formEl: FormInstance | undefined) => {
 </script>
 
 <style lang="scss" scoped>
-@import '../index.scss';
+@import url('../index.scss');
 </style>
