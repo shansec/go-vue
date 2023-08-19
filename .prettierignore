@@ -1,5 +1,6 @@
 ## OS
 .DS_Store
+.vscode
 .idea
 .editorconfig
 pnpm-lock.yaml
@@ -19,4 +20,3 @@ pnpm-lock.yaml
 ## Built-files
 .cache
 dist
-src/style/**

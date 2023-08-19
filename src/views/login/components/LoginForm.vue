@@ -13,7 +13,11 @@
   >
     <el-form-item prop="account">
       <!-- 用户名-->
-      <el-input v-model="loginForm.account" :prefix-icon="Avatar" placeholder="请输入用户名" />
+      <el-input
+        v-model="loginForm.account"
+        :prefix-icon="Avatar"
+        placeholder="请输入用户名"
+      />
     </el-form-item>
     <!-- 密码-->
     <el-form-item prop="password">
@@ -26,7 +30,13 @@
       />
     </el-form-item>
     <el-form-item style="width: 100%">
-      <el-button :loading="loading" type="primary" class="login_btn" @click="submitForm(ruleFormRef)">登录 </el-button>
+      <el-button
+        :loading="loading"
+        type="primary"
+        class="login_btn"
+        @click="submitForm(ruleFormRef)"
+        >登录
+      </el-button>
     </el-form-item>
   </el-form>
 </template>

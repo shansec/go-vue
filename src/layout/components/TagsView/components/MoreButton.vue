@@ -9,13 +9,15 @@
         <!--        <el-dropdown-item-->
         <!--          ><el-icon :size="14"><Refresh /></el-icon> 刷新当页</el-dropdown-item>-->
         <el-dropdown-item @click="delCurrent"
-          ><el-icon :size="14"><FolderRemove /></el-icon> 关闭当前</el-dropdown-item
+          ><el-icon :size="14"><FolderRemove /></el-icon>
+          关闭当前</el-dropdown-item
         >
         <el-dropdown-item @click="delOther"
           ><el-icon :size="14"><Close /></el-icon>关闭其他</el-dropdown-item
         >
         <el-dropdown-item @click="delAllTag"
-          ><el-icon :size="14"><FolderDelete /></el-icon>关闭所有</el-dropdown-item
+          ><el-icon :size="14"><FolderDelete /></el-icon
+          >关闭所有</el-dropdown-item
         >
       </el-dropdown-menu>
     </template>

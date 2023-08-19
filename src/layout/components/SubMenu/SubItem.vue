@@ -19,7 +19,12 @@
         </el-icon>
         <span>{{ item.meta && item.meta.title }}</span>
       </template>
-      <sub-item v-for="child in item.children" :key="child.path" :item="child" :base-path="resolvePath(child.path)" />
+      <sub-item
+        v-for="child in item.children"
+        :key="child.path"
+        :item="child"
+        :base-path="resolvePath(child.path)"
+      />
     </el-sub-menu>
   </template>
 </template>

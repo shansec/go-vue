@@ -1,7 +1,10 @@
 <template>
   <div class="sidebar-container">
     <Logo :collapsed="collapsed" v-if="showLogo" />
-    <el-scrollbar style="height: calc(100% - 50px)" wrap-class="scrollbar-wrapper">
+    <el-scrollbar
+      style="height: calc(100% - 50px)"
+      wrap-class="scrollbar-wrapper"
+    >
       <el-menu
         :default-active="activeMenu"
         background-color="#191a23"
@@ -12,7 +15,12 @@
         class="el-menu-vertical-demo"
         :collapse="collapsed"
       >
-        <SubItem v-for="route in constantRoutes" :key="route.path" :item="route" :base-path="route.path" />
+        <SubItem
+          v-for="route in constantRoutes"
+          :key="route.path"
+          :item="route"
+          :base-path="route.path"
+        />
       </el-menu>
     </el-scrollbar>
   </div>

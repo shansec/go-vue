@@ -12,16 +12,6 @@ interface isJwt {
   exp: number
 }
 
-export const asyncRouter = [...echartsRouter]
-// const roleType = '1'
-
-// function permissionRouter(router = routesSet) {
-//   return router.filter((item) => {
-//     if (item.children) item.children = permissionRouter(item.children);
-//     return item.meta.permission.includes(roleType);
-//   });
-//   return router
-// }
 export const constantRoutes: Array<RouteRecordRaw & extendRoute> = [
   {
     path: '/404',
@@ -49,9 +39,11 @@ export const constantRoutes: Array<RouteRecordRaw & extendRoute> = [
       }
     ]
   },
-  { path: '/:catchAll(.*)', redirect: '/404', hidden: true },
-  ...asyncRouter
+  { path: '/:catchAll(.*)', redirect: '/404', hidden: true }
 ]
+
+export const asyncRouter = [echartsRouter]
+
 const router = createRouter({
   // 创建一个 HTML5 历史，即单页面应用程序中最常见的历史记录
   history: createWebHistory(),

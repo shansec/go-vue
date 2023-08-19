@@ -1,7 +1,13 @@
 <template>
   <div class="tag-container">
     <div class="tag-view">
-      <el-tabs v-model="editableTabsValue" type="card" class="tabs" @tab-click="tabClick" @tab-remove="removeTab">
+      <el-tabs
+        v-model="editableTabsValue"
+        type="card"
+        class="tabs"
+        @tab-click="tabClick"
+        @tab-remove="removeTab"
+      >
         <el-tab-pane
           v-for="item in tagViews"
           :key="item.name"

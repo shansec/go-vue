@@ -5,7 +5,13 @@
         <i class="iconfont icon-sousuo" @click="handleSearch"></i>
       </el-icon>
     </el-tooltip>
-    <el-dialog v-model="isShowSearch" class="header_dialog" width="600px" destroy-on-close :show-close="false">
+    <el-dialog
+      v-model="isShowSearch"
+      class="header_dialog"
+      width="600px"
+      destroy-on-close
+      :show-close="false"
+    >
       <el-select
         style="width: 100%"
         ref="headerSearchSelect"
@@ -22,7 +28,12 @@
           v-for="item in options"
           :key="item.item.path"
           :value="item.item.path"
-          :label="item.item && item.item.title && item.item.title.length && item.item.title.join(' > ')"
+          :label="
+            item.item &&
+            item.item.title &&
+            item.item.title.length &&
+            item.item.title.join(' > ')
+          "
         >
         </el-option>
       </el-select>

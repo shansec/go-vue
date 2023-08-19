@@ -14,7 +14,10 @@ import { useSettingStore } from '@/store/modules/settings'
 const settingStore = useSettingStore()
 
 const showSetting = () => {
-  settingStore.changeThemeSetting('showThemeSetting', !settingStore.themeConfig.showThemeSetting)
+  settingStore.changeThemeSetting(
+    'showThemeSetting',
+    !settingStore.themeConfig.showThemeSetting
+  )
 }
 </script>
 

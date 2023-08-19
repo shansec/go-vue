@@ -26,7 +26,9 @@
           <el-divider />
           <div class="people-info-motto">
             <h5>favorite words</h5>
-            <div class="favorite-words">知之真切笃实处，即是行；行之明觉精察处，即是知。</div>
+            <div class="favorite-words">
+              知之真切笃实处，即是行；行之明觉精察处，即是知。
+            </div>
           </div>
           <el-divider />
         </div>

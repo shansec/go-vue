@@ -2,7 +2,11 @@
   <div class="avatar">
     <el-dropdown>
       <span class="avatar-show">
-        <el-avatar :size="30" class="avatar-content" :src="userInfo.headerImg" />
+        <el-avatar
+          :size="30"
+          class="avatar-content"
+          :src="userInfo.headerImg"
+        />
         {{ userInfo.nickName }}
         <el-icon>
           <ArrowDown />
@@ -21,25 +25,51 @@
         </el-dropdown-menu>
       </template>
     </el-dropdown>
-    <el-dialog v-model="modifyDialogVisible" :title="modifyDialogTitle" width="40%">
-      <el-form ref="modifyFormRef" :model="modifyForm" label-width="0" :rules="modifyRules" class="form">
+    <el-dialog
+      v-model="modifyDialogVisible"
+      :title="modifyDialogTitle"
+      width="40%"
+    >
+      <el-form
+        ref="modifyFormRef"
+        :model="modifyForm"
+        label-width="0"
+        :rules="modifyRules"
+        class="form"
+      >
         <el-form-item prop="account" label="用户名" label-width="100px">
           <!-- 用户名-->
-          <el-input v-model="modifyForm.account" disabled placeholder="请输入用户名" />
+          <el-input
+            v-model="modifyForm.account"
+            disabled
+            placeholder="请输入用户名"
+          />
         </el-form-item>
         <!-- 旧密码-->
         <el-form-item prop="password" label="旧密码" label-width="100px">
-          <el-input v-model="modifyForm.password" type="password" placeholder="请输入旧密码" show-password />
+          <el-input
+            v-model="modifyForm.password"
+            type="password"
+            placeholder="请输入旧密码"
+            show-password
+          />
         </el-form-item>
         <!-- 新密码 -->
         <el-form-item prop="newPassword" label="新密码" label-width="100px">
-          <el-input v-model="modifyForm.newPassword" type="password" placeholder="请输入新密码" show-password />
+          <el-input
+            v-model="modifyForm.newPassword"
+            type="password"
+            placeholder="请输入新密码"
+            show-password
+          />
         </el-form-item>
       </el-form>
       <template #footer>
         <span class="dialog-footer">
           <el-button @click="modifyDialogVisible = false">取消</el-button>
-          <el-button type="primary" @click="submitForm(modifyFormRef)">确认</el-button>
+          <el-button type="primary" @click="submitForm(modifyFormRef)"
+            >确认</el-button
+          >
         </span>
       </template>
     </el-dialog>

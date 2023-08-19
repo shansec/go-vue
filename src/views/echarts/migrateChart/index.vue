@@ -4,7 +4,11 @@ import MigrationChart from '@/components/echarts/migrateChart/index.vue'
 
 <template>
   <div class="echarts-box">
-    <migration-chart height="100%" width="100%" id="migration"></migration-chart>
+    <migration-chart
+      height="100%"
+      width="100%"
+      id="migration"
+    ></migration-chart>
   </div>
 </template>
 

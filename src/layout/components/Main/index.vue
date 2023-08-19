@@ -3,7 +3,10 @@
     <router-view v-slot="{ Component, route }">
       <transition mode="out-in">
         <keep-alive>
-          <component :is="useWrapComponents(Component, route)" :key="route.path" />
+          <component
+            :is="useWrapComponents(Component, route)"
+            :key="route.path"
+          />
         </keep-alive>
       </transition>
     </router-view>

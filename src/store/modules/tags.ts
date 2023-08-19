@@ -60,7 +60,9 @@ export const useTagsSetting = defineStore({
     },
 
     delOtherView(path) {
-      this.tagViews = this.tagViews.filter((item) => item.path === path || item.meta.affix)
+      this.tagViews = this.tagViews.filter(
+        (item) => item.path === path || item.meta.affix
+      )
     },
 
     delAllView() {

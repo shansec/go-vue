@@ -1,5 +1,8 @@
 <template>
-  <div class="m-layout-header" :style="showTags ? 'height: 90px' : 'height: 50px'">
+  <div
+    class="m-layout-header"
+    :style="showTags ? 'height: 90px' : 'height: 50px'"
+  >
     <div class="m-header-inner">
       <HeaderLeft />
       <HeaderRight />

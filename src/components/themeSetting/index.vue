@@ -2,8 +2,12 @@
   <div class="m-theme-setting">
     <div class="theme-fix">
       <div class="item" @click="openThemeSetting">
-        <el-icon size="30" :color="settingStore.themeConfig.themeColor"><brush /></el-icon>
-        <span :style="{ color: settingStore.themeConfig.themeColor }">主题设置</span>
+        <el-icon size="30" :color="settingStore.themeConfig.themeColor"
+          ><brush
+        /></el-icon>
+        <span :style="{ color: settingStore.themeConfig.themeColor }"
+          >主题设置</span
+        >
       </div>
     </div>
     <el-drawer v-model="drawer" size="300px">
@@ -16,23 +20,38 @@
       </div>
       <div class="theme-item">
         <label>显示标签栏</label>
-        <el-switch v-model="showTagsView" @change="(val) => changeTheme('showTagsView', val)"></el-switch>
+        <el-switch
+          v-model="showTagsView"
+          @change="(val) => changeTheme('showTagsView', val)"
+        ></el-switch>
       </div>
       <div class="theme-item">
         <label>显示侧边栏Logo</label>
-        <el-switch v-model="showLogo" @change="(val) => changeTheme('showLogo', val)"></el-switch>
+        <el-switch
+          v-model="showLogo"
+          @change="(val) => changeTheme('showLogo', val)"
+        ></el-switch>
       </div>
       <div class="theme-item">
         <label>保持一个子菜单打开</label>
-        <el-switch v-model="uniqueOpened" @change="(val) => changeTheme('uniqueOpened', val)"></el-switch>
+        <el-switch
+          v-model="uniqueOpened"
+          @change="(val) => changeTheme('uniqueOpened', val)"
+        ></el-switch>
       </div>
       <div class="theme-item">
         <label>灰色模式</label>
-        <el-switch v-model="grey" @change="(val) => changeGreyAndWeakColor('grey', val)"></el-switch>
+        <el-switch
+          v-model="grey"
+          @change="(val) => changeGreyAndWeakColor('grey', val)"
+        ></el-switch>
       </div>
       <div class="theme-item">
         <label>色弱模式</label>
-        <el-switch v-model="weakColor" @change="(val) => changeGreyAndWeakColor('weakColor', val)"></el-switch>
+        <el-switch
+          v-model="weakColor"
+          @change="(val) => changeGreyAndWeakColor('weakColor', val)"
+        ></el-switch>
       </div>
       <div class="theme-item">
         <label>主题颜色</label>
@@ -68,7 +87,15 @@ const weakColor = ref(settingStore.themeConfig.weakColor)
 // 主题颜色
 const themeColor = ref(settingStore.themeConfig.themeColor)
 // 预定义颜色
-const predefineColors = ref(['#ff4500', '#ff8c00', '#ffd700', '#90ee90', '#00ced1', '#1e90ff', '#c71585'])
+const predefineColors = ref([
+  '#ff4500',
+  '#ff8c00',
+  '#ffd700',
+  '#90ee90',
+  '#00ced1',
+  '#1e90ff',
+  '#c71585'
+])
 const drawer = computed({
   get() {
     return settingStore.themeConfig.showThemeSetting
