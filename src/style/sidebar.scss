@@ -5,12 +5,12 @@
   left: 0;
   z-index: 98;
   display: flex;
-  flex-direction: column;
+  overflow: hidden;
   width: $sideBarWidth;
   height: 100%;
-  overflow: hidden;
   background-color: $menuBackground;
   transition: width 0.28s ease;
+  flex-direction: column;
 
 
 
@@ -35,13 +35,13 @@
 
 .main-container {
   position: relative;
-  box-sizing: border-box;
   display: flex;
+  margin-left: $sideBarWidth;
+  min-height: 100%;
+  transition: margin-left 0.28s;
+  box-sizing: border-box;
   flex: 1;
   flex-direction: column;
-  min-height: 100%;
-  margin-left: $sideBarWidth;
-  transition: margin-left 0.28s;
 }
 
 .hideSidebar {

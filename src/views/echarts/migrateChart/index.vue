@@ -15,11 +15,11 @@ import MigrationChart from '@/components/echarts/migrateChart/index.vue'
 <style lang="scss" scoped>
 .echarts-box {
   position: relative;
-  box-sizing: border-box;
+  overflow: hidden;
   width: 100%;
   height: 100%;
-  overflow: hidden;
   background: #001540;
+  box-sizing: border-box;
 
   .info {
     position: absolute;

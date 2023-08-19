@@ -15,8 +15,8 @@ const { toggle, isFullscreen } = useFullscreen()
 <style lang="scss" scoped>
 .screen-full {
   display: flex;
-  align-items: center;
   justify-content: center;
+  align-items: center;
   height: 100%;
 }
 </style>

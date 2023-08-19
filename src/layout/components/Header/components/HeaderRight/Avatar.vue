@@ -172,7 +172,7 @@ const submitForm = async (formEl: FormInstance | undefined) => {
 }
 
 .form {
-  width: 80%;
   margin: 0 auto;
+  width: 80%;
 }
 </style>

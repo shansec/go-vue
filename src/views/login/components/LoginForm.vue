@@ -9,7 +9,7 @@
     label-width="0"
     :rules="rules"
     class="form"
-    @keyup.enter.native="submitForm(ruleFormRef)"
+    @keyup.enter="submitForm(ruleFormRef)"
   >
     <el-form-item prop="account">
       <!-- 用户名-->

@@ -27,8 +27,8 @@ const goHome = () => {
 <style lang="scss" scoped>
 .error-404-container {
   display: flex;
-  align-items: center;
   justify-content: center;
+  align-items: center;
   width: 100%;
   height: 100%;
 
@@ -70,12 +70,12 @@ const goHome = () => {
       width: 110px;
       height: 36px;
       font-size: 14px;
-      line-height: 36px;
-      color: #fff;
       text-align: center;
-      cursor: pointer;
+      color: #fff;
       background: #1482f0;
       border-radius: 100px;
+      line-height: 36px;
+      cursor: pointer;
     }
   }
 }

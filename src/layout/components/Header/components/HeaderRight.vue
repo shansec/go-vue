@@ -21,8 +21,8 @@ import Search from '@/layout/components/Header/components/HeaderRight/Search.vue
   // padding-right: 15px;
 
   .item-children {
-    height: 100%;
     margin-right: 15px;
+    height: 100%;
   }
 }
 </style>

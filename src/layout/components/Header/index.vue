@@ -31,8 +31,8 @@ const showTags = computed(() => settingStore.themeConfig.showTagsView)
 
   .m-header-inner {
     display: flex;
-    align-items: center;
     justify-content: space-between;
+    align-items: center;
     height: 50px;
     border-bottom: 1px solid #eee;
   }

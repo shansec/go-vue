@@ -178,24 +178,24 @@ const changeThemeColor = (val) => {
 
     .item {
       display: flex;
-      flex-direction: column;
-      align-items: center;
       justify-content: center;
-      width: 60px;
-      height: 60px;
+      align-items: center;
       padding: 4px;
       margin: 0;
+      width: 60px;
+      height: 60px;
       color: #3698fd;
-      list-style: none;
       background: #ebf5ff;
       border-radius: 5.5px;
+      list-style: none;
+      flex-direction: column;
     }
   }
 
   .theme-item {
     display: flex;
-    align-items: center;
     justify-content: space-between;
+    align-items: center;
     margin-bottom: 15px;
     color: black;
   }

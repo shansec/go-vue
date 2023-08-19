@@ -17,21 +17,21 @@ import { useWrapComponents } from '@/hooks/useWrapComponents'
 </script>
 <style lang="scss" scoped>
 .app-main {
-  box-sizing: border-box;
   display: flex;
-  flex: 1;
+  overflow-x: hidden;
   width: 100%;
   height: calc(100% - 90px);
-  overflow-x: hidden;
+  box-sizing: border-box;
+  flex: 1;
 
   .app-main-inner {
-    box-sizing: border-box;
     display: flex;
-    flex: 1;
-    width: 100%;
-    padding: 20px;
     overflow-x: hidden;
+    padding: 20px;
+    width: 100%;
     background: #f0f2f5;
+    box-sizing: border-box;
+    flex: 1;
   }
 }
 </style>

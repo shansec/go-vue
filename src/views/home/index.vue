@@ -57,13 +57,13 @@ const labelList = ref<Array<string>>(['读书', '敲代码', '听音乐', '冥�
   background-color: #f0f2f5;
 
   .people-info {
-    box-sizing: border-box;
+    padding: 16px;
     width: 100%;
     height: 100%;
-    padding: 16px;
     background-color: #fff;
     border-radius: 4px;
     box-shadow: rgb(99 99 99 / 20%) 0 2px 8px 0;
+    box-sizing: border-box;
 
     div {
       margin-bottom: 5px;

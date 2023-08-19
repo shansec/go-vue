@@ -55,8 +55,8 @@ onMounted(() => {
 
   .echarts-box {
     display: flex;
-    align-items: center;
     justify-content: center;
+    align-items: center;
     width: 100%;
     height: 100%;
     background: white;

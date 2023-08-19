@@ -31,7 +31,7 @@ module.exports = {
     'vue/multi-word-component-names': [
       'error',
       {
-        ignores: ['index']
+        ignores: ['index', 'Avatar', 'Search', 'Setting', 'Logo', '404']
       }
     ]
   }
