@@ -1,3 +1,15 @@
+<script lang="ts" setup>
+import { useSettingStore } from '@/store/modules/settings'
+
+import HeaderLeft from '@/layout/components/Header/components/HeaderLeft.vue'
+import HeaderRight from '@/layout/components/Header/components/HeaderRight.vue'
+import DynamicTags from '@/layout/components/TagsView/index.vue'
+import { computed } from 'vue'
+
+const settingStore = useSettingStore()
+const showTags = computed(() => settingStore.themeConfig.showTagsView)
+</script>
+
 <template>
   <div
     class="m-layout-header"
@@ -10,18 +22,6 @@
     <DynamicTags v-if="showTags" />
   </div>
 </template>
-
-<script lang="ts" setup>
-import { useSettingStore } from '@/store/modules/settings'
-
-import HeaderLeft from '@/layout/components/Header/components/HeaderLeft.vue'
-import HeaderRight from '@/layout/components/Header/components/HeaderRight.vue'
-import DynamicTags from '@/layout/components/TagsView/index.vue'
-import { computed } from 'vue'
-
-const settingStore = useSettingStore()
-const showTags = computed(() => settingStore.themeConfig.showTagsView)
-</script>
 
 <style lang="scss" scoped>
 .m-layout-header {

@@ -18,40 +18,24 @@ export const useUserStore = defineStore({
       }
     ]
   },
-  getters: {},
+  getters: {
+    getToken(state): string {
+      return state.token
+    },
+    getUserInfo(state): object {
+      return state.userInfo
+    }
+  },
   actions: {
-    /**
-     * 登陆成功，存储token
-     * @param token
-     */
-    setToken(token: string): void {
+    setToken(token: string) {
       this.token = token
     },
-    /**
-     * 设置 token 为原始值
-     */
-    setInfoToNUll(): void {
+    setInfoToNUll() {
       this.token = ''
       this.userInfo = {}
     },
-    /**
-     * 获取 token，用来判断是否已经登录
-     */
-    getToken(): string {
-      return this.token
-    },
-    /**
-     * 登陆成功，存储用户信息
-     * @param userData
-     */
-    setUserInfo(userData: object): void {
+    setUserInfo(userData: object) {
       this.userInfo = userData
-    },
-    /**
-     * 获取用户信息
-     */
-    getUserInfo(): object {
-      return this.userInfo
     }
   }
 })

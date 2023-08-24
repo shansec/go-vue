@@ -1,46 +1,3 @@
-<template>
-  <div class="avatar_box">
-    <img src="../../../assets/go-vue.png" alt="头像" />
-    <h2 class="title">Go-Vue</h2>
-  </div>
-  <el-form
-    ref="ruleFormRef"
-    :model="loginForm"
-    label-width="0"
-    :rules="rules"
-    class="form"
-    @keyup.enter="submitForm(ruleFormRef)"
-  >
-    <el-form-item prop="account">
-      <!-- 用户名-->
-      <el-input
-        v-model="loginForm.account"
-        :prefix-icon="Avatar"
-        placeholder="请输入用户名"
-      />
-    </el-form-item>
-    <!-- 密码-->
-    <el-form-item prop="password">
-      <el-input
-        v-model="loginForm.password"
-        :prefix-icon="Lock"
-        type="password"
-        placeholder="请输入密码"
-        show-password
-      />
-    </el-form-item>
-    <el-form-item style="width: 100%">
-      <el-button
-        :loading="loading"
-        type="primary"
-        class="login_btn"
-        @click="submitForm(ruleFormRef)"
-        >登录
-      </el-button>
-    </el-form-item>
-  </el-form>
-</template>
-
 <script lang="ts" setup>
 import { reactive, ref } from 'vue'
 import { useRouter } from 'vue-router'
@@ -93,6 +50,47 @@ const submitForm = async (formEl: FormInstance | undefined) => {
 }
 </script>
 
+<template>
+  <div class="avatar_box">
+    <img src="../../../assets/go-vue.png" alt="头像" />
+    <h2 class="title">Go-Vue</h2>
+  </div>
+  <el-form
+    ref="ruleFormRef"
+    :model="loginForm"
+    label-width="0"
+    :rules="rules"
+    class="form"
+    @keyup.enter="submitForm(ruleFormRef)"
+  >
+    <el-form-item prop="account">
+      <el-input
+        v-model="loginForm.account"
+        :prefix-icon="Avatar"
+        placeholder="请输入用户名"
+      />
+    </el-form-item>
+    <el-form-item prop="password">
+      <el-input
+        v-model="loginForm.password"
+        :prefix-icon="Lock"
+        type="password"
+        placeholder="请输入密码"
+        show-password
+      />
+    </el-form-item>
+    <el-form-item style="width: 100%">
+      <el-button
+        :loading="loading"
+        type="primary"
+        class="login_btn"
+        @click="submitForm(ruleFormRef)"
+        >登录
+      </el-button>
+    </el-form-item>
+  </el-form>
+</template>
+
 <style lang="scss" scoped>
-@import url('../index.scss');
+@import '../index';
 </style>

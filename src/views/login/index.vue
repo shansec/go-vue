@@ -1,3 +1,8 @@
+<script lang="ts" setup>
+import LoginForm from '@/views/login/components/LoginForm.vue'
+import SwitchDark from '@/components/switchDark/index.vue'
+</script>
+
 <template>
   <div class="login-container">
     <div class="login-box">
@@ -12,11 +17,6 @@
   </div>
 </template>
 
-<script lang="ts" setup>
-import LoginForm from '@/views/login/components/LoginForm.vue'
-import SwitchDark from '@/components/switchDark/index.vue'
-</script>
-
 <style lang="scss" scoped>
-@import url('./index.scss');
+@import './index';
 </style>

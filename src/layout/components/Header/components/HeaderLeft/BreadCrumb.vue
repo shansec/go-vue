@@ -1,3 +1,23 @@
+<script lang="ts" setup>
+import { useRoute, useRouter } from 'vue-router'
+import { computed } from 'vue'
+
+const route = useRoute()
+const router = useRouter()
+const matchRoute = computed(() =>
+  route.matched.filter((item) => item.meta && item.meta.title)
+)
+/**
+ * 点击实现路由跳转
+ * @param item 路由信息
+ */
+const handleLink = (item) => {
+  router.push({
+    path: item.path
+  })
+}
+</script>
+
 <template>
   <el-breadcrumb class="app-breadcrumb" separator="/">
     <el-breadcrumb-item
@@ -18,23 +38,3 @@
     </el-breadcrumb-item>
   </el-breadcrumb>
 </template>
-
-<script lang="ts" setup>
-import { useRoute, useRouter } from 'vue-router'
-import { computed } from 'vue'
-
-const route = useRoute()
-const router = useRouter()
-const matchRoute = computed(() =>
-  route.matched.filter((item) => item.meta && item.meta.title)
-)
-/**
- * 点击实现路由跳转
- * @param item 路由信息
- */
-const handleLink = (item) => {
-  router.push({
-    path: item.path
-  })
-}
-</script>

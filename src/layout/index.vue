@@ -1,13 +1,3 @@
-<template>
-  <div class="container-layout" :class="classObj">
-    <Sidebar />
-    <div class="main-container">
-      <MyHeader></MyHeader>
-      <Main></Main>
-      <ThemeSetting />
-    </div>
-  </div>
-</template>
 <script lang="ts" setup>
 import { computed } from 'vue'
 import { MyHeader, Sidebar, Main } from './components'
@@ -22,8 +12,20 @@ const classObj = computed(() => {
   }
 })
 </script>
+
+<template>
+  <div class="container-layout" :class="classObj">
+    <Sidebar />
+    <div class="main-container">
+      <MyHeader></MyHeader>
+      <Main></Main>
+      <ThemeSetting />
+    </div>
+  </div>
+</template>
+
 <style lang="scss" scoped>
-@import url('@/style/index.scss');
+@import '@/style/index';
 
 .container-layout {
   width: 100%;

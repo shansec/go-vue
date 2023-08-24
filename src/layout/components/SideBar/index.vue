@@ -1,3 +1,25 @@
+<script lang="ts" setup>
+import { computed } from 'vue'
+import { useRoute } from 'vue-router'
+import { constantRoutes } from '@/router'
+import { useSettingStore } from '@/store/modules/settings'
+import SubItem from '@/layout/components/SubMenu/SubItem.vue'
+import Logo from '@/layout/components/SideBar/components/Logo.vue'
+
+const route = useRoute()
+const settingStore = useSettingStore()
+const collapsed = computed(() => settingStore.collapsed)
+const showLogo = computed(() => settingStore.themeConfig.showLogo)
+
+const activeMenu = computed(() => {
+  const { meta, path } = route
+  if (meta.activeMenu) {
+    return meta.activeMenu
+  }
+  return path
+})
+</script>
+
 <template>
   <div class="sidebar-container">
     <Logo :collapsed="collapsed" v-if="showLogo" />
@@ -25,25 +47,3 @@
     </el-scrollbar>
   </div>
 </template>
-
-<script lang="ts" setup>
-import { computed } from 'vue'
-import { useRoute } from 'vue-router'
-import { constantRoutes } from '@/router'
-import { useSettingStore } from '@/store/modules/settings'
-import SubItem from '@/layout/components/SubMenu/SubItem.vue'
-import Logo from '@/layout/components/SideBar/components/Logo.vue'
-
-const route = useRoute()
-const settingStore = useSettingStore()
-const collapsed = computed(() => settingStore.collapsed)
-const showLogo = computed(() => settingStore.themeConfig.showLogo)
-
-const activeMenu = computed(() => {
-  const { meta, path } = route
-  if (meta.activeMenu) {
-    return meta.activeMenu
-  }
-  return path
-})
-</script>

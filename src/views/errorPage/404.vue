@@ -1,3 +1,13 @@
+<script lang="ts" setup>
+import { useRouter } from 'vue-router'
+
+const router = useRouter()
+
+const goHome = () => {
+  router.push({ path: '/home' })
+}
+</script>
+
 <template>
   <div class="error-404-container">
     <div class="img-prompt">
@@ -13,16 +23,6 @@
     </div>
   </div>
 </template>
-
-<script lang="ts" setup>
-import { useRouter } from 'vue-router'
-
-const router = useRouter()
-
-const goHome = () => {
-  router.push({ path: '/home' })
-}
-</script>
 
 <style lang="scss" scoped>
 .error-404-container {

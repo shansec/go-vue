@@ -26,13 +26,13 @@ export const useSettingStore = defineStore({
     }
   }),
   actions: {
-    /**
-     * 改变主题的样式
-     * @param key 主题设置的 key
-     * @param val 主题设置的 val
-     */
-    changeThemeSetting(key, val) {
-      this.themeConfig[key] = val
+    CHANGE_SETTING(key: string, value: boolean | string) {
+      if (Reflect.has(this, key)) {
+        this[key] = value
+      }
+    },
+    changeThemeSetting(key: string, val: boolean | string) {
+      this.CHANGE_SETTING(key, val)
     }
   }
 })

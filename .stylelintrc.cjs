@@ -42,6 +42,7 @@ module.exports = {
         ignorePseudoClasses: ['deep']
       }
     ],
+    "import-notation": "string",
     // 指定样式的排序
     'order/properties-order': [
       'position',

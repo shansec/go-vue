@@ -1,33 +1,3 @@
-<template>
-  <div class="tag-container">
-    <div class="tag-view">
-      <el-tabs
-        v-model="editableTabsValue"
-        type="card"
-        class="tabs"
-        @tab-click="tabClick"
-        @tab-remove="removeTab"
-      >
-        <el-tab-pane
-          v-for="item in tagViews"
-          :key="item.name"
-          :path="item.path"
-          :label="item.title"
-          :name="item.path"
-          :closable="!(item.meta && item.meta.affix)"
-        >
-          <template #label>
-            {{ item.title }}
-          </template>
-        </el-tab-pane>
-      </el-tabs>
-    </div>
-    <div class="right-btn">
-      <MoreButton />
-    </div>
-  </div>
-</template>
-
 <script lang="ts" setup>
 import { computed, onMounted, watch } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
@@ -90,8 +60,38 @@ watch(route, () => {
 })
 </script>
 
+<template>
+  <div class="tag-container">
+    <div class="tag-view">
+      <el-tabs
+        v-model="editableTabsValue"
+        type="card"
+        class="tabs"
+        @tab-click="tabClick"
+        @tab-remove="removeTab"
+      >
+        <el-tab-pane
+          v-for="item in tagViews"
+          :key="item.name"
+          :path="item.path"
+          :label="item.title"
+          :name="item.path"
+          :closable="!(item.meta && item.meta.affix)"
+        >
+          <template #label>
+            {{ item.title }}
+          </template>
+        </el-tab-pane>
+      </el-tabs>
+    </div>
+    <div class="right-btn">
+      <MoreButton />
+    </div>
+  </div>
+</template>
+
 <style lang="scss" scoped>
-@import url('@/style/variables.module.scss');
+@import '@/style/variables.module';
 
 .tag-container {
   // box-sizing: border-box;
@@ -129,7 +129,7 @@ watch(route, () => {
       }
     }
 
-    ::v-deep(.el-tabs__item) {
+    :deep(.el-tabs__item) {
       padding: 0 10px;
 
       &::before {
@@ -143,7 +143,7 @@ watch(route, () => {
       }
     }
 
-    ::v-deep(.el-tabs .el-tabs__header .el-tabs__item.is-active) {
+    :deep(.el-tabs .el-tabs__header .el-tabs__item.is-active) {
       padding: 0 10px;
       color: var(--el-color-primary);
       border-bottom: 2px solid var(--el-color-primary);

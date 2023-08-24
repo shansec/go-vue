@@ -1,33 +1,3 @@
-<template>
-  <template v-if="!item.hidden">
-    <template v-if="hasOneShowingChild(item, item.children)">
-      <router-link :to="props.basePath">
-        <el-menu-item :index="resolvePath(onlyChild.path)">
-          <el-icon :size="20">
-            <!--            <component :is="onlyChild.meta.icon"></component>-->
-            <i class="iconfont" :class="onlyChild.meta.icon"></i>
-          </el-icon>
-          <template #title>{{ onlyChild.meta.title }}</template>
-        </el-menu-item>
-      </router-link>
-    </template>
-    <el-sub-menu v-else :index="resolvePath(item.path)">
-      <template #title>
-        <el-icon :size="20">
-          <!--          <component :is="item.meta.icon"></component>-->
-          <i class="iconfont" :class="item.meta.icon"></i>
-        </el-icon>
-        <span>{{ item.meta && item.meta.title }}</span>
-      </template>
-      <sub-item
-        v-for="child in item.children"
-        :key="child.path"
-        :item="child"
-        :base-path="resolvePath(child.path)"
-      />
-    </el-sub-menu>
-  </template>
-</template>
 <script lang="ts" setup>
 import { ref } from 'vue'
 import { resolve } from 'path-browserify'
@@ -77,3 +47,34 @@ const resolvePath = (routePath) => {
   return resolve(props.basePath, routePath)
 }
 </script>
+
+<template>
+  <template v-if="!item.hidden">
+    <template v-if="hasOneShowingChild(item, item.children)">
+      <router-link :to="props.basePath">
+        <el-menu-item :index="resolvePath(onlyChild.path)">
+          <el-icon :size="20">
+            <!--            <component :is="onlyChild.meta.icon"></component>-->
+            <i class="iconfont" :class="onlyChild.meta.icon"></i>
+          </el-icon>
+          <template #title>{{ onlyChild.meta.title }}</template>
+        </el-menu-item>
+      </router-link>
+    </template>
+    <el-sub-menu v-else :index="resolvePath(item.path)">
+      <template #title>
+        <el-icon :size="20">
+          <!--          <component :is="item.meta.icon"></component>-->
+          <i class="iconfont" :class="item.meta.icon"></i>
+        </el-icon>
+        <span>{{ item.meta && item.meta.title }}</span>
+      </template>
+      <sub-item
+        v-for="child in item.children"
+        :key="child.path"
+        :item="child"
+        :base-path="resolvePath(child.path)"
+      />
+    </el-sub-menu>
+  </template>
+</template>

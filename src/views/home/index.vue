@@ -1,3 +1,22 @@
+<script lang="ts" setup>
+import { useUserStore } from '@/store/modules/user'
+import { reactive, ref } from 'vue'
+
+interface label {
+  id: number
+  value: string
+}
+
+const userStore = useUserStore()
+const userInfo = reactive<object>(userStore.getUserInfo())
+const labelList = ref<Array<label>>([
+  { id: 1, value: '读书' },
+  { id: 1, value: '敲代码' },
+  { id: 1, value: '听音乐' },
+  { id: 1, value: '冥想' }
+])
+</script>
+
 <template>
   <div class="home-container">
     <el-row :gutter="20">
@@ -18,8 +37,8 @@
           <div class="people-info-label">
             <h5>个性标签</h5>
             <div class="label-list">
-              <template v-for="(label, index) in labelList" :key="index">
-                <el-tag>{{ label }}</el-tag>
+              <template v-for="label in labelList" :key="label.id">
+                <el-tag>{{ label.value }}</el-tag>
               </template>
             </div>
           </div>
@@ -39,15 +58,6 @@
     </el-row>
   </div>
 </template>
-
-<script lang="ts" setup>
-import { useUserStore } from '@/store/modules/user'
-import { reactive, ref } from 'vue'
-
-const userStore = useUserStore()
-const userInfo = reactive<object>(userStore.getUserInfo())
-const labelList = ref<Array<string>>(['读书', '敲代码', '听音乐', '冥想'])
-</script>
 
 <style lang="scss" scoped>
 .home-container {

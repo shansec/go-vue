@@ -1,45 +1,3 @@
-<template>
-  <div class="search">
-    <el-tooltip content="菜单搜索" placement="bottom">
-      <el-icon style="font-size: 20px">
-        <i class="iconfont icon-sousuo" @click="handleSearch"></i>
-      </el-icon>
-    </el-tooltip>
-    <el-dialog
-      v-model="isShowSearch"
-      class="header_dialog"
-      width="600px"
-      destroy-on-close
-      :show-close="false"
-    >
-      <el-select
-        style="width: 100%"
-        ref="headerSearchSelect"
-        v-model="search"
-        :remote-method="query"
-        filterable
-        default-first-option
-        remote
-        placeholder="菜单搜索 ：支持菜单名称、路径"
-        class="header_search_select"
-        @change="change"
-      >
-        <el-option
-          v-for="item in options"
-          :key="item.item.path"
-          :value="item.item.path"
-          :label="
-            item.item &&
-            item.item.title &&
-            item.item.title.length &&
-            item.item.title.join(' > ')
-          "
-        >
-        </el-option>
-      </el-select>
-    </el-dialog>
-  </div>
-</template>
 <script lang="ts" setup>
 import { onMounted, ref, watch } from 'vue'
 import { useRouter } from 'vue-router'
@@ -47,7 +5,7 @@ import { useRouter } from 'vue-router'
 import path from 'path-browserify'
 import Fuse from 'fuse.js'
 
-import authRoute from '@/router/modules/authRoute'
+import { echartsRouter } from '@/router/modules/echarts'
 
 const router = useRouter()
 const search = ref('')
@@ -135,7 +93,7 @@ const handleSearch = () => {
 }
 
 onMounted(() => {
-  searchPool.value = generateRoutes(JSON.parse(JSON.stringify(authRoute)))
+  searchPool.value = generateRoutes(JSON.parse(JSON.stringify(echartsRouter)))
 })
 
 // 搜索框的远程搜索方法
@@ -162,6 +120,50 @@ const change = (val) => {
   isShowSearch.value = false
 }
 </script>
+
+<template>
+  <div class="search">
+    <el-tooltip content="菜单搜索" placement="bottom">
+      <el-icon style="font-size: 20px">
+        <i class="iconfont icon-sousuo" @click="handleSearch"></i>
+      </el-icon>
+    </el-tooltip>
+    <el-dialog
+      v-model="isShowSearch"
+      class="header_dialog"
+      width="600px"
+      destroy-on-close
+      :show-close="false"
+    >
+      <el-select
+        style="width: 100%"
+        ref="headerSearchSelect"
+        v-model="search"
+        :remote-method="query"
+        filterable
+        default-first-option
+        remote
+        placeholder="菜单搜索 ：支持菜单名称、路径"
+        class="header_search_select"
+        @change="change"
+      >
+        <el-option
+          v-for="item in options"
+          :key="item.item.path"
+          :value="item.item.path"
+          :label="
+            item.item &&
+            item.item.title &&
+            item.item.title.length &&
+            item.item.title.join(' > ')
+          "
+        >
+        </el-option>
+      </el-select>
+    </el-dialog>
+  </div>
+</template>
+
 <style lang="scss" scoped>
 .search {
   display: flex;

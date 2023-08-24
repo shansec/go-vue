@@ -1,3 +1,7 @@
+<script lang="ts" setup>
+import { useWrapComponents } from '@/hooks/useWrapComponents'
+</script>
+
 <template>
   <div class="app-main">
     <router-view v-slot="{ Component, route }">
@@ -12,9 +16,7 @@
     </router-view>
   </div>
 </template>
-<script lang="ts" setup>
-import { useWrapComponents } from '@/hooks/useWrapComponents'
-</script>
+
 <style lang="scss" scoped>
 .app-main {
   display: flex;

@@ -1,3 +1,8 @@
+<script lang="ts" setup>
+import { useFullscreen } from '@vueuse/core'
+const { toggle, isFullscreen } = useFullscreen()
+</script>
+
 <template>
   <div class="screen-full">
     <el-tooltip content="全屏" placement="bottom">
@@ -8,10 +13,7 @@
     </el-tooltip>
   </div>
 </template>
-<script lang="ts" setup>
-import { useFullscreen } from '@vueuse/core'
-const { toggle, isFullscreen } = useFullscreen()
-</script>
+
 <style lang="scss" scoped>
 .screen-full {
   display: flex;
@@ -20,4 +22,3 @@ const { toggle, isFullscreen } = useFullscreen()
   height: 100%;
 }
 </style>
-·

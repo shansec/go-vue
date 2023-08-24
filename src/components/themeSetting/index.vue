@@ -22,35 +22,35 @@
         <label>显示标签栏</label>
         <el-switch
           v-model="showTagsView"
-          @change="(val) => changeTheme('showTagsView', val)"
+          @change="(val: boolean) => changeTheme('showTagsView', val)"
         ></el-switch>
       </div>
       <div class="theme-item">
         <label>显示侧边栏Logo</label>
         <el-switch
           v-model="showLogo"
-          @change="(val) => changeTheme('showLogo', val)"
+          @change="(val: boolean) => changeTheme('showLogo', val)"
         ></el-switch>
       </div>
       <div class="theme-item">
         <label>保持一个子菜单打开</label>
         <el-switch
           v-model="uniqueOpened"
-          @change="(val) => changeTheme('uniqueOpened', val)"
+          @change="(val: boolean) => changeTheme('uniqueOpened', val)"
         ></el-switch>
       </div>
       <div class="theme-item">
         <label>灰色模式</label>
         <el-switch
           v-model="grey"
-          @change="(val) => changeGreyAndWeakColor('grey', val)"
+          @change="(val: boolean) => changeGreyAndWeakColor('grey', val)"
         ></el-switch>
       </div>
       <div class="theme-item">
         <label>色弱模式</label>
         <el-switch
           v-model="weakColor"
-          @change="(val) => changeGreyAndWeakColor('weakColor', val)"
+          @change="(val: boolean) => changeGreyAndWeakColor('weakColor', val)"
         ></el-switch>
       </div>
       <div class="theme-item">
@@ -58,7 +58,7 @@
         <el-color-picker
           v-model="themeColor"
           :predefine="predefineColors"
-          @change="(val) => changeThemeColor(val)"
+          @change="(val: string) => changeThemeColor(val)"
         ></el-color-picker>
       </div>
     </el-drawer>
@@ -109,7 +109,7 @@ const drawer = computed({
  * @param key 属性名称
  * @param val 属性值
  */
-const changeTheme = (key, val) => {
+const changeTheme = (key: string, val: boolean | string) => {
   settingStore.changeThemeSetting(key, val)
 }
 /**
@@ -123,7 +123,7 @@ const openThemeSetting = () => {
  * @param type grey | weak
  * @param value true | false
  */
-const changeGreyAndWeakColor = (type, value) => {
+const changeGreyAndWeakColor = (type: string, value: boolean) => {
   const body = document.documentElement as HTMLElement
   if (!value) {
     return body.setAttribute('style', '')
@@ -140,7 +140,7 @@ const changeGreyAndWeakColor = (type, value) => {
  * 设置主题颜色
  * @param val 颜色值
  */
-const changeThemeColor = (val) => {
+const changeThemeColor = (val: string) => {
   if (!val) {
     themeColor.value = THRME_COLOR
   }
@@ -150,7 +150,7 @@ const changeThemeColor = (val) => {
 </script>
 
 <style lang="scss" scoped>
-::v-deep(.el-drawer__header) {
+:deep(.el-drawer__header) {
   padding: 15px 20px 14px;
   margin-bottom: 0;
   border: 0 solid;
