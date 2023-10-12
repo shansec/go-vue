@@ -55,25 +55,16 @@ const resolvePath = (routePath) => {
         <el-menu-item :index="resolvePath(onlyChild.path)">
           <el-icon :size="20">
             <!--            <component :is="onlyChild.meta.icon"></component>-->
-            <i
-              class="iconfont"
-              :class="onlyChild.meta.icon"
-            />
+            <i class="iconfont" :class="onlyChild.meta.icon" />
           </el-icon>
           <template #title>{{ onlyChild.meta.title }}</template>
         </el-menu-item>
       </router-link>
     </template>
-    <el-sub-menu
-      v-else
-      :index="resolvePath(item.path)"
-    >
+    <el-sub-menu v-else :index="resolvePath(item.path)">
       <template #title>
         <el-icon :size="20">
-          <i
-            class="iconfont"
-            :class="item.meta.icon"
-          />
+          <i class="iconfont" :class="item.meta.icon" />
         </el-icon>
         <span>{{ item.meta && item.meta.title }}</span>
       </template>

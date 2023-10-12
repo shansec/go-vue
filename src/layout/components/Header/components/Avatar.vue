@@ -49,7 +49,7 @@ const logout = () => {
 const modifyDialogShow = () => {
   modifyDialogVisible.value = true
 }
-const submitForm = async() => {
+const submitForm = async () => {
   User.modifyPassword(modifyForm)
     .then(() => {
       // 退出登录清除存储的数据
@@ -103,11 +103,7 @@ const submitForm = async() => {
         :rules="modifyRules"
         class="form"
       >
-        <el-form-item
-          prop="account"
-          label="用户名"
-          label-width="100px"
-        >
+        <el-form-item prop="account" label="用户名" label-width="100px">
           <!-- 用户名-->
           <el-input
             v-model="modifyForm.account"
@@ -116,11 +112,7 @@ const submitForm = async() => {
           />
         </el-form-item>
         <!-- 旧密码-->
-        <el-form-item
-          prop="password"
-          label="旧密码"
-          label-width="100px"
-        >
+        <el-form-item prop="password" label="旧密码" label-width="100px">
           <el-input
             v-model="modifyForm.password"
             type="password"
@@ -129,11 +121,7 @@ const submitForm = async() => {
           />
         </el-form-item>
         <!-- 新密码 -->
-        <el-form-item
-          prop="newPassword"
-          label="新密码"
-          label-width="100px"
-        >
+        <el-form-item prop="newPassword" label="新密码" label-width="100px">
           <el-input
             v-model="modifyForm.newPassword"
             type="password"
@@ -145,10 +133,7 @@ const submitForm = async() => {
       <template #footer>
         <span class="dialog-footer">
           <el-button @click="modifyDialogVisible = false">取消</el-button>
-          <el-button
-            type="primary"
-            @click="submitForm()"
-          >确认</el-button>
+          <el-button type="primary" @click="submitForm()">确认</el-button>
         </span>
       </template>
     </el-dialog>
