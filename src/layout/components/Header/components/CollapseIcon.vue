@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 import { computed } from 'vue'
-import { useSettingStore } from '@/store/modules/settings'
+import { useSettingStore } from '@/store/modules/settings.js'
 
 const settingStore = useSettingStore()
 const collapsed = computed(() => settingStore.collapsed)
@@ -12,8 +12,14 @@ const changeCollapsed = () => {
 <template>
   <div class="folder">
     <el-icon :size="20">
-      <Expand v-if="collapsed" @click="changeCollapsed" />
-      <Fold v-else @click="changeCollapsed" />
+      <Expand
+        v-if="collapsed"
+        @click="changeCollapsed"
+      />
+      <Fold
+        v-else
+        @click="changeCollapsed"
+      />
     </el-icon>
   </div>
 </template>

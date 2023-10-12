@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { useSettingStore } from '@/store/modules/settings'
+import { useSettingStore } from '@/store/modules/settings.js'
 
 const settingStore = useSettingStore()
 
@@ -13,9 +13,15 @@ const showSetting = () => {
 
 <template>
   <div class="setting">
-    <el-tooltip content="主题设置" placement="bottom">
-      <el-icon style="font-size: 20px" @click="showSetting">
-        <i class="iconfont icon-shezhi"></i>
+    <el-tooltip
+      content="主题设置"
+      placement="bottom"
+    >
+      <el-icon
+        style="font-size: 20px"
+        @click="showSetting"
+      >
+        <i class="iconfont icon-shezhi" />
       </el-icon>
     </el-tooltip>
   </div>

@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 import { computed } from 'vue'
-import { useSettingStore } from '@/store/modules/settings'
+import { useSettingStore } from '@/store/modules/settings.js'
 
 const settingStore = useSettingStore()
 const isCollaps = computed(() => settingStore.collapsed)
@@ -14,7 +14,10 @@ defineProps({
 
 <template>
   <div :class="isCollaps ? 'collapsed_logo' : 'logo'">
-    <img src="@/assets/go-vue.png" alt="logo" />
+    <img
+      src="@/assets/go-vue.png"
+      alt="logo"
+    >
     <span v-if="!collapsed">Go-Vue</span>
   </div>
 </template>

@@ -1,5 +1,5 @@
 import { defineStore } from 'pinia'
-import { THRME_COLOR } from '@/config'
+import { THRME_COLOR } from '@/config/index.js'
 
 export const useSettingStore = defineStore({
   id: 'settingStore',
@@ -26,12 +26,12 @@ export const useSettingStore = defineStore({
     }
   }),
   actions: {
-    CHANGE_SETTING(key: string, value: boolean | string) {
+    CHANGE_SETTING(key, value) {
       if (Reflect.has(this, key)) {
         this[key] = value
       }
     },
-    changeThemeSetting(key: string, val: boolean | string) {
+    changeThemeSetting(key, val) {
       this.CHANGE_SETTING(key, val)
     }
   }

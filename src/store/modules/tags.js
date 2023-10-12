@@ -1,5 +1,5 @@
 import { defineStore } from 'pinia'
-import router from '@/router'
+import router from '@/router/index.js'
 
 export const useTagsSetting = defineStore({
   id: 'tagsSetting',
@@ -21,7 +21,7 @@ export const useTagsSetting = defineStore({
   },
   getters: {},
   actions: {
-    setButtonMenu(val: string) {
+    setButtonMenu(val) {
       this.tagViewValue = val
     },
     addView(view) {

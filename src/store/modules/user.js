@@ -19,22 +19,22 @@ export const useUserStore = defineStore({
     ]
   },
   getters: {
-    getToken(state): string {
+    getToken(state) {
       return state.token
     },
-    getUserInfo(state): object {
+    getUserInfo(state) {
       return state.userInfo
     }
   },
   actions: {
-    setToken(token: string) {
+    setToken(token) {
       this.token = token
     },
     setInfoToNUll() {
       this.token = ''
       this.userInfo = {}
     },
-    setUserInfo(userData: object) {
+    setUserInfo(userData) {
       this.userInfo = userData
     }
   }

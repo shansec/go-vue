@@ -1,9 +1,9 @@
 <script lang="ts" setup>
 import { computed } from 'vue'
 import { useRoute } from 'vue-router'
-import { constantRoutes } from '@/router'
-import { useSettingStore } from '@/store/modules/settings'
-import SubItem from '@/layout/components/SubMenu/SubItem.vue'
+import { constantRoutes } from '@/router/index.js'
+import { useSettingStore } from '@/store/modules/settings.js'
+import SubItem from '@/layout/components/SideBar/components/SubItem.vue'
 import Logo from '@/layout/components/SideBar/components/Logo.vue'
 
 const route = useRoute()
@@ -22,7 +22,10 @@ const activeMenu = computed(() => {
 
 <template>
   <div class="sidebar-container">
-    <Logo :collapsed="collapsed" v-if="showLogo" />
+    <Logo
+      v-if="showLogo"
+      :collapsed="collapsed"
+    />
     <el-scrollbar
       style="height: calc(100% - 50px)"
       wrap-class="scrollbar-wrapper"

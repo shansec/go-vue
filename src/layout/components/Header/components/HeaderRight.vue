@@ -1,7 +1,7 @@
 <script lang="ts" setup>
-import Avatar from '@/layout/components/Header/components/HeaderRight/Avatar.vue'
-import Setting from '@/layout/components/Header/components/HeaderRight/Setting.vue'
-import ScreenFull from '@/layout/components/Header/components/HeaderRight/ScreenFull.vue'
+import Avatar from '@/layout/components/Header/components/Avatar.vue'
+import Setting from '@/layout/components/Header/components/Setting.vue'
+import ScreenFull from '@/layout/components/Header/components/ScreenFull.vue'
 // import Search from '@/layout/components/Header/components/HeaderRight/Search.vue'
 </script>
 

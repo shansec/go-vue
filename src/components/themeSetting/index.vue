@@ -1,65 +1,70 @@
 <template>
   <div class="m-theme-setting">
     <div class="theme-fix">
-      <div class="item" @click="openThemeSetting">
-        <el-icon size="30" :color="settingStore.themeConfig.themeColor"
-          ><brush
-        /></el-icon>
-        <span :style="{ color: settingStore.themeConfig.themeColor }"
-          >主题设置</span
-        >
+      <div
+        class="item"
+        @click="openThemeSetting"
+      >
+        <el-icon
+          size="30"
+          :color="settingStore.themeConfig.themeColor"
+        ><brush /></el-icon>
+        <span :style="{ color: settingStore.themeConfig.themeColor }">主题设置</span>
       </div>
     </div>
-    <el-drawer v-model="drawer" size="300px">
+    <el-drawer
+      v-model="drawer"
+      size="300px"
+    >
       <template #header>
         <h3>主题设置</h3>
       </template>
       <div class="theme-item">
         <label>黑暗模式</label>
-        <SwitchDark></SwitchDark>
+        <SwitchDark />
       </div>
       <div class="theme-item">
         <label>显示标签栏</label>
         <el-switch
           v-model="showTagsView"
-          @change="(val: boolean) => changeTheme('showTagsView', val)"
-        ></el-switch>
+          @change="(val) => changeTheme('showTagsView', val)"
+        />
       </div>
       <div class="theme-item">
         <label>显示侧边栏Logo</label>
         <el-switch
           v-model="showLogo"
-          @change="(val: boolean) => changeTheme('showLogo', val)"
-        ></el-switch>
+          @change="(val) => changeTheme('showLogo', val)"
+        />
       </div>
       <div class="theme-item">
         <label>保持一个子菜单打开</label>
         <el-switch
           v-model="uniqueOpened"
-          @change="(val: boolean) => changeTheme('uniqueOpened', val)"
-        ></el-switch>
+          @change="(val) => changeTheme('uniqueOpened', val)"
+        />
       </div>
       <div class="theme-item">
         <label>灰色模式</label>
         <el-switch
           v-model="grey"
-          @change="(val: boolean) => changeGreyAndWeakColor('grey', val)"
-        ></el-switch>
+          @change="(val) => changeGreyAndWeakColor('grey', val)"
+        />
       </div>
       <div class="theme-item">
         <label>色弱模式</label>
         <el-switch
           v-model="weakColor"
-          @change="(val: boolean) => changeGreyAndWeakColor('weakColor', val)"
-        ></el-switch>
+          @change="(val) => changeGreyAndWeakColor('weakColor', val)"
+        />
       </div>
       <div class="theme-item">
         <label>主题颜色</label>
         <el-color-picker
           v-model="themeColor"
           :predefine="predefineColors"
-          @change="(val: string) => changeThemeColor(val)"
-        ></el-color-picker>
+          @change="(val) => changeThemeColor(val)"
+        />
       </div>
     </el-drawer>
   </div>
@@ -68,8 +73,8 @@
 <script lang="ts" setup>
 import { computed, ref } from 'vue'
 
-import { useSettingStore } from '@/store/modules/settings'
-import { THRME_COLOR } from '@/config'
+import { useSettingStore } from '@/store/modules/settings.js'
+import { THRME_COLOR } from '@/config/index.js'
 
 import SwitchDark from '@/components/switchDark/index.vue'
 
@@ -109,7 +114,7 @@ const drawer = computed({
  * @param key 属性名称
  * @param val 属性值
  */
-const changeTheme = (key: string, val: boolean | string) => {
+const changeTheme = (key, val) => {
   settingStore.changeThemeSetting(key, val)
 }
 /**
@@ -123,8 +128,8 @@ const openThemeSetting = () => {
  * @param type grey | weak
  * @param value true | false
  */
-const changeGreyAndWeakColor = (type: string, value: boolean) => {
-  const body = document.documentElement as HTMLElement
+const changeGreyAndWeakColor = (type, value) => {
+  const body = document.documentElement
   if (!value) {
     return body.setAttribute('style', '')
   }
@@ -140,7 +145,7 @@ const changeGreyAndWeakColor = (type: string, value: boolean) => {
  * 设置主题颜色
  * @param val 颜色值
  */
-const changeThemeColor = (val: string) => {
+const changeThemeColor = (val) => {
   if (!val) {
     themeColor.value = THRME_COLOR
   }

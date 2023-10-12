@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { useWrapComponents } from '@/hooks/useWrapComponents'
+import { useWrapComponents } from '@/hooks/useWrapComponents.js'
 </script>
 
 <template>

@@ -1,58 +1,48 @@
 <script lang="ts" setup>
 import { reactive, ref } from 'vue'
 import { useRouter } from 'vue-router'
-import type { FormInstance, FormRules } from 'element-plus'
 import { Avatar, Lock } from '@element-plus/icons-vue'
 
-import User from '@/api/User'
-import { useUserStore } from '@/store/modules/user'
+import User from '@/api/User.js'
+import { useUserStore } from '@/store/modules/user.js'
 
-interface LoginForm {
-  account: string
-  password: string
-}
-
-const ruleFormRef = ref<FormInstance>()
+const ruleFormRef = ref('ruleFormRef')
 const loading = ref(false)
-const loginForm = reactive<LoginForm>({
+const loginForm = reactive({
   account: 'admin',
   password: 'admin'
 })
 const router = useRouter()
 const userStore = useUserStore()
-const rules = reactive<FormRules<LoginForm>>({
+const rules = reactive({
   account: [{ required: true, message: '请输入账号', trigger: 'blur' }],
   password: [{ required: true, message: '请输入密码', trigger: 'blur' }]
 })
-const submitForm = async (formEl: FormInstance | undefined) => {
-  if (!formEl) return
-  await formEl.validate((valid, fields) => {
-    if (valid) {
-      loading.value = true
-      User.login(loginForm.account, loginForm.password)
-        .then((res) => {
-          const userData = res.data
-          userStore.setToken(userData.token)
-          userStore.setUserInfo(userData.user)
+const submitForm = async() => {
+  loading.value = true
+  User.login(loginForm.account, loginForm.password)
+    .then((res) => {
+      const userData = res.data
+      userStore.setToken(userData.token)
+      userStore.setUserInfo(userData.user)
 
-          router.push({
-            path: '/'
-          })
-          loading.value = false
-        })
-        .catch(() => {
-          loading.value = false
-        })
-    } else {
-      console.log('error submit!', fields)
-    }
-  })
+      router.push({
+        path: '/'
+      })
+      loading.value = false
+    })
+    .catch(() => {
+      loading.value = false
+    })
 }
 </script>
 
 <template>
   <div class="avatar_box">
-    <img src="../../../assets/go-vue.png" alt="头像" />
+    <img
+      src="../../../assets/go-vue.png"
+      alt="头像"
+    >
     <h2 class="title">Go-Vue</h2>
   </div>
   <el-form
@@ -61,7 +51,7 @@ const submitForm = async (formEl: FormInstance | undefined) => {
     label-width="0"
     :rules="rules"
     class="form"
-    @keyup.enter="submitForm(ruleFormRef)"
+    @keyup.enter="submitForm()"
   >
     <el-form-item prop="account">
       <el-input
@@ -84,8 +74,8 @@ const submitForm = async (formEl: FormInstance | undefined) => {
         :loading="loading"
         type="primary"
         class="login_btn"
-        @click="submitForm(ruleFormRef)"
-        >登录
+        @click="submitForm()"
+      >登录
       </el-button>
     </el-form-item>
   </el-form>

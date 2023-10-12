@@ -5,7 +5,7 @@ import { useRouter } from 'vue-router'
 import path from 'path-browserify'
 import Fuse from 'fuse.js'
 
-import { echartsRouter } from '@/router/modules/echarts'
+import { echartsRouter } from '@/router/modules/echarts.js'
 
 const router = useRouter()
 const search = ref('')
@@ -123,9 +123,15 @@ const change = (val) => {
 
 <template>
   <div class="search">
-    <el-tooltip content="菜单搜索" placement="bottom">
+    <el-tooltip
+      content="菜单搜索"
+      placement="bottom"
+    >
       <el-icon style="font-size: 20px">
-        <i class="iconfont icon-sousuo" @click="handleSearch"></i>
+        <i
+          class="iconfont icon-sousuo"
+          @click="handleSearch"
+        />
       </el-icon>
     </el-tooltip>
     <el-dialog
@@ -136,9 +142,9 @@ const change = (val) => {
       :show-close="false"
     >
       <el-select
-        style="width: 100%"
         ref="headerSearchSelect"
         v-model="search"
+        style="width: 100%"
         :remote-method="query"
         filterable
         default-first-option
@@ -153,12 +159,11 @@ const change = (val) => {
           :value="item.item.path"
           :label="
             item.item &&
-            item.item.title &&
-            item.item.title.length &&
-            item.item.title.join(' > ')
+              item.item.title &&
+              item.item.title.length &&
+              item.item.title.join(' > ')
           "
-        >
-        </el-option>
+        />
       </el-select>
     </el-dialog>
   </div>

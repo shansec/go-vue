@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { useSettingStore } from '@/store/modules/settings'
+import { useSettingStore } from '@/store/modules/settings.js'
 
 import HeaderLeft from '@/layout/components/Header/components/HeaderLeft.vue'
 import HeaderRight from '@/layout/components/Header/components/HeaderRight.vue'

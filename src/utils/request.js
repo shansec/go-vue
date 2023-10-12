@@ -1,5 +1,5 @@
-import axios, { AxiosError, AxiosRequestConfig, AxiosResponse } from 'axios'
-import { useUserStore } from '@/store/modules/user'
+import axios from 'axios'
+import { useUserStore } from '@/store/modules/user.js'
 import { ElMessage } from 'element-plus'
 
 const service = axios.create({
@@ -9,7 +9,7 @@ const service = axios.create({
 // axios.defaults.baseURL = '/api'
 // request interceptors 接口请求拦截
 service.interceptors.request.use(
-  (config: AxiosRequestConfig) => {
+  (config) => {
     const userStore = useUserStore()
 
     config.headers = {
@@ -18,14 +18,14 @@ service.interceptors.request.use(
     }
     return config
   },
-  (error: AxiosError) => {
+  (error) => {
     return Promise.reject(error)
   }
 )
 
 // response interceptors 响应拦截
 service.interceptors.response.use(
-  (response: AxiosResponse) => {
+  (response) => {
     const userStore = useUserStore()
     if (response.headers['new-token']) {
       userStore.setToken(response.headers['new-token'])
@@ -43,7 +43,7 @@ service.interceptors.response.use(
     }
     return response.data
   },
-  (error: AxiosError) => {
+  (error) => {
     return Promise.reject(error)
   }
 )

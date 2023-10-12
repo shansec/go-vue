@@ -1,32 +1,25 @@
 <script lang="ts" setup>
 import { useRouter } from 'vue-router'
-import { ElMessage, ElMessageBox, FormInstance, FormRules } from 'element-plus'
+import { ElMessage, ElMessageBox } from 'element-plus'
 
-import { useUserStore } from '@/store/modules/user'
+import { useUserStore } from '@/store/modules/user.js'
 import { reactive, ref } from 'vue'
-import User from '@/api/User'
-
-interface ModifyForm {
-  uid: number
-  account: string
-  password: string
-  newPassword: string
-}
+import User from '@/api/User.js'
 
 const router = useRouter()
 const userStore = useUserStore()
 
-const userInfo = ref<object>(userStore.getUserInfo())
-const modifyDialogVisible = ref<boolean>(false)
-const modifyDialogTitle = ref<string>('修改密码')
-const modifyFormRef = ref<FormInstance>()
-const modifyForm = reactive<ModifyForm>({
+const userInfo = ref(userStore.getUserInfo)
+const modifyDialogVisible = ref(false)
+const modifyDialogTitle = ref('修改密码')
+const modifyFormRef = ref('modifyFormRef')
+const modifyForm = reactive({
   uid: userInfo.value.ID,
   account: userInfo.value.userName,
   password: '',
   newPassword: ''
 })
-const modifyRules = reactive<FormRules<ModifyForm>>({
+const modifyRules = reactive({
   password: [{ required: true, message: '请输入旧密码', trigger: 'blur' }],
   newPassword: [{ required: true, message: '请输入新密码', trigger: 'blur' }]
 })
@@ -56,25 +49,18 @@ const logout = () => {
 const modifyDialogShow = () => {
   modifyDialogVisible.value = true
 }
-const submitForm = async (formEl: FormInstance | undefined) => {
-  if (!formEl) return
-  await formEl.validate((valid, fields) => {
-    if (valid) {
-      User.modifyPassword(modifyForm)
-        .then(() => {
-          // 退出登录清除存储的数据
-          window.localStorage.clear()
-          // 设置 token 为空
-          userStore.setInfoToNUll()
-          router.replace('/login')
-        })
-        .catch(() => {
-          console.log('修改密码失败')
-        })
-    } else {
-      console.log('error submit!', fields)
-    }
-  })
+const submitForm = async() => {
+  User.modifyPassword(modifyForm)
+    .then(() => {
+      // 退出登录清除存储的数据
+      window.localStorage.clear()
+      // 设置 token 为空
+      userStore.setInfoToNUll()
+      router.replace('/login')
+    })
+    .catch(() => {
+      console.log('修改密码失败')
+    })
 }
 </script>
 
@@ -95,11 +81,11 @@ const submitForm = async (formEl: FormInstance | undefined) => {
       <template #dropdown>
         <el-dropdown-menu>
           <el-dropdown-item @click="modifyDialogShow">
-            <i class="iconfont icon-xiugaimima"></i>
+            <i class="iconfont icon-xiugaimima" />
             <span>修改密码</span>
           </el-dropdown-item>
           <el-dropdown-item @click="logout">
-            <i class="iconfont icon-guanbi"></i>
+            <i class="iconfont icon-guanbi" />
             <span>退出登录</span>
           </el-dropdown-item>
         </el-dropdown-menu>
@@ -117,7 +103,11 @@ const submitForm = async (formEl: FormInstance | undefined) => {
         :rules="modifyRules"
         class="form"
       >
-        <el-form-item prop="account" label="用户名" label-width="100px">
+        <el-form-item
+          prop="account"
+          label="用户名"
+          label-width="100px"
+        >
           <!-- 用户名-->
           <el-input
             v-model="modifyForm.account"
@@ -126,7 +116,11 @@ const submitForm = async (formEl: FormInstance | undefined) => {
           />
         </el-form-item>
         <!-- 旧密码-->
-        <el-form-item prop="password" label="旧密码" label-width="100px">
+        <el-form-item
+          prop="password"
+          label="旧密码"
+          label-width="100px"
+        >
           <el-input
             v-model="modifyForm.password"
             type="password"
@@ -135,7 +129,11 @@ const submitForm = async (formEl: FormInstance | undefined) => {
           />
         </el-form-item>
         <!-- 新密码 -->
-        <el-form-item prop="newPassword" label="新密码" label-width="100px">
+        <el-form-item
+          prop="newPassword"
+          label="新密码"
+          label-width="100px"
+        >
           <el-input
             v-model="modifyForm.newPassword"
             type="password"
@@ -147,9 +145,10 @@ const submitForm = async (formEl: FormInstance | undefined) => {
       <template #footer>
         <span class="dialog-footer">
           <el-button @click="modifyDialogVisible = false">取消</el-button>
-          <el-button type="primary" @click="submitForm(modifyFormRef)"
-            >确认</el-button
-          >
+          <el-button
+            type="primary"
+            @click="submitForm()"
+          >确认</el-button>
         </span>
       </template>
     </el-dialog>
