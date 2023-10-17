@@ -4,20 +4,9 @@ export const useUserStore = defineStore({
   id: 'userStore',
   state: () => ({
     token: '',
-    userInfo: {}
+    userInfo: {},
+    roles: []
   }),
-  persist: {
-    // 开启数据缓存
-    enabled: true,
-    strategies: [
-      {
-        // 本地存储的名称
-        key: 'userStore',
-        // 本地存储的位置
-        storage: localStorage
-      }
-    ]
-  },
   getters: {
     getToken(state) {
       return state.token
@@ -36,6 +25,10 @@ export const useUserStore = defineStore({
     },
     setUserInfo(userData) {
       this.userInfo = userData
+      this.setRoles()
+    },
+    setRoles() {
+      this.roles = ['admin']
     }
   }
 })

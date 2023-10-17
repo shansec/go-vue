@@ -1,0 +1,52 @@
+import router from '@/router'
+import { useUserStore } from '@/store/modules/user'
+import NProgress from 'nprogress'
+import getPageTitle from '@/utils/get-page-title'
+import pinia from '@/store'
+import { Message } from '@element-plus/icons-vue'
+import storage from '@/utils/storage'
+
+NProgress.configure({ showSpinner: false })
+
+const whiteList = ['/login']
+
+router.beforeEach(async(to, from, next) => {
+  NProgress.start()
+
+  document.title = getPageTitle(to.meta.title)
+
+  const userStore = useUserStore(pinia)
+  const hasToken = storage.get('token')
+  if (!hasToken) {
+    console.log('有token')
+    if (to.path === '/login') {
+      next('/login')
+      NProgress.done()
+    } else {
+      const hasRoles = userStore.roles && userStore.roles.length > 0
+      if (hasRoles) {
+        next()
+      } else {
+        try {
+          console.log('目前正在添加代码')
+        } catch (error) {
+          Message.error(error || 'has Error')
+          next('/login')
+          NProgress.done()
+        }
+      }
+    }
+  } else {
+    if (whiteList.indexOf(to.path) !== -1) {
+      console.log('无token')
+      next()
+    } else {
+      next(`/login?redirect=${to.path}`)
+      NProgress.done()
+    }
+  }
+})
+
+router.afterEach(() => {
+  NProgress.done()
+})
