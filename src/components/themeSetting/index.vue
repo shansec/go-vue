@@ -1,16 +1,104 @@
+<script lang="js" setup>
+import { computed, ref } from 'vue'
+
+import { useSettingStore } from '@/store/modules/settings.js'
+import { THEME_COLOR } from '@/config/index.js'
+
+import SwitchDark from '@/components/switchDark/index.vue'
+
+const settingStore = useSettingStore()
+// 保持一个子菜单打开
+const uniqueOpened = ref(settingStore.uniqueOpened)
+// 是否展示侧边栏Logo
+const showLogo = ref(settingStore.showLogo)
+// 是否显示标签栏
+const showTagsView = ref(settingStore.showTagsView)
+// 灰色模式
+const grey = ref(settingStore.grey)
+// 色弱模式
+const weakColor = ref(settingStore.weakColor)
+// 主题颜色
+const themeColor = ref(settingStore.themeColor)
+// 预定义颜色
+const predefineColors = ref([
+  '#ff4500',
+  '#ff8c00',
+  '#ffd700',
+  '#90ee90',
+  '#00ced1',
+  '#1e90ff',
+  '#c71585'
+])
+const drawer = computed({
+  get() {
+    return settingStore.showThemeSetting
+  },
+  set() {
+    changeTheme('showThemeSetting', !settingStore.showThemeSetting)
+  }
+})
+
+/**
+ * 设置主题的样式
+ * @param key 属性名称
+ * @param val 属性值
+ */
+const changeTheme = (key, val) => {
+  settingStore.changeThemeSetting(key, val)
+}
+
+// const openThemeSetting = () => {
+//   drawer.value = true
+// }
+/**
+ * 修改色弱 和 灰色模式
+ * @param type grey | weak
+ * @param value true | false
+ */
+const changeGreyAndWeakColor = (type, value) => {
+  const body = document.documentElement
+  if (!value) {
+    return body.setAttribute('style', '')
+  }
+  if (type === 'grey') {
+    body.setAttribute('style', 'filter: grayscale(1)')
+  }
+  if (type === 'weakColor') {
+    body.setAttribute('style', 'filter: invert(80%)')
+  }
+  changeTheme(type, value)
+}
+/**
+ * 设置主题颜色
+ * @param val 颜色值
+ */
+const changeThemeColor = (val) => {
+  if (!val) {
+    themeColor.value = THEME_COLOR
+  }
+  document.documentElement.style.setProperty('--el-color-primary', val)
+  changeTheme('themeColor', val)
+}
+</script>
+
 <template>
   <div class="m-theme-setting">
-    <div class="theme-fix">
-      <div class="item" @click="openThemeSetting">
-        <el-icon size="30" :color="settingStore.themeConfig.themeColor"
-          ><brush
-        /></el-icon>
-        <span :style="{ color: settingStore.themeConfig.themeColor }"
-          >主题设置</span
-        >
-      </div>
-    </div>
-    <el-drawer v-model="drawer" size="300px">
+<!--    <div class="theme-fix">-->
+<!--      <div-->
+<!--        class="item"-->
+<!--        @click="openThemeSetting"-->
+<!--      >-->
+<!--        <el-icon-->
+<!--          size="30"-->
+<!--          :color="settingStore.themeColor"-->
+<!--        ><brush /></el-icon>-->
+<!--        <span :style="{ color: settingStore.themeColor }">主题设置</span>-->
+<!--      </div>-->
+<!--    </div>-->
+    <el-drawer
+      v-model="drawer"
+      size="300px"
+    >
       <template #header>
         <h3>主题设置</h3>
       </template>
@@ -64,90 +152,6 @@
     </el-drawer>
   </div>
 </template>
-
-<script lang="ts" setup>
-import { computed, ref } from 'vue'
-
-import { useSettingStore } from '@/store/modules/settings.js'
-import { THRME_COLOR } from '@/config/index.js'
-
-import SwitchDark from '@/components/switchDark/index.vue'
-
-const settingStore = useSettingStore()
-// 保持一个子菜单打开
-const uniqueOpened = ref(settingStore.themeConfig.uniqueOpened)
-// 是否展示侧边栏Logo
-const showLogo = ref(settingStore.themeConfig.showLogo)
-// 是否显示标签栏
-const showTagsView = ref(settingStore.themeConfig.showTagsView)
-// 灰色模式
-const grey = ref(settingStore.themeConfig.grey)
-// 色弱模式
-const weakColor = ref(settingStore.themeConfig.weakColor)
-// 主题颜色
-const themeColor = ref(settingStore.themeConfig.themeColor)
-// 预定义颜色
-const predefineColors = ref([
-  '#ff4500',
-  '#ff8c00',
-  '#ffd700',
-  '#90ee90',
-  '#00ced1',
-  '#1e90ff',
-  '#c71585'
-])
-const drawer = computed({
-  get() {
-    return settingStore.themeConfig.showThemeSetting
-  },
-  set() {
-    changeTheme('showThemeSetting', !settingStore.themeConfig.showThemeSetting)
-  }
-})
-/**
- * 设置主题的样式
- * @param key 属性名称
- * @param val 属性值
- */
-const changeTheme = (key, val) => {
-  settingStore.changeThemeSetting(key, val)
-}
-/**
- * 打开抽屉
- */
-const openThemeSetting = () => {
-  drawer.value = true
-}
-/**
- * 修改色弱 和 灰色模式
- * @param type grey | weak
- * @param value true | false
- */
-const changeGreyAndWeakColor = (type, value) => {
-  const body = document.documentElement
-  if (!value) {
-    return body.setAttribute('style', '')
-  }
-  if (type === 'grey') {
-    body.setAttribute('style', 'filter: grayscale(1)')
-  }
-  if (type === 'weakColor') {
-    body.setAttribute('style', 'filter: invert(80%)')
-  }
-  changeTheme(type, value)
-}
-/**
- * 设置主题颜色
- * @param val 颜色值
- */
-const changeThemeColor = (val) => {
-  if (!val) {
-    themeColor.value = THRME_COLOR
-  }
-  document.documentElement.style.setProperty('--el-color-primary', val)
-  changeTheme('themeColor', val)
-}
-</script>
 
 <style lang="scss" scoped>
 :deep(.el-drawer__header) {

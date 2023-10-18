@@ -1,9 +1,9 @@
-<script lang="ts" setup>
+<script lang="js" setup>
 import { useUserStore } from '@/store/modules/user.js'
 import { reactive, ref } from 'vue'
 
 const userStore = useUserStore()
-const userInfo = reactive<object>(userStore.getUserInfo)
+const userInfo = reactive(userStore.getUserInfo)
 const labelList = ref([
   { id: 1, value: '读书' },
   { id: 1, value: '敲代码' },
@@ -18,7 +18,10 @@ const labelList = ref([
       <el-col :span="8">
         <div class="people-info">
           <div class="people-info-detail">
-            <el-avatar :size="50" :src="userInfo.headerImg" />
+            <el-avatar
+              :size="50"
+              :src="userInfo.headerImg"
+            />
             <div>昵称：{{ userInfo.userName }}</div>
             <div>职业：前端小白</div>
             <div>公司：小公司</div>
@@ -32,7 +35,10 @@ const labelList = ref([
           <div class="people-info-label">
             <h5>个性标签</h5>
             <div class="label-list">
-              <template v-for="label in labelList" :key="label.id">
+              <template
+                v-for="label in labelList"
+                :key="label.id"
+              >
                 <el-tag>{{ label.value }}</el-tag>
               </template>
             </div>

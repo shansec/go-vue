@@ -1,6 +1,7 @@
 import router from '@/router'
 import { useUserStore } from '@/store/modules/user'
 import NProgress from 'nprogress'
+import 'nprogress/nprogress.css'
 import getPageTitle from '@/utils/get-page-title'
 import pinia from '@/store'
 import { Message } from '@element-plus/icons-vue'
@@ -10,17 +11,14 @@ NProgress.configure({ showSpinner: false })
 
 const whiteList = ['/login']
 
-router.beforeEach(async (to, from, next) => {
+router.beforeEach(async(to, from, next) => {
   NProgress.start()
-
   document.title = getPageTitle(to.meta.title)
-
   const userStore = useUserStore(pinia)
   const hasToken = storage.get('token')
-  if (!hasToken) {
-    console.log('有token')
+  if (hasToken) {
     if (to.path === '/login') {
-      next('/login')
+      next({ path: '/' })
       NProgress.done()
     } else {
       const hasRoles = userStore.roles && userStore.roles.length > 0
@@ -38,10 +36,9 @@ router.beforeEach(async (to, from, next) => {
     }
   } else {
     if (whiteList.indexOf(to.path) !== -1) {
-      console.log('无token')
       next()
     } else {
-      next(`/login?redirect=${to.path}`)
+      next(`/login`)
       NProgress.done()
     }
   }

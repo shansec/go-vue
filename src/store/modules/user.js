@@ -5,7 +5,7 @@ export const useUserStore = defineStore({
   state: () => ({
     token: '',
     userInfo: {},
-    roles: []
+    roles: ['admin']
   }),
   getters: {
     getToken(state) {

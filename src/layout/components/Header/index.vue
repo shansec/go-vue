@@ -7,7 +7,7 @@ import DynamicTags from '@/layout/components/TagsView/index.vue'
 import { computed } from 'vue'
 
 const settingStore = useSettingStore()
-const showTags = computed(() => settingStore.themeConfig.showTagsView)
+const showTags = computed(() => settingStore.showTagsView)
 </script>
 
 <template>

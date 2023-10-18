@@ -1,4 +1,4 @@
-<script lang="ts" setup>
+<script lang="js" setup>
 import LoginForm from '@/views/login/components/LoginForm.vue'
 import SwitchDark from '@/components/switchDark/index.vue'
 </script>
@@ -8,7 +8,10 @@ import SwitchDark from '@/components/switchDark/index.vue'
     <div class="login-box">
       <SwitchDark class="switch_dark" />
       <div class="login-left">
-        <img src="../../assets/login/side-logo.png" alt="" />
+        <img
+          src="../../assets/login/side-logo.png"
+          alt=""
+        >
       </div>
       <div class="login-form">
         <LoginForm />

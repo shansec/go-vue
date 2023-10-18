@@ -9,20 +9,18 @@ export const constantRoutes = [
   },
   {
     path: '/login',
-    name: 'login',
     component: () => import('@/views/login/index.vue'),
     hidden: true,
     meta: { title: '登录' }
   },
   {
     path: '/',
-    name: 'home',
     component: Layout,
     redirect: '/home',
     hidden: true,
     children: [
       {
-        path: '/home',
+        path: 'home',
         component: () => import('@/views/home/index.vue'),
         name: 'home',
         meta: { title: '首页', icon: 'icon-yuzhiyibiaopan', affix: true }
@@ -31,8 +29,6 @@ export const constantRoutes = [
   },
   { path: '/:catchAll(.*)', redirect: '/404', hidden: true }
 ]
-
-export const asyncRouter = []
 
 const router = createRouter({
   // 创建一个 HTML5 历史，即单页面应用程序中最常见的历史记录

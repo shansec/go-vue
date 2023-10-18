@@ -6,7 +6,7 @@ const settingStore = useSettingStore()
 const showSetting = () => {
   settingStore.changeThemeSetting(
     'showThemeSetting',
-    !settingStore.themeConfig.showThemeSetting
+    !settingStore.showThemeSetting
   )
 }
 </script>
