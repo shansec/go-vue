@@ -1,4 +1,4 @@
-import { post } from '@/utils/request.js'
+import { post, get } from '@/utils/request.js'
 
 export default class User {
   /**
@@ -21,5 +21,9 @@ export default class User {
    */
   static async modifyPassword(data) {
     return post('/user/modifyPassword', data)
+  }
+
+  static async getUserInfo() {
+    return get('/user/getUserInfo')
   }
 }

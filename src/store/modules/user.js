@@ -1,11 +1,12 @@
 import { defineStore } from 'pinia'
+import User from '@/api/User'
 
 export const useUserStore = defineStore({
   id: 'userStore',
   state: () => ({
     token: '',
     userInfo: {},
-    roles: ['admin']
+    roles: []
   }),
   getters: {
     getToken(state) {
@@ -29,6 +30,11 @@ export const useUserStore = defineStore({
     },
     setRoles() {
       this.roles = ['admin']
+    },
+    getUserInformation() {
+      User.getUserInfo().then((res) => {
+        console.log(res)
+      })
     }
   }
 })

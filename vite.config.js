@@ -16,7 +16,9 @@ export default defineConfig({
     cors: false,
     proxy: {
       '/api': {
-        target: 'http://localhost:8080',
+        // target: 'http://localhost:8080',
+        target:
+          'https://symmetrical-space-telegram-q4jp9rvjx5xf65wp-8080.app.github.dev/',
         changeOrigin: true,
         rewrite: (path) => path.replace(/^\/api/, '')
       }

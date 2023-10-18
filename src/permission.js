@@ -22,11 +22,12 @@ router.beforeEach(async (to, from, next) => {
       NProgress.done()
     } else {
       const hasRoles = userStore.roles && userStore.roles.length > 0
+      console.log(hasRoles)
       if (hasRoles) {
         next()
       } else {
         try {
-          console.log('目前正在添加代码')
+          userStore.getUserInformation()
         } catch (error) {
           Message.error(error || 'has Error')
           next('/login')

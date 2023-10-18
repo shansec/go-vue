@@ -23,14 +23,16 @@ const submitForm = async () => {
   loading.value = true
   User.login(loginForm.account, loginForm.password)
     .then((res) => {
-      const userData = res.data
-      userStore.setToken(userData.token)
-      userStore.setUserInfo(userData.user)
-      // 存到缓存
-      storage.set('token', userData.token)
-      router.push({
-        path: '/'
-      })
+      if (res.code === 200) {
+        const userData = res.data
+        userStore.setToken(userData.token)
+        userStore.setUserInfo(userData.user)
+        // 存到缓存
+        storage.set('token', userData.token)
+        router.push({
+          path: '/'
+        })
+      }
       loading.value = false
     })
     .catch(() => {
