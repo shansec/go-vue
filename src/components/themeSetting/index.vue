@@ -83,22 +83,19 @@ const changeThemeColor = (val) => {
 
 <template>
   <div class="m-theme-setting">
-<!--    <div class="theme-fix">-->
-<!--      <div-->
-<!--        class="item"-->
-<!--        @click="openThemeSetting"-->
-<!--      >-->
-<!--        <el-icon-->
-<!--          size="30"-->
-<!--          :color="settingStore.themeColor"-->
-<!--        ><brush /></el-icon>-->
-<!--        <span :style="{ color: settingStore.themeColor }">主题设置</span>-->
-<!--      </div>-->
-<!--    </div>-->
-    <el-drawer
-      v-model="drawer"
-      size="300px"
-    >
+    <!--    <div class="theme-fix">-->
+    <!--      <div-->
+    <!--        class="item"-->
+    <!--        @click="openThemeSetting"-->
+    <!--      >-->
+    <!--        <el-icon-->
+    <!--          size="30"-->
+    <!--          :color="settingStore.themeColor"-->
+    <!--        ><brush /></el-icon>-->
+    <!--        <span :style="{ color: settingStore.themeColor }">主题设置</span>-->
+    <!--      </div>-->
+    <!--    </div>-->
+    <el-drawer v-model="drawer" size="300px">
       <template #header>
         <h3>主题设置</h3>
       </template>

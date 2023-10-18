@@ -19,7 +19,7 @@ const rules = reactive({
   account: [{ required: true, message: '请输入账号', trigger: 'blur' }],
   password: [{ required: true, message: '请输入密码', trigger: 'blur' }]
 })
-const submitForm = async() => {
+const submitForm = async () => {
   loading.value = true
   User.login(loginForm.account, loginForm.password)
     .then((res) => {
@@ -41,10 +41,7 @@ const submitForm = async() => {
 
 <template>
   <div class="avatar_box">
-    <img
-      src="@/assets/go-vue.png"
-      alt="头像"
-    >
+    <img src="@/assets/go-vue.png" alt="头像" />
     <h2 class="title">Go-Vue</h2>
   </div>
   <el-form
@@ -77,7 +74,7 @@ const submitForm = async() => {
         type="primary"
         class="login_btn"
         @click="submitForm()"
-      >登录
+        >登录
       </el-button>
     </el-form-item>
   </el-form>
