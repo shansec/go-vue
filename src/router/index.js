@@ -9,12 +9,14 @@ export const constantRoutes = [
   },
   {
     path: '/login',
+    name: 'Login',
     component: () => import('@/views/login/index.vue'),
     hidden: true,
     meta: { title: '登录' }
   },
   {
     path: '/',
+    name: 'Home',
     component: Layout,
     redirect: '/home',
     hidden: true,
@@ -22,7 +24,6 @@ export const constantRoutes = [
       {
         path: 'home',
         component: () => import('@/views/home/index.vue'),
-        name: 'home',
         meta: { title: '首页', icon: 'icon-yuzhiyibiaopan', affix: true }
       }
     ]

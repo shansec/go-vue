@@ -1,38 +1,40 @@
-import { defineConfig } from 'vite'
+import { defineConfig, loadEnv } from 'vite'
 import vue from '@vitejs/plugin-vue'
 import path from 'path'
 
-export default defineConfig({
-  plugins: [vue()],
-  resolve: {
-    alias: {
-      '@': path.resolve(__dirname, './src')
-    }
-  },
-  server: {
-    https: false,
-    port: 5157,
-    open: true,
-    cors: false,
-    proxy: {
-      '/api': {
-        // target: 'http://localhost:8080',
-        target:
-          'https://symmetrical-space-telegram-q4jp9rvjx5xf65wp-8080.app.github.dev/',
-        changeOrigin: true,
-        rewrite: (path) => path.replace(/^\/api/, '')
-      }
-    }
-  },
-  build: {
-    rollupOptions: {
-      input: {
-        main: path.resolve(__dirname, 'index.html')
+export default defineConfig(({ command, mode }) => {
+  const env = loadEnv(mode, process.cwd(), '')
+
+  return {
+    plugins: [vue()],
+    resolve: {
+      alias: {
+        '@': path.resolve(__dirname, './src')
       }
     },
-    target: 'es2015',
-    sourcemap: true,
-    chunkSizeWarningLimit: 2000,
-    reportCompressedSize: false
+    server: {
+      https: false,
+      // port: env.VITE_CLI_PORT,
+      open: true,
+      cors: false,
+      proxy: {
+        [env.VITE_BASE_API]: {
+          target: `${env.VITE_BASE_PATH}`,
+          changeOrigin: true,
+          rewrite: path => path.replace(new RegExp('^' + env.VITE_BASE_API), '')
+        },
+      }
+    },
+    build: {
+      rollupOptions: {
+        input: {
+          main: path.resolve(__dirname, 'index.html')
+        }
+      },
+      target: 'es2015',
+      sourcemap: true,
+      chunkSizeWarningLimit: 2000,
+      reportCompressedSize: false
+    }
   }
 })
