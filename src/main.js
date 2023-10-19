@@ -12,6 +12,7 @@ import router from './router/index.js'
 import pinia from './store/index.js'
 import App from './App.vue'
 
+import './permission'
 // 引入 iconfont 图标
 import '@/assets/iconfont/iconfont.css'
 import '@/assets/iconfont/iconfont.js'

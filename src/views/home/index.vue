@@ -1,9 +1,9 @@
-<script lang="ts" setup>
+<script lang="js" setup>
 import { useUserStore } from '@/store/modules/user.js'
 import { reactive, ref } from 'vue'
 
 const userStore = useUserStore()
-const userInfo = reactive<object>(userStore.getUserInfo)
+const userInfo = reactive(userStore.getUserInfo)
 const labelList = ref([
   { id: 1, value: '读书' },
   { id: 1, value: '敲代码' },

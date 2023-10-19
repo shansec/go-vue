@@ -1,4 +1,4 @@
-<script lang="ts" setup>
+<script lang="js" setup>
 import { computed } from 'vue'
 import { MyHeader, Sidebar, Main } from './components/index.js'
 import ThemeSetting from '@/components/themeSetting/index.vue'

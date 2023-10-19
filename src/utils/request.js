@@ -1,6 +1,7 @@
 import axios from 'axios'
 import { useUserStore } from '@/store/modules/user.js'
 import { ElMessage } from 'element-plus'
+import storage from '@/utils/storage'
 
 const service = axios.create({
   baseURL: '/api',
@@ -10,10 +11,10 @@ const service = axios.create({
 // request interceptors 接口请求拦截
 service.interceptors.request.use(
   (config) => {
-    const userStore = useUserStore()
+    const token = storage.get('token')
 
     config.headers = {
-      'x-token': userStore.token,
+      'x-token': token,
       ...config.headers
     }
     return config
@@ -30,7 +31,7 @@ service.interceptors.response.use(
     if (response.headers['new-token']) {
       userStore.setToken(response.headers['new-token'])
     }
-    if (response.data.code === 0) {
+    if (response.data.code === 200) {
       ElMessage({
         message: response.data.msg,
         type: 'success'

@@ -1,10 +1,11 @@
 <script lang="ts" setup>
 import { useRouter } from 'vue-router'
+import { reactive, ref } from 'vue'
 import { ElMessage, ElMessageBox } from 'element-plus'
 
 import { useUserStore } from '@/store/modules/user.js'
-import { reactive, ref } from 'vue'
 import User from '@/api/User.js'
+import storage from '@/utils/storage'
 
 const router = useRouter()
 const userStore = useUserStore()
@@ -32,7 +33,7 @@ const logout = () => {
   })
     .then(() => {
       // 退出登录清除存储的数据
-      window.localStorage.clear()
+      storage.clear()
       // 设置 token 为空
       userStore.setInfoToNUll()
       router.replace('/login')

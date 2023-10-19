@@ -9,7 +9,7 @@ import Logo from '@/layout/components/SideBar/components/Logo.vue'
 const route = useRoute()
 const settingStore = useSettingStore()
 const collapsed = computed(() => settingStore.collapsed)
-const showLogo = computed(() => settingStore.themeConfig.showLogo)
+const showLogo = computed(() => settingStore.showLogo)
 
 const activeMenu = computed(() => {
   const { meta, path } = route
@@ -31,9 +31,9 @@ const activeMenu = computed(() => {
         :default-active="activeMenu"
         background-color="#191a23"
         text-color="#fff"
-        :active-text-color="settingStore.themeConfig.themeColor"
+        :active-text-color="settingStore.themeColor"
         :collapse-transition="false"
-        :unique-opened="settingStore.themeConfig.uniqueOpened"
+        :unique-opened="settingStore.uniqueOpened"
         class="el-menu-vertical-demo"
         :collapse="collapsed"
       >
