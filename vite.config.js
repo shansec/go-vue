@@ -21,8 +21,9 @@ export default defineConfig(({ command, mode }) => {
         [env.VITE_BASE_API]: {
           target: `${env.VITE_BASE_PATH}`,
           changeOrigin: true,
-          rewrite: path => path.replace(new RegExp('^' + env.VITE_BASE_API), '')
-        },
+          rewrite: (path) =>
+            path.replace(new RegExp('^' + env.VITE_BASE_API), '')
+        }
       }
     },
     build: {

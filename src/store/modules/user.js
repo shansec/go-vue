@@ -33,16 +33,17 @@ export const useUserStore = defineStore({
     },
     getUserInformation() {
       return new Promise((resolve, reject) => {
-        User.getUserInfo().then((res) => {
-          if (!res || !res.data) {
-            this.setUserInfo()
-            resolve()
-          }
-          const user = res.data.user
-          this.setUserInfo(user)
-          resolve(res)
-        })
-          .catch(error => {
+        User.getUserInfo()
+          .then((res) => {
+            if (!res || !res.data) {
+              this.setUserInfo()
+              resolve()
+            }
+            const user = res.data.user
+            this.setUserInfo(user)
+            resolve(res)
+          })
+          .catch((error) => {
             reject(error)
           })
       })

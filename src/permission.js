@@ -11,7 +11,7 @@ NProgress.configure({ showSpinner: false })
 
 const whiteList = ['/login']
 
-router.beforeEach(async(to, from) => {
+router.beforeEach(async (to, from) => {
   NProgress.start()
   document.title = getPageTitle(to.meta.title)
   const userStore = useUserStore(pinia)
