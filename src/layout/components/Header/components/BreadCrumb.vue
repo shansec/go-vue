@@ -1,4 +1,4 @@
-<script lang="ts" setup>
+<script lang="js" setup>
 import { useRoute, useRouter } from 'vue-router'
 import { computed } from 'vue'
 
@@ -23,7 +23,7 @@ const handleLink = (item) => {
     <el-breadcrumb-item
       v-if="matchRoute[0].meta.title !== '首页'"
       key="homepage"
-      :to="{ path: '/home' }"
+      :to="{ path: '/dashboard' }"
     >
       <div class="breadcrumb-item">
         <span class="breadcrumb-title">首页</span>

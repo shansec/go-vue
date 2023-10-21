@@ -1,4 +1,4 @@
-<script lang="ts" setup>
+<script lang="js" setup>
 import { ref } from 'vue'
 import { resolve } from 'path-browserify'
 import { isExternal } from '@/utils/validate.js'

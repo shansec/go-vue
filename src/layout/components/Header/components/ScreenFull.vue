@@ -1,4 +1,4 @@
-<script lang="ts" setup>
+<script lang="js" setup>
 import { useFullscreen } from '@vueuse/core'
 const { toggle, isFullscreen } = useFullscreen()
 </script>

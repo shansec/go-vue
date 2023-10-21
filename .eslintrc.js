@@ -12,6 +12,7 @@ module.exports = {
   extends: ['plugin:vue/recommended', 'eslint:recommended'],
   rules: {
     'vue/no-v-model-argument': 0,
+    'vue/no-mutating-props': 0,
     'vue/no-v-for-template-key': 0,
     'vue/no-multiple-template-root': 0,
     'vue/no-template-shadow': 0,

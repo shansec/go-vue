@@ -1,4 +1,4 @@
-<script lang="ts" setup>
+<script lang="js" setup>
 import { useRoute } from 'vue-router'
 import { useTagsSetting } from '@/store/modules/tags.js'
 

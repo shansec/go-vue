@@ -1,4 +1,4 @@
-<script lang="ts" setup>
+<script lang="js" setup>
 import BreadCrumb from '@/layout/components/Header/components/BreadCrumb.vue'
 import CollapseIcon from '@/layout/components/Header/components/CollapseIcon.vue'
 </script>

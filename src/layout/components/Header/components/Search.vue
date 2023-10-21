@@ -1,4 +1,4 @@
-<script lang="ts" setup>
+<script lang="js" setup>
 import { onMounted, ref, watch } from 'vue'
 import { useRouter } from 'vue-router'
 

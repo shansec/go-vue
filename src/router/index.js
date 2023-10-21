@@ -16,15 +16,28 @@ export const constantRoutes = [
   },
   {
     path: '/',
-    name: 'Home',
     component: Layout,
-    redirect: '/home',
+    redirect: '/dashboard',
     hidden: true,
     children: [
       {
-        path: 'home',
-        component: () => import('@/views/home/index.vue'),
+        path: 'dashboard',
+        name: 'Dashboard',
+        component: () => import('@/views/dashboard/index.vue'),
         meta: { title: '首页', icon: 'icon-yuzhiyibiaopan', affix: true }
+      }
+    ]
+  },
+  {
+    path: '/profile',
+    component: Layout,
+    redirect: '/profile/index',
+    children: [
+      {
+        path: 'index',
+        name: 'Profile',
+        component: () => import('@/views/profile/index.vue'),
+        meta: { title: '个人设置', icon: 'icon-leidatu', affix: false }
       }
     ]
   },

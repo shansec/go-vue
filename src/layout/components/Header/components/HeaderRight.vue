@@ -1,13 +1,13 @@
-<script lang="ts" setup>
+<script lang="js" setup>
 import Avatar from '@/layout/components/Header/components/Avatar.vue'
 import Setting from '@/layout/components/Header/components/Setting.vue'
 import ScreenFull from '@/layout/components/Header/components/ScreenFull.vue'
-// import Search from '@/layout/components/Header/components/HeaderRight/Search.vue'
+// import Search from '@/layout/components/Header/components/Search.vue'
 </script>
 
 <template>
   <div class="m-tool-right">
-    <!-- <Search class="item-children" /> -->
+    <!--    <Search class="item-children" />-->
     <ScreenFull class="item-children" />
     <Setting class="item-children" />
     <Avatar class="item-children" />

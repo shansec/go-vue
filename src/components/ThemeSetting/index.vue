@@ -4,7 +4,7 @@ import { computed, ref } from 'vue'
 import { useSettingStore } from '@/store/modules/settings.js'
 import { THEME_COLOR } from '@/config/index.js'
 
-import SwitchDark from '@/components/switchDark/index.vue'
+import SwitchDark from '@/components/SwitchDark/index.vue'
 
 const settingStore = useSettingStore()
 // 保持一个子菜单打开
