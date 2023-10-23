@@ -1,12 +1,12 @@
 <script lang="js" setup>
-import { onMounted, reactive, ref } from 'vue'
-// import userAvatar from './components/userAvatar.vue'
-// import userInfo from './components/userInfo.vue'
-// import resetPwd from './components/resetPwd.vue'
+import { onMounted, ref } from 'vue'
+import userAvatar from './components/userAvatar.vue'
+import userInfo from './components/userInfo.vue'
+import resetPwd from './components/resetPwd.vue'
 import BasicLayout from '@/components/BasicLayout/index.vue'
 import User from '@/api/User'
 
-const user = reactive({})
+const user = ref({})
 const activeTab = ref('userinfo')
 const roleName = ref(null)
 const deptName = ref(null)
@@ -20,6 +20,7 @@ const getUser = () => {
 }
 onMounted(() => {
   getUser()
+  console.log(user.value)
 })
 </script>
 
@@ -33,10 +34,10 @@ onMounted(() => {
               <span>个人信息</span>
             </div>
             <div>
-              <!--              <div class="text-center">-->
-              <!--                <userAvatar :user="user" />-->
-              <!--              </div>-->
-              <ul class="list-group list-group-striped">
+              <div class="text-center">
+                <userAvatar :user="user" />
+              </div>
+              <ul class="list-group">
                 <li class="list-group-item">
                   <svg-icon icon-class="user" />用户名称
                   <div class="pull-right">{{ user.nickName }}</div>
@@ -72,10 +73,10 @@ onMounted(() => {
             </div>
             <el-tabs v-model="activeTab">
               <el-tab-pane label="基本资料" name="userinfo">
-                <!--                <userInfo :user="user" />-->
+                <userInfo :user="user" />
               </el-tab-pane>
               <el-tab-pane label="修改密码" name="resetPwd">
-                <!--                <resetPwd :user="user" />-->
+                <resetPwd :user="user" />
               </el-tab-pane>
             </el-tabs>
           </el-card>
@@ -86,11 +87,36 @@ onMounted(() => {
 </template>
 
 <style lang="scss" scoped>
-.list-group-item {
-  padding: 18px 0;
-}
+.box-card {
+  .clearfix {
+    font-size: 18px;
+  }
 
-.svg-icon {
-  margin-right: 5px;
+  .text-center {
+    text-align: center;
+  }
+
+  .list-group {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    padding: 0;
+    width: 100%;
+    flex-direction: column;
+
+    .list-group-item {
+      padding: 18px 0;
+      width: 100%;
+      border-top: 1px solid #e7eaec;
+
+      .svg-icon {
+        margin-right: 5px;
+      }
+
+      .pull-right {
+        float: right;
+      }
+    }
+  }
 }
 </style>

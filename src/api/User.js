@@ -23,7 +23,20 @@ export default class User {
     return post('/user/modifyPassword', data)
   }
 
+  /**
+   * 获取用户信息
+   * @returns user
+   */
   static async getUserInfo() {
     return get('/user/getUserInfo')
+  }
+
+  /**
+   * 修改用户信息
+   * @param data 包含了用户信息
+   * @returns string
+   */
+  static async updateUserInfo(data) {
+    return post('/user/updateUserInfo', data)
   }
 }
