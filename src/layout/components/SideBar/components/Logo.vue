@@ -1,19 +1,25 @@
-<script lang="ts" setup>
+<script lang="js" setup>
 import { computed } from 'vue'
+import { useRouter } from 'vue-router'
 import { useSettingStore } from '@/store/modules/settings.js'
 
-const settingStore = useSettingStore()
-const isCollaps = computed(() => settingStore.collapsed)
 defineProps({
   collapsed: {
     type: Boolean,
     required: true
   }
 })
+
+const router = useRouter()
+const settingStore = useSettingStore()
+const isCollaps = computed(() => settingStore.collapsed)
+const goHome = () => {
+  router.push({ path: '/' })
+}
 </script>
 
 <template>
-  <div :class="isCollaps ? 'collapsed_logo' : 'logo'">
+  <div :class="isCollaps ? 'collapsed_logo' : 'logo'" @click="goHome">
     <img src="@/assets/go-vue.png" alt="logo" />
     <span v-if="!collapsed">Go-Vue</span>
   </div>
@@ -27,6 +33,7 @@ defineProps({
   padding: 0 20px;
   height: 50px;
   background-color: #191a23;
+  cursor: pointer;
 
   img {
     margin-right: 10px;
@@ -49,6 +56,7 @@ defineProps({
   padding: 0 20px;
   height: 50px;
   background-color: #191a23;
+  cursor: pointer;
 
   img {
     width: 40px;

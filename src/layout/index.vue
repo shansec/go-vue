@@ -1,7 +1,7 @@
 <script lang="js" setup>
 import { computed } from 'vue'
 import { MyHeader, Sidebar, Main } from './components/index.js'
-import ThemeSetting from '@/components/themeSetting/index.vue'
+import ThemeSetting from '@/components/ThemeSetting/index.vue'
 import { useSettingStore } from '@/store/modules/settings.js'
 
 const settingStore = useSettingStore()

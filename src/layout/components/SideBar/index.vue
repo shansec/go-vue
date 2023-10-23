@@ -1,4 +1,4 @@
-<script lang="ts" setup>
+<script lang="js" setup>
 import { computed } from 'vue'
 import { useRoute } from 'vue-router'
 import { constantRoutes } from '@/router/index.js'

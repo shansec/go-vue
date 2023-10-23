@@ -11,36 +11,36 @@ NProgress.configure({ showSpinner: false })
 
 const whiteList = ['/login']
 
-router.beforeEach(async (to, from, next) => {
+router.beforeEach(async (to, from) => {
   NProgress.start()
   document.title = getPageTitle(to.meta.title)
   const userStore = useUserStore(pinia)
   const hasToken = storage.get('token')
   if (hasToken) {
     if (to.path === '/login') {
-      next({ path: '/' })
       NProgress.done()
+      return { name: 'Dashboard' }
     } else {
       const hasRoles = userStore.roles && userStore.roles.length > 0
-      console.log(hasRoles)
       if (hasRoles) {
-        next()
+        return true
       } else {
         try {
-          userStore.getUserInformation()
+          await userStore.getUserInformation()
+          return true
         } catch (error) {
           Message.error(error || 'has Error')
-          next('/login')
           NProgress.done()
+          return { name: 'Login' }
         }
       }
     }
   } else {
     if (whiteList.indexOf(to.path) !== -1) {
-      next()
+      return true
     } else {
-      next(`/login`)
       NProgress.done()
+      return { name: 'Login' }
     }
   }
 })

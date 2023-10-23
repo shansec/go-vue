@@ -1,4 +1,4 @@
-<script lang="ts" setup>
+<script lang="js" setup>
 import { useWrapComponents } from '@/hooks/useWrapComponents.js'
 </script>
 

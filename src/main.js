@@ -13,13 +13,18 @@ import pinia from './store/index.js'
 import App from './App.vue'
 
 import './permission'
+import './icons'
+import 'virtual:svg-icons-register'
+
 // 引入 iconfont 图标
 import '@/assets/iconfont/iconfont.css'
 import '@/assets/iconfont/iconfont.js'
+import SvgIcon from '@/components/SvgIcon/index.vue'
 
 const app = createApp(App)
 registerEleIcon(app)
 
+app.component('SvgIcon', SvgIcon)
 app.use(pinia)
 app.use(router)
 app.use(ElementPlus).mount('#app')

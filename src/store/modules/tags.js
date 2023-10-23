@@ -4,7 +4,7 @@ import router from '@/router/index.js'
 export const useTagsSetting = defineStore({
   id: 'tagsSetting',
   state: () => ({
-    tagViewValue: '/home',
+    tagViewValue: '/dashboard',
     tagViews: []
   }),
   persist: {
@@ -50,8 +50,8 @@ export const useTagsSetting = defineStore({
       this.tagViews = this.tagViews.filter((item) => item.meta.affix)
     },
     goHome() {
-      this.tagViewValue = '/home'
-      router.push('/home')
+      this.tagViewValue = '/dashboard'
+      router.push('/dashboard')
     }
   }
 })

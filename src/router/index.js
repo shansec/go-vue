@@ -9,6 +9,7 @@ export const constantRoutes = [
   },
   {
     path: '/login',
+    name: 'Login',
     component: () => import('@/views/login/index.vue'),
     hidden: true,
     meta: { title: '登录' }
@@ -16,14 +17,27 @@ export const constantRoutes = [
   {
     path: '/',
     component: Layout,
-    redirect: '/home',
+    redirect: '/dashboard',
     hidden: true,
     children: [
       {
-        path: 'home',
-        component: () => import('@/views/home/index.vue'),
-        name: 'home',
-        meta: { title: '首页', icon: 'icon-yuzhiyibiaopan', affix: true }
+        path: 'dashboard',
+        name: 'Dashboard',
+        component: () => import('@/views/dashboard/index.vue'),
+        meta: { title: '首页', icon: 'user', affix: true }
+      }
+    ]
+  },
+  {
+    path: '/profile',
+    component: Layout,
+    redirect: '/profile/index',
+    children: [
+      {
+        path: 'index',
+        name: 'Profile',
+        component: () => import('@/views/profile/index.vue'),
+        meta: { title: '个人设置', icon: 'user', affix: false }
       }
     ]
   },

@@ -1,4 +1,4 @@
-<script lang="ts" setup>
+<script lang="js" setup>
 import { useSettingStore } from '@/store/modules/settings.js'
 
 import HeaderLeft from '@/layout/components/Header/components/HeaderLeft.vue'
