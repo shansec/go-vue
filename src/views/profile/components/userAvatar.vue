@@ -179,8 +179,6 @@ const realTime = (data) => {
   height: 200px;
   border-radius: 50%;
   box-shadow: 0 0 4px #ccc;
-  box-shadow: 0 0 4px #ccc;
-  transform: translate(50%, -50%);
   transform: translate(50%, -50%);
 }
 </style>
