@@ -6,8 +6,9 @@ import { Avatar, Lock } from '@element-plus/icons-vue'
 import User from '@/api/User.js'
 import { useUserStore } from '@/store/modules/user.js'
 import storage from '@/utils/storage'
+import { errorMsg, successMsg } from '@/utils/message'
 
-const ruleFormRef = ref('ruleFormRef')
+const ruleFormRef = ref(null)
 const loading = ref(false)
 const loginForm = reactive({
   account: 'admin',
@@ -21,23 +22,31 @@ const rules = reactive({
 })
 const submitForm = async () => {
   loading.value = true
-  User.login(loginForm.account, loginForm.password)
-    .then((res) => {
-      if (res.code === 200) {
-        const userData = res.data
-        userStore.setToken(userData.token)
-        userStore.setUserInfo(userData.user)
-        // 存到缓存
-        storage.set('token', userData.token)
-        router.push({
-          path: '/'
+  ruleFormRef.value.validate((value) => {
+    if (value) {
+      User.login(loginForm.account, loginForm.password)
+        .then((res) => {
+          if (res.code === 200) {
+            const userData = res.data
+            userStore.setToken(userData.token)
+            userStore.setUserInfo(userData.user)
+            // 存到缓存
+            storage.set('token', userData.token)
+            successMsg('登录成功')
+            router.push({
+              path: '/'
+            })
+          }
+          loading.value = false
         })
-      }
+        .catch(() => {
+          loading.value = false
+        })
+    } else {
+      errorMsg('输入正确的账号密码才能提交哦~')
       loading.value = false
-    })
-    .catch(() => {
-      loading.value = false
-    })
+    }
+  })
 }
 </script>
 

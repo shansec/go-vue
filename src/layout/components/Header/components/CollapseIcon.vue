@@ -11,9 +11,13 @@ const changeCollapsed = () => {
 
 <template>
   <div class="folder">
-    <el-icon :size="20">
-      <Expand v-if="collapsed" @click="changeCollapsed" />
-      <Fold v-else @click="changeCollapsed" />
+    <el-icon :size="22">
+      <svg-icon
+        v-if="collapsed"
+        icon-class="header-expand"
+        @click="changeCollapsed"
+      />
+      <svg-icon v-else icon-class="header-fold" @click="changeCollapsed" />
     </el-icon>
   </div>
 </template>

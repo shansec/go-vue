@@ -1,14 +1,25 @@
 <script lang="js" setup>
+import { reactive, ref } from 'vue'
+import { useRouter } from 'vue-router'
 import User from '@/api/User'
-import { reactive } from 'vue'
+import { useUserStore } from '@/store/modules/user'
+import storage from '@/utils/storage'
+import { successMsg } from '@/utils/message'
 
+const router = useRouter()
+const userStore = useUserStore()
+
+const userInfo = ref(userStore.getUserInfo)
+const form = ref(null)
 const user = reactive({
-  oldPassword: '',
+  uid: userInfo.value.ID,
+  account: userInfo.value.userName,
+  password: '',
   newPassword: '',
   confirmPassword: ''
 })
 const equalToPassword = (rule, value, callback) => {
-  if (this.user.newPassword !== value) {
+  if (user.newPassword !== value) {
     callback(new Error('两次输入的密码不一致'))
   } else {
     callback()
@@ -16,10 +27,10 @@ const equalToPassword = (rule, value, callback) => {
 }
 
 const rules = reactive({
-  oldPassword: [{ required: true, message: '旧密码不能为空', trigger: 'blur' }],
+  password: [{ required: true, message: '旧密码不能为空', trigger: 'blur' }],
   newPassword: [
     { required: true, message: '新密码不能为空', trigger: 'blur' },
-    { min: 6, max: 20, message: '长度在 6 到 20 个字符', trigger: 'blur' }
+    { min: 5, max: 20, message: '长度在 6 到 20 个字符', trigger: 'blur' }
   ],
   confirmPassword: [
     { required: true, message: '确认密码不能为空', trigger: 'blur' },
@@ -28,23 +39,23 @@ const rules = reactive({
 })
 
 const submit = async () => {
-  User.modifyPassword(user)
-    .then(() => {
-      // // 退出登录清除存储的数据
-      // window.localStorage.clear()
-      // // 设置 token 为空
-      // userStore.setInfoToNUll()
-      // router.replace('/login')
-    })
-    .catch(() => {
-      console.log('修改密码失败')
-    })
+  form.value.validate((value) => {
+    if (value) {
+      User.modifyPassword(user)
+        .then((response) => {
+          if (response.code === 200) {
+            storage.clear()
+            successMsg('修改密码成功，请重新登录！')
+            router.push({ path: '/login' })
+          }
+        })
+        .catch(() => {})
+    }
+  })
 }
 
 const close = () => {
-  // this.$store.dispatch('tagsView/delView', this.$route)
-  // this.$router.push({ path: '/index' })
-  console.log('close')
+  router.push({ path: '/dashboard' })
 }
 </script>
 
@@ -52,7 +63,7 @@ const close = () => {
   <el-form ref="form" :model="user" :rules="rules" label-width="80px">
     <el-form-item label="旧密码" prop="oldPassword">
       <el-input
-        v-model="user.oldPassword"
+        v-model="user.password"
         placeholder="请输入旧密码"
         type="password"
       />

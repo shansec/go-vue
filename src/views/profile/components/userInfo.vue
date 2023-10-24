@@ -3,8 +3,9 @@ import { ref } from 'vue'
 import { useRouter } from 'vue-router'
 import User from '@/api/User'
 import storage from '@/utils/storage'
+import { errorMsg, successMsg } from '@/utils/message'
 
-defineProps({
+const props = defineProps({
   user: {
     type: Object,
     default: null
@@ -21,12 +22,12 @@ const rules = {
     }
   ],
   phone: [
-    { required: true, message: '手机号码不能为空', trigger: 'blur' },
-    {
-      pattern: /^1[3|4|5|6|7|8|9][0-9]\d{8}$/,
-      message: '请输入正确的手机号码',
-      trigger: 'blur'
-    }
+    { required: true, message: '手机号码不能为空', trigger: 'blur' }
+    // {
+    //   pattern: /^1[3|4|5|6|7|8|9][0-9]\d{8}$/,
+    //   message: '请输入正确的手机号码',
+    //   trigger: 'blur'
+    // }
   ]
 }
 const form = ref(null)
@@ -34,20 +35,20 @@ const router = useRouter()
 const submit = () => {
   form.value.validate((valid) => {
     if (valid) {
-      User.updateUserInfo(this.user).then((response) => {
-        console.log(response)
+      User.updateUserInfo(props.user).then((response) => {
         if (response.code === 200) {
-          console.log('更新成功')
+          storage.clear()
+          successMsg(`${response.msg},请重新登录！`)
+          router.push({ path: '/login' })
         } else {
-          console.log('更新失败')
+          errorMsg(response.msg)
         }
       })
     }
   })
 }
 const close = () => {
-  storage.clear()
-  router.push({ path: '/login' })
+  router.push({ path: '/dashboard' })
 }
 </script>
 
