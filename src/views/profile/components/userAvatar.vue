@@ -1,6 +1,7 @@
 <script lang="js" setup>
-import { reactive, ref } from 'vue'
+import { ref } from 'vue'
 import { useUserStore } from '@/store/modules/user'
+import 'vue-cropper/dist/index.css'
 import { VueCropper } from 'vue-cropper'
 
 defineProps({
@@ -12,7 +13,7 @@ defineProps({
 const open = ref(false)
 const title = ref('修改头像')
 const userStore = useUserStore()
-const options = reactive({
+const options = ref({
   // 裁剪图片的地址
   img: userStore.userInfo.headerImg,
   // 是否默认生成截图框
@@ -24,7 +25,7 @@ const options = reactive({
   // 固定截图框大小 不允许改变
   fixedBox: true
 })
-const previews = reactive({})
+const previews = ref({})
 const cropper = ref(null)
 
 // 编辑头像
@@ -126,33 +127,29 @@ const realTime = (data) => {
           >
             <el-button size="small">
               上传
-              <i class="el-icon-upload el-icon--right" />
+              <el-icon :size="15"><UploadFilled /></el-icon>
             </el-button>
           </el-upload>
         </el-col>
         <el-col :lg="{ span: 1, offset: 2 }" :md="2">
-          <el-button icon="el-icon-plus" size="small" @click="changeScale(1)" />
+          <el-button size="small" @click="changeScale(1)">
+            <el-icon :size="15"><Plus /></el-icon>
+          </el-button>
         </el-col>
         <el-col :lg="{ span: 1, offset: 1 }" :md="2">
-          <el-button
-            icon="el-icon-minus"
-            size="small"
-            @click="changeScale(-1)"
-          />
+          <el-button size="small" @click="changeScale(-1)">
+            <el-icon :size="15"><Minus /></el-icon>
+          </el-button>
         </el-col>
         <el-col :lg="{ span: 1, offset: 1 }" :md="2">
-          <el-button
-            icon="el-icon-refresh-left"
-            size="small"
-            @click="rotateLeft()"
-          />
+          <el-button size="small" @click="rotateLeft()">
+            <el-icon :size="15"><RefreshLeft /></el-icon>
+          </el-button>
         </el-col>
         <el-col :lg="{ span: 1, offset: 1 }" :md="2">
-          <el-button
-            icon="el-icon-refresh-right"
-            size="small"
-            @click="rotateRight()"
-          />
+          <el-button size="small" @click="rotateRight()">
+            <el-icon :size="15"><RefreshRight /></el-icon>
+          </el-button>
         </el-col>
         <el-col :lg="{ span: 2, offset: 6 }" :md="2">
           <el-button type="primary" size="small" @click="uploadImg()"
@@ -172,5 +169,16 @@ const realTime = (data) => {
 
 .img-circle {
   border-radius: 50%;
+}
+
+.avatar-upload-preview {
+  position: absolute;
+  top: 50%;
+  overflow: hidden;
+  width: 200px;
+  height: 200px;
+  border-radius: 50%;
+  box-shadow: 0 0 4px #ccc;
+  transform: translate(50%, -50%);
 }
 </style>

@@ -24,7 +24,7 @@ export const constantRoutes = [
         path: 'dashboard',
         name: 'Dashboard',
         component: () => import('@/views/dashboard/index.vue'),
-        meta: { title: '首页', icon: 'user', affix: true }
+        meta: { title: '首页', icon: 'app-group-fill', affix: true }
       }
     ]
   },
@@ -37,7 +37,7 @@ export const constantRoutes = [
         path: 'index',
         name: 'Profile',
         component: () => import('@/views/profile/index.vue'),
-        meta: { title: '个人设置', icon: 'user', affix: false }
+        meta: { title: '个人设置', icon: 'user-setting', affix: false }
       }
     ]
   },

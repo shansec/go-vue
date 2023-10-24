@@ -14,13 +14,12 @@ const deptName = ref(null)
 const getUser = () => {
   User.getUserInfo().then((response) => {
     user.value = response.data.user
-    roleName.value = 'admin'
-    deptName.value = 'admin'
+    roleName.value = user.value.sysRole.roleName
+    deptName.value = '技术部'
   })
 }
 onMounted(() => {
   getUser()
-  console.log(user.value)
 })
 </script>
 

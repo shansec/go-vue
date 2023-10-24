@@ -1,10 +1,10 @@
 <script lang="js" setup>
+import { computed } from 'vue'
 import { useSettingStore } from '@/store/modules/settings.js'
 
 import HeaderLeft from '@/layout/components/Header/components/HeaderLeft.vue'
 import HeaderRight from '@/layout/components/Header/components/HeaderRight.vue'
 import DynamicTags from '@/layout/components/TagsView/index.vue'
-import { computed } from 'vue'
 
 const settingStore = useSettingStore()
 const showTags = computed(() => settingStore.showTagsView)
