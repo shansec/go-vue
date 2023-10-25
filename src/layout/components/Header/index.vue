@@ -39,10 +39,7 @@ watch(
 </script>
 
 <template>
-  <div
-    class="m-layout-header"
-    :style="headerType"
-  >
+  <div class="m-layout-header" :style="headerType">
     <div class="m-header-inner">
       <HeaderLeft />
       <HeaderRight />
@@ -53,15 +50,16 @@ watch(
 
 <style lang="scss" scoped>
 @import '@/style/variables.module';
+
 .m-layout-header {
   position: fixed;
-  right: 0;
   top: 0;
+  right: 0;
   z-index: 998;
   width: 100%;
   height: 90px;
-  box-shadow: 0 1px 4px #00152914;
   background-color: #fff;
+  box-shadow: 0 1px 4px #00152914;
 
   .m-header-inner {
     display: flex;

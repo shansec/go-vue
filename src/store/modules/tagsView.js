@@ -5,7 +5,7 @@ export const useTagsSetting = defineStore({
   id: 'tagsSetting',
   state: () => ({
     tagViewValue: '/dashboard',
-    tagViews: [],
+    tagViews: []
   }),
   persist: {
     // 开启数据缓存

@@ -8,10 +8,7 @@ import SwitchDark from '@/components/SwitchDark/index.vue'
     <div class="login-box">
       <SwitchDark class="switch_dark" />
       <div class="login-left">
-        <img
-          src="../../assets/login/side-logo.png"
-          alt=""
-        >
+        <img src="../../assets/login/side-logo.png" alt="" />
       </div>
       <div class="login-form">
         <LoginForm />
