@@ -16,7 +16,7 @@ module.exports = {
     'vue/no-v-for-template-key': 0,
     'vue/no-multiple-template-root': 0,
     'vue/no-template-shadow': 0,
-    'vue/max-attributes-per-line': 2,
+    'vue/max-attributes-per-line': 1,
     'vue/singleline-html-element-content-newline': 'off',
     'vue/multiline-html-element-content-newline': 'off',
     'vue/multi-word-component-names': 'off',
@@ -223,7 +223,7 @@ module.exports = {
       }
     ],
     'space-before-blocks': [2, 'always'],
-    'space-before-function-paren': [2, 'always'],
+    'space-before-function-paren': [2, 'never'],
     'space-in-parens': [2, 'never'],
     'space-infix-ops': 2,
     'space-unary-ops': [

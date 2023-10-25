@@ -17,7 +17,11 @@ const changeCollapsed = () => {
         icon-class="header-expand"
         @click="changeCollapsed"
       />
-      <svg-icon v-else icon-class="header-fold" @click="changeCollapsed" />
+      <svg-icon
+        v-else
+        icon-class="header-fold"
+        @click="changeCollapsed"
+      />
     </el-icon>
   </div>
 </template>

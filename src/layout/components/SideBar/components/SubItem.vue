@@ -60,7 +60,10 @@ const resolvePath = (routePath) => {
         </el-menu-item>
       </router-link>
     </template>
-    <el-sub-menu v-else :index="resolvePath(item.path)">
+    <el-sub-menu
+      v-else
+      :index="resolvePath(item.path)"
+    >
       <template #title>
         <el-icon :size="20">
           <svg-icon :icon-class="item.meta.icon" />

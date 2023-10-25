@@ -8,7 +8,11 @@
           </div>
           <div class="gva-top-card-left-dot">{{ weatherInfo }}</div>
           <el-row class="my-8 w-[500px] flex-align">
-            <el-col :span="8" :xs="24" :sm="8">
+            <el-col
+              :span="8"
+              :xs="24"
+              :sm="8"
+            >
               <div class="flex items-center">
                 <el-icon class="dashboard-icon">
                   <sort />
@@ -16,7 +20,11 @@
                 今日流量 (3035)
               </div>
             </el-col>
-            <el-col :span="8" :xs="24" :sm="8">
+            <el-col
+              :span="8"
+              :xs="24"
+              :sm="8"
+            >
               <div class="flex items-center">
                 <el-icon class="dashboard-icon">
                   <avatar />
@@ -24,7 +32,11 @@
                 总用户数 (1001)
               </div>
             </el-col>
-            <el-col :span="8" :xs="24" :sm="8">
+            <el-col
+              :span="8"
+              :xs="24"
+              :sm="8"
+            >
               <div class="flex items-center">
                 <el-icon class="dashboard-icon">
                   <comment />
@@ -40,8 +52,7 @@
                 style="color: #409eff"
                 target="view_window"
                 href="https://github.com/shansec/go-vue"
-                >https://github.com/shansec/go-vue</a
-              >
+              >https://github.com/shansec/go-vue</a>
             </div>
             <div class="gva-top-card-left-item">
               后端模块：
@@ -49,12 +60,15 @@
                 style="color: #409eff"
                 target="view_window"
                 href="https://github.com/shansec/go-vue-admin"
-                >https://github.com/shansec/go-vue-admin</a
-              >
+              >https://github.com/shansec/go-vue-admin</a>
             </div>
           </div>
         </div>
-        <img src="@/assets/dashboard.png" class="gva-top-card-right" alt />
+        <img
+          src="@/assets/dashboard.png"
+          class="gva-top-card-right"
+          alt
+        >
       </div>
     </div>
     <div class="gva-card-box">
@@ -62,10 +76,16 @@
         <div class="gva-card-title">数据统计</div>
         <div class="p-4">
           <el-row :gutter="20">
-            <el-col :xs="24" :sm="18">
+            <el-col
+              :xs="24"
+              :sm="18"
+            >
               <echarts-line />
             </el-col>
-            <el-col :xs="24" :sm="6">
+            <el-col
+              :xs="24"
+              :sm="6"
+            >
               <dashboard-table />
             </el-col>
           </el-row>
@@ -79,10 +99,6 @@
 import EchartsLine from '@/views/dashboard/components/line/index.vue'
 import DashboardTable from '@/views/dashboard/components/table/index.vue'
 import { useWeatherInfo } from '@/views/dashboard/weather'
-
-defineOptions({
-  name: 'Dashboard'
-})
 
 const weatherInfo = useWeatherInfo()
 </script>

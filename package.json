@@ -1,7 +1,21 @@
 {
   "name": "go-vue",
   "private": true,
-  "version": "0.0.0",
+  "version": "1.0.0",
+  "keywords": [
+    "go-vue",
+    "go-vue-admin",
+    "element-plus",
+    "javascript",
+    "pinia",
+    "vue3",
+    "vite"
+  ],
+  "homepage": "https://github.com/shansec/go-vue",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/shansec/go-vue"
+  },
   "scripts": {
     "dev": "vite",
     "build": "vue-tsc && vite build",
@@ -36,8 +50,6 @@
     "@commitlint/config-conventional": "^17.7.0",
     "@vitejs/plugin-vue": "^4.2.3",
     "eslint": "^8.47.0",
-    "eslint-config-prettier": "^9.0.0",
-    "eslint-plugin-prettier": "^5.0.0",
     "eslint-plugin-vue": "^9.17.0",
     "fast-glob": "^3.3.1",
     "husky": "^8.0.3",

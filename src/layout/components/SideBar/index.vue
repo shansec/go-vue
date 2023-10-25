@@ -22,7 +22,10 @@ const activeMenu = computed(() => {
 
 <template>
   <div class="sidebar-container">
-    <Logo v-if="showLogo" :collapsed="collapsed" />
+    <Logo
+      v-if="showLogo"
+      :collapsed="collapsed"
+    />
     <el-scrollbar
       style="height: calc(100% - 50px)"
       wrap-class="scrollbar-wrapper"
