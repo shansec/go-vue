@@ -11,7 +11,7 @@ const showTags = computed(() => settingStore.showTagsView)
 const collapsed = computed(() => settingStore.collapsed)
 const headerType = ref({
   height: '90px',
-  marginLeft: '210px'
+  width: 'calc(100% - 210px)'
 })
 
 watch(
@@ -30,9 +30,9 @@ watch(
   (value) => {
     console.log(value)
     if (value) {
-      headerType.value.marginLeft = '60px'
+      headerType.value.width = 'calc(100% - 60px)'
     } else {
-      headerType.value.marginLeft = '210px'
+      headerType.value.width = 'calc(100% - 210px)'
     }
   }
 )
@@ -56,10 +56,10 @@ watch(
   top: 0;
   right: 0;
   z-index: 998;
-  width: 100%;
   height: 90px;
   background-color: #fff;
   box-shadow: 0 1px 4px #00152914;
+  transition: width 0.28s ease;
 
   .m-header-inner {
     display: flex;
