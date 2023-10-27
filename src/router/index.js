@@ -47,7 +47,7 @@ export const constantRoutes = [
 const router = createRouter({
   // 创建一个 HTML5 历史，即单页面应用程序中最常见的历史记录
   history: createWebHistory(),
-  routes: constantRoutes
+  routes: constantRoutes,
 })
 
 export default router

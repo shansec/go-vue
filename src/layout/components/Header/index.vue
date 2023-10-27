@@ -49,8 +49,6 @@ watch(
 </template>
 
 <style lang="scss" scoped>
-@import '@/style/variables.module';
-
 .m-layout-header {
   position: fixed;
   top: 0;
