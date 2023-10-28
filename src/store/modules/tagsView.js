@@ -15,7 +15,7 @@ export const useTagsSetting = defineStore({
         // 本地存储的名称
         key: 'tagsSetting',
         // 本地存储的位置
-        storage: localStorage
+        storage: sessionStorage
       }
     ]
   },

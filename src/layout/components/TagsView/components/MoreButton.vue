@@ -1,6 +1,6 @@
 <script lang="js" setup>
 import { useRoute } from 'vue-router'
-import { useTagsSetting } from '@/store/modules/tags.js'
+import { useTagsSetting } from '@/store/modules/tagsView.js'
 
 const route = useRoute()
 const tagsSetting = useTagsSetting()

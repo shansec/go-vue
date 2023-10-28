@@ -1,11 +1,19 @@
 <script lang="js" setup>
+import { computed } from 'vue'
 import { useWrapComponents } from '@/hooks/useWrapComponents.js'
+import { useSettingStore } from '@/store/modules/settings'
+
+const settingStore = useSettingStore()
+const showTags = computed(() => settingStore.showTagsView)
 </script>
 
 <template>
-  <div class="app-main">
+  <div
+    class="app-main"
+    :style="showTags ? 'padding-top: 90px' : 'padding-top: 50px'"
+  >
     <router-view v-slot="{ Component, route }">
-      <transition mode="out-in">
+      <transition name="fade-transform" mode="out-in">
         <keep-alive>
           <component
             :is="useWrapComponents(Component, route)"

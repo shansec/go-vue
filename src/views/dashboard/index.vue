@@ -80,10 +80,6 @@ import EchartsLine from '@/views/dashboard/components/line/index.vue'
 import DashboardTable from '@/views/dashboard/components/table/index.vue'
 import { useWeatherInfo } from '@/views/dashboard/weather'
 
-defineOptions({
-  name: 'Dashboard'
-})
-
 const weatherInfo = useWeatherInfo()
 </script>
 
