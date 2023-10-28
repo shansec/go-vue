@@ -1,11 +1,11 @@
 <script lang="js" setup>
-import { computed } from 'vue'
+import { ref } from 'vue'
 import { Sunny, Moon } from '@element-plus/icons-vue'
 import { useSettingStore } from '@/store/modules/settings.js'
 
 const settingStore = useSettingStore()
 // 主题设置
-const idDark = computed(() => settingStore.idDark)
+const idDark = ref(settingStore.idDark)
 const switchDark = () => {
   const body = document.documentElement
   if (idDark.value) {

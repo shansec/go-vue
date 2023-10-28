@@ -1,9 +1,10 @@
 <script lang="js" setup>
-import { reactive, ref } from 'vue'
+import { onMounted, reactive, ref } from 'vue'
 import { useRouter } from 'vue-router'
-import { Avatar, Lock } from '@element-plus/icons-vue'
+import { Avatar } from '@element-plus/icons-vue'
 
 import User from '@/api/User.js'
+import Captcha from '@/api/Captcha'
 import { useUserStore } from '@/store/modules/user.js'
 import storage from '@/utils/storage'
 import { errorMsg, successMsg } from '@/utils/message'
@@ -11,20 +12,27 @@ import { errorMsg, successMsg } from '@/utils/message'
 const ruleFormRef = ref(null)
 const loading = ref(false)
 const loginForm = reactive({
-  account: 'admin',
-  password: 'admin'
+  username: 'admin',
+  password: 'admin',
+  captcha: '',
+  captchaId: '',
 })
+const captcha = ref({})
 const router = useRouter()
 const userStore = useUserStore()
 const rules = reactive({
-  account: [{ required: true, message: '请输入账号', trigger: 'blur' }],
-  password: [{ required: true, message: '请输入密码', trigger: 'blur' }]
+  username: [{ required: true, message: '请输入账号', trigger: 'blur' }],
+  password: [{ required: true, message: '请输入密码', trigger: 'blur' }],
+  captcha: [
+    { required: true, message: '请输入验证码', trigger: 'blur' },
+    { min: 6, max: 6, message: '请输入6位验证码', trigger: 'blur' }
+  ],
 })
-const submitForm = async () => {
+const submitForm = async() => {
   loading.value = true
   ruleFormRef.value.validate((value) => {
     if (value) {
-      User.login(loginForm.account, loginForm.password)
+      User.login(loginForm)
         .then((res) => {
           if (res.code === 200) {
             const userData = res.data
@@ -36,6 +44,9 @@ const submitForm = async () => {
             router.push({
               path: '/'
             })
+          } else {
+            errorMsg(res.msg)
+            requestCaptcha()
           }
           loading.value = false
         })
@@ -43,16 +54,35 @@ const submitForm = async () => {
           loading.value = false
         })
     } else {
-      errorMsg('输入正确的账号密码才能提交哦~')
       loading.value = false
     }
   })
 }
+const requestCaptcha = () => {
+  Captcha.getCaptcha().then(response => {
+    if (response.code === 200) {
+      captcha.value = response.data
+      loginForm.captchaId = response.data.captchaId
+    } else {
+      errorMsg(response.msg)
+    }
+  })
+    .catch(err => {
+      errorMsg(err)
+    })
+}
+
+onMounted(() => {
+  requestCaptcha()
+})
 </script>
 
 <template>
   <div class="avatar_box">
-    <img src="@/assets/go-vue.png" alt="头像" />
+    <img
+      src="@/assets/go-vue.png"
+      alt="头像"
+    >
     <h2 class="title">Go-Vue</h2>
   </div>
   <el-form
@@ -63,29 +93,49 @@ const submitForm = async () => {
     class="form"
     @keyup.enter="submitForm()"
   >
-    <el-form-item prop="account">
-      <el-input
-        v-model="loginForm.account"
-        :prefix-icon="Avatar"
-        placeholder="请输入用户名"
-      />
-    </el-form-item>
-    <el-form-item prop="password">
-      <el-input
-        v-model="loginForm.password"
-        :prefix-icon="Lock"
-        type="password"
-        placeholder="请输入密码"
-        show-password
-      />
-    </el-form-item>
+    <el-row>
+      <el-col :span="24">
+        <el-form-item prop="username">
+          <el-input
+            v-model="loginForm.username"
+            :suffix-icon="Avatar"
+            placeholder="请输入用户名"
+          />
+        </el-form-item>
+      </el-col>
+    </el-row>
+    <el-row>
+      <el-col :span="24">
+        <el-form-item prop="password">
+          <el-input
+            v-model="loginForm.password"
+            type="password"
+            placeholder="请输入密码"
+            show-password
+          />
+        </el-form-item>
+      </el-col>
+    </el-row>
+    <el-row :gutter="10">
+      <el-col :span="16">
+        <el-form-item prop="captcha">
+          <el-input
+            v-model="loginForm.captcha"
+            placeholder="请输入验证码"
+          />
+        </el-form-item>
+      </el-col>
+      <el-col :span="8">
+        <el-image class="captcha" :src="captcha.picPath" @click="requestCaptcha"/>
+      </el-col>
+    </el-row>
     <el-form-item style="width: 100%">
       <el-button
         :loading="loading"
         type="primary"
         class="login_btn"
         @click="submitForm()"
-        >登录
+      >登录
       </el-button>
     </el-form-item>
   </el-form>

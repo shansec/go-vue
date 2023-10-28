@@ -13,7 +13,10 @@ const showTags = computed(() => settingStore.showTagsView)
     :style="showTags ? 'padding-top: 90px' : 'padding-top: 50px'"
   >
     <router-view v-slot="{ Component, route }">
-      <transition name="fade-transform" mode="out-in">
+      <transition
+        name="fade-transform"
+        mode="out-in"
+      >
         <keep-alive>
           <component
             :is="useWrapComponents(Component, route)"
