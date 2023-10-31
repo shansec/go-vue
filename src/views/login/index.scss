@@ -61,6 +61,21 @@
         }
       }
 
+      .el-row {
+        margin-bottom: 16px;
+        height: 40px;
+
+        .el-col {
+          height: 100%;
+        }
+      }
+
+      .captcha {
+        --tw-bg-opacity: 1 !important;
+
+        background-color: rgb(195 212 242 / var(--tw-bg-opacity))!important;
+      }
+
       :deep .el-input__inner {
         height: 40px;
       }
