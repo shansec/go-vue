@@ -80,7 +80,7 @@ onMounted(() => {
 
 <template>
   <div class="avatar_box">
-    <img src="@/assets/go-vue.png" alt="头像" />
+    <img src="../../../../assets/go-vue.png" alt="头像" />
     <h2 class="title">Go-Vue</h2>
   </div>
   <el-form
@@ -141,5 +141,5 @@ onMounted(() => {
 </template>
 
 <style lang="scss" scoped>
-@import '../index';
+@import '../../index';
 </style>

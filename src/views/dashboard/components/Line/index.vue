@@ -17,8 +17,8 @@ var data = [220, 182, 191, 234, 290, 330, 310, 123, 442, 321, 90, 149]
 var yMax = 500
 var dataShadow = []
 
-// eslint-disable-next-line no-redeclare
-for (var i = 0; i < data.length; i++) {
+// eslint-disable-next-Line no-redeclare
+for (let i = 0; i < data.length; i++) {
   dataShadow.push(yMax)
 }
 

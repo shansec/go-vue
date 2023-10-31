@@ -2,6 +2,7 @@
 import { ref } from 'vue'
 import { resolve } from 'path-browserify'
 import { isExternal } from '@/utils/validate.js'
+import SubItem from '@/layout/components/SideBar/components/SubItem/index.vue'
 
 const props = defineProps({
   item: {
@@ -67,7 +68,7 @@ const resolvePath = (routePath) => {
         </el-icon>
         <span>{{ item.meta && item.meta.title }}</span>
       </template>
-      <sub-item
+      <SubItem
         v-for="child in item.children"
         :key="child.path"
         :item="child"

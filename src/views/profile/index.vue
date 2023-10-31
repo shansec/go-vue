@@ -1,8 +1,8 @@
 <script lang="js" setup>
 import { onMounted, ref } from 'vue'
-import userAvatar from './components/userAvatar.vue'
-import userInfo from './components/userInfo.vue'
-import resetPwd from './components/resetPwd.vue'
+import userAvatar from './components/UserAvatar/index.vue'
+import userInfo from './components/UserInfo/index.vue'
+import resetPwd from './components/ResetPwd/index.vue'
 import BasicLayout from '@/components/BasicLayout/index.vue'
 import User from '@/api/User'
 
