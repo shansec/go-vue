@@ -1,7 +1,7 @@
 <script lang="js" setup>
 import { ref } from 'vue'
 import { useRouter } from 'vue-router'
-import User from '@/api/User'
+import { updateUserInfo } from '@/api/User'
 import storage from '@/utils/storage'
 import { errorMsg, successMsg } from '@/utils/message'
 
@@ -35,7 +35,7 @@ const router = useRouter()
 const submit = () => {
   form.value.validate((valid) => {
     if (valid) {
-      User.updateUserInfo(props.user).then((response) => {
+      updateUserInfo(props.user).then((response) => {
         if (response.code === 200) {
           storage.clear()
           successMsg(`${response.msg},请重新登录！`)
