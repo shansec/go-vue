@@ -53,11 +53,36 @@ export const getUserInfo = () => {
 
 /**
  * 获取用户列表
- * @returns [] user
+ * @returns []user
  */
-export function getUsersInfo() {
+export const getUsersInfo = (data) => {
   return service({
     url: '/user/getUsersInfo',
-    method: 'GET'
+    method: 'POST',
+    data
+  })
+}
+
+/**
+ * 更改用户信息
+ * @returns string
+ */
+export const updateUserStatus = (data) => {
+  return service({
+    url: '/user/updateUserStatus',
+    method: 'PUT',
+    data
+  })
+}
+
+/**
+ * 删除用户信息
+ * @returns string
+ */
+export const delUserInfo = (data) => {
+  return service({
+    url: '/user/delUserInfo',
+    method: 'DELETE',
+    data
   })
 }
