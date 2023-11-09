@@ -39,21 +39,20 @@ const prop = defineProps({
 })
 const emit = defineEmits(['pagination', 'update:page', 'update:limit'])
 const handleSizeChange = (val) => {
-  console.log(val)
-  emit('pagination', { page: prop.currentPage, limit: val })
+  emit('pagination', { page: currentPage.value, limit: val })
   if (prop.autoScroll) {
     scrollTo(0, 800)
   }
 }
 const handleCurrentChange = (val) => {
-  emit('pagination', { page: val, limit: pageSize })
+  emit('pagination', { page: val, limit: pageSize.value })
   if (prop.autoScroll) {
     scrollTo(0, 800)
   }
 }
 const currentPage = computed({
   get() {
-    return this.page
+    return prop.page
   },
   set(val) {
     emit('update:page', val)
@@ -61,7 +60,7 @@ const currentPage = computed({
 })
 const pageSize = computed({
   get() {
-    return this.limit
+    return prop.limit
   },
   set(val) {
     emit('update:limit', val)
@@ -72,12 +71,12 @@ const pageSize = computed({
 <template>
   <div :class="{ hidden: hidden }" class="pagination-container">
     <el-pagination
-      :background="background"
-      :current-page.sync="currentPage"
-      :page-size.sync="pageSize"
-      :layout="layout"
-      :page-sizes="pageSizes"
-      :total="total"
+      :background="prop.background"
+      :current-page.sync="prop.currentPage"
+      :page-size.sync="prop.pageSize"
+      :layout="prop.layout"
+      :page-sizes="prop.pageSizes"
+      :total="prop.total"
       v-bind="$attrs"
       @size-change="handleSizeChange"
       @current-change="handleCurrentChange"
@@ -87,6 +86,8 @@ const pageSize = computed({
 
 <style scoped>
 .pagination-container {
+  display: flex;
+  justify-content: flex-end;
   padding: 32px 16px;
   background: #fff;
 }

@@ -7,14 +7,24 @@ import { confirmBox, successMsg } from '@/utils/message'
 const userList = ref()
 const queryParams = ref({
   page: 1,
-  pageSize: 10
+  pageSize: 10,
+  nickName: '',
+  phone: '',
+  status: ''
 })
 const total = ref(0)
-const getUsersInfos = () => {
-  getUsersInfo({
-    page: queryParams.value.page,
-    pageSize: queryParams.value.pageSize
-  }).then((response) => {
+const userStatus = ref([
+  {
+    name: '正常',
+    value: '1'
+  },
+  {
+    name: '禁用',
+    value: '2'
+  }
+])
+const requestUsersInfo = () => {
+  getUsersInfo(queryParams.value).then((response) => {
     if (response.code === 200) {
       userList.value = response.data.list
       queryParams.value.page = response.data.page
@@ -23,8 +33,10 @@ const getUsersInfos = () => {
     }
   })
 }
-const getUsersInfoss = (e) => {
-  console.log(e)
+const requestUserList = ({ page, limit }) => {
+  queryParams.value.page = page
+  queryParams.value.pageSize = limit
+  requestUsersInfo()
 }
 const formatTime = (rowData) => formatTimeToStr(rowData.CreatedAt)
 const updateRowInfo = (scope) => {
@@ -57,13 +69,61 @@ const updateStatus = (mark) => {
       })
   })
 }
+const inquireUser = () => {
+  queryParams.value.page = 1
+  queryParams.value.pageSize = 10
+  requestUsersInfo()
+}
+const resetQuery = () => {
+  queryParams.value = {
+    page: 1,
+    pageSize: 10,
+    nickName: '',
+    phone: '',
+    status: ''
+  }
+  requestUsersInfo()
+}
 onMounted(() => {
-  getUsersInfos()
+  requestUsersInfo()
 })
 </script>
 
 <template>
   <div class="table">
+    <div class="query-box">
+      <el-form :model="queryParams" :inline="true" label-width="70px">
+        <el-form-item label="用户昵称">
+          <el-input
+            v-model.trim="queryParams.nickName"
+            placeholder="请输入用户昵称"
+          />
+        </el-form-item>
+        <el-form-item label="手机号码">
+          <el-input v-model="queryParams.phone" placeholder="请输入手机号码" />
+        </el-form-item>
+        <el-form-item label="状态">
+          <el-select v-model="queryParams.status" placeholder="用户状态">
+            <el-option
+              v-for="status in userStatus"
+              :key="status.value"
+              :label="status.name"
+              :value="status.value"
+            />
+          </el-select>
+        </el-form-item>
+        <el-form-item>
+          <el-button type="primary" @click="inquireUser">
+            <svg-icon icon-class="table-search" />
+            查询
+          </el-button>
+          <el-button @click="resetQuery">
+            <svg-icon icon-class="table-reset" />
+            重置
+          </el-button>
+        </el-form-item>
+      </el-form>
+    </div>
     <el-table
       :data="userList"
       border
@@ -124,9 +184,9 @@ onMounted(() => {
     <pagination
       v-show="total > 0"
       :total="total"
-      :page.sync="queryParams.pageIndex"
+      :page.sync="queryParams.page"
       :limit.sync="queryParams.pageSize"
-      @pagination="getUsersInfoss()"
+      @pagination="requestUserList"
     />
   </div>
 </template>
