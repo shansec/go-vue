@@ -1,6 +1,7 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import Layout from '@/layout/index.vue'
 import userRoutes from '@/router/modules/user'
+import deptRoutes from '@/router/modules/dept'
 
 export const constantRoutes = [
   {
@@ -30,6 +31,7 @@ export const constantRoutes = [
     ]
   },
   ...userRoutes,
+  ...deptRoutes,
   {
     path: '/profile',
     component: Layout,
