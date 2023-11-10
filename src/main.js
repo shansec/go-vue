@@ -1,10 +1,10 @@
 import { createApp } from 'vue'
 import ElementPlus from 'element-plus'
-import 'element-plus/dist/index.css'
-
+import zhCn from 'element-plus/dist/locale/zh-cn.mjs'
 import { registerEleIcon } from '@/plugins/ElementIcon.js'
 // 引入黑暗模式
 import 'element-plus/theme-chalk/dark/css-vars.css'
+import 'element-plus/dist/index.css'
 import '@/style/element-dark.scss'
 
 import '@/style/style.scss'
@@ -20,11 +20,13 @@ import 'virtual:svg-icons-register'
 import '@/assets/iconfont/iconfont.css'
 import '@/assets/iconfont/iconfont.js'
 import SvgIcon from '@/components/SvgIcon/index.vue'
+import Pagination from '@/components/Pagination/index.vue'
 
 const app = createApp(App)
 registerEleIcon(app)
 
 app.component('SvgIcon', SvgIcon)
+app.component('Pagination', Pagination)
 app.use(pinia)
 app.use(router)
-app.use(ElementPlus).mount('#app')
+app.use(ElementPlus, { locale: zhCn }).mount('#app')

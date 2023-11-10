@@ -1,5 +1,5 @@
 import { defineStore } from 'pinia'
-import User from '@/api/User'
+import { getUserInfo } from '@/api/User'
 
 export const useUserStore = defineStore({
   id: 'userStore',
@@ -33,7 +33,7 @@ export const useUserStore = defineStore({
     },
     getUserInformation() {
       return new Promise((resolve, reject) => {
-        User.getUserInfo()
+        getUserInfo()
           .then((res) => {
             if (!res || !res.data) {
               this.setUserInfo()

@@ -14,9 +14,9 @@
 </template>
 
 <script setup>
-import Github from '@/api/github'
+import { Commits } from '@/api/Github'
 import { formatTimeToStr } from '@/utils/date.js'
-import { ref } from 'vue'
+import { onMounted, ref } from 'vue'
 
 defineOptions({
   name: 'DashboardTable'
@@ -26,7 +26,7 @@ const loading = ref(true)
 const dataTimeline = ref([])
 
 const loadCommits = () => {
-  Github.Commits(0).then(({ data }) => {
+  Commits(0).then(({ data }) => {
     loading.value = false
     data.forEach((element, index) => {
       if (element.commit.message && index < 10) {
@@ -41,7 +41,9 @@ const loadCommits = () => {
   })
 }
 
-loadCommits()
+onMounted(() => {
+  loadCommits()
+})
 </script>
 
 <style lang="scss" scoped>

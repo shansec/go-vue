@@ -1,7 +1,7 @@
 <script lang="js" setup>
 import { reactive, ref } from 'vue'
 import { useRouter } from 'vue-router'
-import User from '@/api/User'
+import { modifyPassword } from '@/api/User'
 import { useUserStore } from '@/store/modules/user'
 import storage from '@/utils/storage'
 import { successMsg } from '@/utils/message'
@@ -41,7 +41,7 @@ const rules = reactive({
 const submit = async () => {
   form.value.validate((value) => {
     if (value) {
-      User.modifyPassword(user)
+      modifyPassword(user)
         .then((response) => {
           if (response.code === 200) {
             storage.clear()

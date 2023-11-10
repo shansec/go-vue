@@ -1,10 +1,12 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import Layout from '@/layout/index.vue'
+import userRoutes from '@/router/modules/user'
+import deptRoutes from '@/router/modules/dept'
 
 export const constantRoutes = [
   {
     path: '/404',
-    component: () => import('@/views/errorPage/404.vue'),
+    component: () => import('@/views/error-page/404.vue'),
     hidden: true
   },
   {
@@ -28,6 +30,8 @@ export const constantRoutes = [
       }
     ]
   },
+  ...userRoutes,
+  ...deptRoutes,
   {
     path: '/profile',
     component: Layout,

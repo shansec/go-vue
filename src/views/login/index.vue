@@ -1,5 +1,5 @@
 <script lang="js" setup>
-import LoginForm from '@/views/login/components/LoginForm.vue'
+import LoginForm from '@/views/login/components/LoginForm/index.vue'
 import SwitchDark from '@/components/SwitchDark/index.vue'
 </script>
 

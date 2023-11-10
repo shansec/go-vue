@@ -3,8 +3,8 @@ import { computed } from 'vue'
 import { useRoute } from 'vue-router'
 import { constantRoutes } from '@/router/index.js'
 import { useSettingStore } from '@/store/modules/settings.js'
-import SubItem from '@/layout/components/SideBar/components/SubItem.vue'
-import Logo from '@/layout/components/SideBar/components/Logo.vue'
+import SubItem from '@/layout/components/SideBar/components/SubItem/index.vue'
+import Logo from '@/layout/components/SideBar/components/Logo/index.vue'
 
 const route = useRoute()
 const settingStore = useSettingStore()

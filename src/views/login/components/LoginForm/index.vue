@@ -3,8 +3,8 @@ import { onMounted, reactive, ref } from 'vue'
 import { useRouter } from 'vue-router'
 import { Avatar } from '@element-plus/icons-vue'
 
-import User from '@/api/User.js'
-import Captcha from '@/api/Captcha'
+import { login } from '@/api/User.js'
+import { getCaptcha } from '@/api/Captcha'
 import { useUserStore } from '@/store/modules/user.js'
 import storage from '@/utils/storage'
 import { errorMsg, successMsg } from '@/utils/message'
@@ -32,7 +32,7 @@ const submitForm = async () => {
   loading.value = true
   ruleFormRef.value.validate((value) => {
     if (value) {
-      User.login(loginForm)
+      login(loginForm)
         .then((res) => {
           if (res.code === 200) {
             const userData = res.data
@@ -59,7 +59,7 @@ const submitForm = async () => {
   })
 }
 const requestCaptcha = () => {
-  Captcha.getCaptcha()
+  getCaptcha()
     .then((response) => {
       if (response.code === 200) {
         captcha.value = response.data
@@ -80,7 +80,7 @@ onMounted(() => {
 
 <template>
   <div class="avatar_box">
-    <img src="@/assets/go-vue.png" alt="头像" />
+    <img src="../../../../assets/go-vue.png" alt="头像" />
     <h2 class="title">Go-Vue</h2>
   </div>
   <el-form
@@ -141,5 +141,5 @@ onMounted(() => {
 </template>
 
 <style lang="scss" scoped>
-@import '../index';
+@import '../../index';
 </style>

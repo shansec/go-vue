@@ -76,8 +76,8 @@
 </template>
 
 <script lang="js" setup>
-import EchartsLine from '@/views/dashboard/components/line/index.vue'
-import DashboardTable from '@/views/dashboard/components/table/index.vue'
+import EchartsLine from '@/views/dashboard/components/Line/index.vue'
+import DashboardTable from '@/views/dashboard/components/Table/index.vue'
 import { useWeatherInfo } from '@/views/dashboard/weather'
 
 const weatherInfo = useWeatherInfo()
