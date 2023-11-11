@@ -19,7 +19,10 @@ const handleLink = (item) => {
 </script>
 
 <template>
-  <el-breadcrumb class="app-breadcrumb" separator="/">
+  <el-breadcrumb
+    class="app-breadcrumb"
+    separator="/"
+  >
     <el-breadcrumb-item
       v-if="matchRoute[0].meta.title !== '首页'"
       key="homepage"

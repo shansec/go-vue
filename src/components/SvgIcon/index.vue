@@ -41,7 +41,12 @@ const styleExternalIcon = computed(() => {
     class="svg-external-icon svg-icon"
     v-on="$attrs"
   />
-  <svg v-else :class="svgClass" aria-hidden="true" v-on="$attrs">
+  <svg
+    v-else
+    :class="svgClass"
+    aria-hidden="true"
+    v-on="$attrs"
+  >
     <use :href="iconName" />
   </svg>
 </template>
@@ -49,6 +54,7 @@ const styleExternalIcon = computed(() => {
 <style scoped>
 .svg-icon {
   overflow: hidden;
+  margin-right: 2px;
   width: 1em;
   height: 1em;
   vertical-align: -0.15em;

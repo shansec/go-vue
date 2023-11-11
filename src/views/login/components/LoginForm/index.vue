@@ -28,7 +28,7 @@ const rules = reactive({
     { min: 6, max: 6, message: '请输入6位验证码', trigger: 'blur' }
   ]
 })
-const submitForm = async () => {
+const submitForm = async() => {
   loading.value = true
   ruleFormRef.value.validate((value) => {
     if (value) {
@@ -80,7 +80,10 @@ onMounted(() => {
 
 <template>
   <div class="avatar_box">
-    <img src="../../../../assets/go-vue.png" alt="头像" />
+    <img
+      src="../../../../assets/go-vue.png"
+      alt="头像"
+    >
     <h2 class="title">Go-Vue</h2>
   </div>
   <el-form
@@ -117,7 +120,10 @@ onMounted(() => {
     <el-row :gutter="10">
       <el-col :span="16">
         <el-form-item prop="captcha">
-          <el-input v-model="loginForm.captcha" placeholder="请输入验证码" />
+          <el-input
+            v-model="loginForm.captcha"
+            placeholder="请输入验证码"
+          />
         </el-form-item>
       </el-col>
       <el-col :span="8">
@@ -134,7 +140,7 @@ onMounted(() => {
         type="primary"
         class="login_btn"
         @click="submitForm()"
-        >登录
+      >登录
       </el-button>
     </el-form-item>
   </el-form>

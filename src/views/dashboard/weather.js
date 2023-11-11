@@ -9,7 +9,7 @@ export const useWeatherInfo = () => {
   return weatherInfo
 }
 
-export const getIp = async () => {
+export const getIp = async() => {
   if (mapKey === '') {
     return false
   }
@@ -19,7 +19,7 @@ export const getIp = async () => {
   }
 }
 
-const getWeather = async (code) => {
+const getWeather = async(code) => {
   const response = await axios.get(
     'https://restapi.amap.com/v3/weather/weatherInfo?key=' +
       mapKey +

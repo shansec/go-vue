@@ -27,9 +27,15 @@ onMounted(() => {
   <BasicLayout>
     <template #wrapper>
       <el-row :gutter="10">
-        <el-col :span="6" :xs="24">
+        <el-col
+          :span="6"
+          :xs="24"
+        >
           <el-card class="box-card">
-            <div slot="header" class="clearfix">
+            <div
+              slot="header"
+              class="clearfix"
+            >
               <span>个人信息</span>
             </div>
             <div>
@@ -65,16 +71,28 @@ onMounted(() => {
             </div>
           </el-card>
         </el-col>
-        <el-col :span="18" :xs="24">
+        <el-col
+          :span="18"
+          :xs="24"
+        >
           <el-card>
-            <div slot="header" class="clearfix">
+            <div
+              slot="header"
+              class="clearfix"
+            >
               <span>基本资料</span>
             </div>
             <el-tabs v-model="activeTab">
-              <el-tab-pane label="基本资料" name="userinfo">
+              <el-tab-pane
+                label="基本资料"
+                name="userinfo"
+              >
                 <userInfo :user="user" />
               </el-tab-pane>
-              <el-tab-pane label="修改密码" name="resetPwd">
+              <el-tab-pane
+                label="修改密码"
+                name="resetPwd"
+              >
                 <resetPwd :user="user" />
               </el-tab-pane>
             </el-tabs>
