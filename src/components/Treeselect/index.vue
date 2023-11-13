@@ -1,5 +1,5 @@
 <script lang="js" setup>
-import { ref, watch } from 'vue'
+import { nextTick, ref, watch } from 'vue'
 const prop = defineProps({
   data: {
     type: Array,
@@ -13,25 +13,31 @@ const prop = defineProps({
     type: String,
     default: '',
     required: true
+  },
+  defaultProps: {
+    type: Object,
+    required: true
   }
 })
 const emit = defineEmits(['getSelectedNode'])
-const defaultProps = {
-  children: 'children',
-  label: 'deptName',
-  value: 'deptId'
-}
 const value = ref('')
 const treeRef = ref()
 const nodeClick = (node) => {
   emit('getSelectedNode', node)
 }
-watch(
-  () => prop.parentId,
-  (newVal) => {
-    value.value = treeRef.value.getNode(newVal).data.deptName
-  }
-)
+nextTick(() => {
+  watch(
+    () => prop.parentId,
+    (newVal) => {
+      if (!newVal) {
+        value.value = ''
+      } else {
+        value.value = treeRef.value.getNode(newVal).data.deptName
+      }
+    },
+    { immediate: true }
+  )
+})
 </script>
 
 <template>

@@ -3,7 +3,6 @@ import { onMounted, ref } from 'vue'
 import userAvatar from './components/UserAvatar/index.vue'
 import userInfo from './components/UserInfo/index.vue'
 import resetPwd from './components/ResetPwd/index.vue'
-import BasicLayout from '@/components/BasicLayout/index.vue'
 import { getUserInfo } from '@/api/User'
 
 const user = ref({})

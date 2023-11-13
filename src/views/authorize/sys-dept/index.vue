@@ -53,9 +53,15 @@ const rules = ref({
     }
   ]
 })
+const defaultProps = {
+  children: 'children',
+  label: 'deptName',
+  value: 'deptId'
+}
 const parentId = ref('1')
 const ShowDialog = () => {
   title.value = '添加部门'
+  parentId.value = ''
   isShowDialog.value = true
 }
 const setParent = (node) => {
@@ -95,244 +101,249 @@ onMounted(() => {
 </script>
 
 <template>
-  <div class="dept-container">
-    <div class="query-box">
-      <el-form
-        :model="queryParams"
-        :inline="true"
-        label-width="70px"
-      >
-        <el-form-item label="部门名称">
-          <el-input
-            v-model.trim="queryParams.deptName"
-            placeholder="请输入部门名称"
-          />
-        </el-form-item>
-        <el-form-item label="状态">
-          <el-select
-            v-model="queryParams.status"
-            placeholder="部门状态"
+  <BasicLayout>
+    <template #wrapper>
+      <div class="dept-container">
+        <div class="query-box">
+          <el-form
+            :model="queryParams"
+            :inline="true"
+            label-width="70px"
           >
-            <el-option
-              v-for="status in deptStatus"
-              :key="status.value"
-              :label="status.name"
-              :value="status.value"
-            />
-          </el-select>
-        </el-form-item>
-        <el-form-item>
-          <el-button
-            type="primary"
-            @click="inquireDept"
-          >
-            <svg-icon icon-class="table-search" />
-            查询
-          </el-button>
-          <el-button @click="resetQuery">
-            <svg-icon icon-class="table-reset" />
-            重置
-          </el-button>
-          <el-button
-            type="primary"
-            @click="ShowDialog"
-          >
-            <svg-icon icon-class="table-add" />
-            增加
-          </el-button>
-        </el-form-item>
-      </el-form>
-    </div>
-    <el-table
-      :data="deptList"
-      style="width: 100%"
-      header-row-class-name="header-row"
-      row-key="deptId"
-      border
-    >
-      <el-table-column
-        prop="deptName"
-        label="部门名称"
-        width="500"
-      />
-      <el-table-column
-        prop="sort"
-        label="排序"
-        width="200"
-      />
-      <el-table-column
-        prop="status"
-        label="状态"
-        width="120"
-      >
-        <template #default="scope">
-          <el-tag
-            v-if="scope.row.status === '1'"
-            type="success"
-            size="large"
-          >可用</el-tag>
-          <el-tag
-            v-else
-            type="danger"
-            size="large"
-          >禁用</el-tag>
-        </template>
-      </el-table-column>
-      <el-table-column
-        prop="CreatedAt"
-        label="创建时间"
-        width="220"
-        :formatter="formatTime"
-      />
-      <el-table-column label="操作">
-        <template #default="scope">
-          <div class="operate-box">
-            <el-button
-              size="small"
-              type="primary"
-              text
-              class="operate-btn"
-            >
-              <svg-icon icon-class="table-update" />
-              修改
-            </el-button>
-            <el-button
-              size="small"
-              type="primary"
-              text
-              class="operate-btn"
-              @click="deptCreate(scope.row)"
-            >
-              <svg-icon icon-class="table-add" />
-              增加
-            </el-button>
-            <el-button
-              size="small"
-              type="danger"
-              text
-              class="operate-btn"
-            >
-              <svg-icon icon-class="table-delete" />
-              删除
-            </el-button>
-          </div>
-        </template>
-      </el-table-column>
-    </el-table>
-    <pagination
-      v-show="total > 0"
-      :total="total"
-      :page.sync="queryParams.page"
-      :limit.sync="queryParams.pageSize"
-    />
-    <!--  添加/修改部门弹框  -->
-    <el-dialog
-      v-model="isShowDialog"
-      :title="title"
-      width="600px"
-      :close-on-click-modal="false"
-    >
-      <el-form
-        :model="form"
-        :rules="rules"
-        label-width="80px"
-      >
-        <el-row>
-          <el-col :span="24">
-            <el-form-item
-              label="上级部门"
-              prop="parentId"
-            >
-              <treeselect
-                v-model="form.parentId"
-                :data="deptList"
-                :placeholder="'请选择上级部门'"
-                :parent-id="parentId"
-                @get-selected-node="setParent"
-              />
-            </el-form-item>
-          </el-col>
-          <el-col :span="12">
-            <el-form-item
-              label="部门名称"
-              prop="deptName"
-            >
+            <el-form-item label="部门名称">
               <el-input
-                v-model="form.deptName"
+                v-model.trim="queryParams.deptName"
                 placeholder="请输入部门名称"
               />
             </el-form-item>
-          </el-col>
-          <el-col :span="12">
-            <el-form-item
-              label="显示排序"
-              prop="orderNum"
-            >
-              <el-input-number
-                v-model="form.sort"
-                controls-position="right"
-                :min="0"
-              />
+            <el-form-item label="状态">
+              <el-select
+                v-model="queryParams.status"
+                placeholder="部门状态"
+              >
+                <el-option
+                  v-for="status in deptStatus"
+                  :key="status.value"
+                  :label="status.name"
+                  :value="status.value"
+                />
+              </el-select>
             </el-form-item>
-          </el-col>
-          <el-col :span="12">
-            <el-form-item
-              label="负责人"
-              prop="leader"
-            >
-              <el-input
-                v-model="form.leader"
-                placeholder="请输入负责人"
-                maxlength="20"
-              />
+            <el-form-item>
+              <el-button
+                type="primary"
+                @click="inquireDept"
+              >
+                <svg-icon icon-class="table-search" />
+                查询
+              </el-button>
+              <el-button @click="resetQuery">
+                <svg-icon icon-class="table-reset" />
+                重置
+              </el-button>
+              <el-button
+                type="primary"
+                @click="ShowDialog"
+              >
+                <svg-icon icon-class="table-add" />
+                增加
+              </el-button>
             </el-form-item>
-          </el-col>
-          <el-col :span="12">
-            <el-form-item
-              label="联系电话"
-              prop="phone"
-            >
-              <el-input
-                v-model="form.phone"
-                placeholder="请输入联系电话"
-                maxlength="11"
-              />
-            </el-form-item>
-          </el-col>
-          <el-col :span="12">
-            <el-form-item
-              label="邮箱"
-              prop="email"
-            >
-              <el-input
-                v-model="form.email"
-                placeholder="请输入邮箱"
-                maxlength="50"
-              />
-            </el-form-item>
-          </el-col>
-          <el-col :span="12">
-            <el-form-item label="部门状态">
-              <el-radio-group v-model="form.status">
-                <el-radio
-                  v-for="dept in deptStatus"
-                  :key="dept.value"
-                  :label="dept.value"
-                >{{ dept.name }}</el-radio>
-              </el-radio-group>
-            </el-form-item>
-          </el-col>
-        </el-row>
-      </el-form>
-      <div
-        slot="footer"
-        class="dialog-footer"
-      >
-        <el-button type="primary">确 定</el-button>
-        <el-button>取 消</el-button>
+          </el-form>
+        </div>
+        <el-table
+          :data="deptList"
+          style="width: 100%"
+          header-row-class-name="header-row"
+          row-key="deptId"
+          border
+        >
+          <el-table-column
+            prop="deptName"
+            label="部门名称"
+            width="500"
+          />
+          <el-table-column
+            prop="sort"
+            label="排序"
+            width="200"
+          />
+          <el-table-column
+            prop="status"
+            label="状态"
+            width="120"
+          >
+            <template #default="scope">
+              <el-tag
+                v-if="scope.row.status === '1'"
+                type="success"
+                size="large"
+              >可用</el-tag>
+              <el-tag
+                v-else
+                type="danger"
+                size="large"
+              >禁用</el-tag>
+            </template>
+          </el-table-column>
+          <el-table-column
+            prop="CreatedAt"
+            label="创建时间"
+            width="220"
+            :formatter="formatTime"
+          />
+          <el-table-column label="操作">
+            <template #default="scope">
+              <div class="operate-box">
+                <el-button
+                  size="small"
+                  type="primary"
+                  text
+                  class="operate-btn"
+                >
+                  <svg-icon icon-class="table-update" />
+                  修改
+                </el-button>
+                <el-button
+                  size="small"
+                  type="primary"
+                  text
+                  class="operate-btn"
+                  @click="deptCreate(scope.row)"
+                >
+                  <svg-icon icon-class="table-add" />
+                  增加
+                </el-button>
+                <el-button
+                  size="small"
+                  type="danger"
+                  text
+                  class="operate-btn"
+                >
+                  <svg-icon icon-class="table-delete" />
+                  删除
+                </el-button>
+              </div>
+            </template>
+          </el-table-column>
+        </el-table>
+        <pagination
+          v-show="total > 0"
+          :total="total"
+          :page.sync="queryParams.page"
+          :limit.sync="queryParams.pageSize"
+        />
+        <!--  添加/修改部门弹框  -->
+        <el-dialog
+          v-model="isShowDialog"
+          :title="title"
+          width="600px"
+          :close-on-click-modal="false"
+        >
+          <el-form
+            :model="form"
+            :rules="rules"
+            label-width="80px"
+          >
+            <el-row>
+              <el-col :span="24">
+                <el-form-item
+                  label="上级部门"
+                  prop="parentId"
+                >
+                  <treeselect
+                    v-model="form.parentId"
+                    :data="deptList"
+                    :placeholder="'请选择上级部门'"
+                    :parent-id="parentId"
+                    :default-props="defaultProps"
+                    @get-selected-node="setParent"
+                  />
+                </el-form-item>
+              </el-col>
+              <el-col :span="12">
+                <el-form-item
+                  label="部门名称"
+                  prop="deptName"
+                >
+                  <el-input
+                    v-model="form.deptName"
+                    placeholder="请输入部门名称"
+                  />
+                </el-form-item>
+              </el-col>
+              <el-col :span="12">
+                <el-form-item
+                  label="显示排序"
+                  prop="orderNum"
+                >
+                  <el-input-number
+                    v-model="form.sort"
+                    controls-position="right"
+                    :min="0"
+                  />
+                </el-form-item>
+              </el-col>
+              <el-col :span="12">
+                <el-form-item
+                  label="负责人"
+                  prop="leader"
+                >
+                  <el-input
+                    v-model="form.leader"
+                    placeholder="请输入负责人"
+                    maxlength="20"
+                  />
+                </el-form-item>
+              </el-col>
+              <el-col :span="12">
+                <el-form-item
+                  label="联系电话"
+                  prop="phone"
+                >
+                  <el-input
+                    v-model="form.phone"
+                    placeholder="请输入联系电话"
+                    maxlength="11"
+                  />
+                </el-form-item>
+              </el-col>
+              <el-col :span="12">
+                <el-form-item
+                  label="邮箱"
+                  prop="email"
+                >
+                  <el-input
+                    v-model="form.email"
+                    placeholder="请输入邮箱"
+                    maxlength="50"
+                  />
+                </el-form-item>
+              </el-col>
+              <el-col :span="12">
+                <el-form-item label="部门状态">
+                  <el-radio-group v-model="form.status">
+                    <el-radio
+                      v-for="dept in deptStatus"
+                      :key="dept.value"
+                      :label="dept.value"
+                    >{{ dept.name }}</el-radio>
+                  </el-radio-group>
+                </el-form-item>
+              </el-col>
+            </el-row>
+          </el-form>
+          <div
+            slot="footer"
+            class="dialog-footer"
+          >
+            <el-button type="primary">确 定</el-button>
+            <el-button>取 消</el-button>
+          </div>
+        </el-dialog>
       </div>
-    </el-dialog>
-  </div>
+    </template>
+  </BasicLayout>
 </template>
 
 <style lang="scss">
