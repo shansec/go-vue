@@ -103,7 +103,7 @@ const resetQuery = () => {
 const confirmSubmit = () => {
   formRef.value.validate((value) => {
     if (value) {
-      createDept(form.value).then(res => {
+      createDept(form.value).then((res) => {
         if (res.code === 200) {
           successMsg(res.msg)
           queryParams.value = {
