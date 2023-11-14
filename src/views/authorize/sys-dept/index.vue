@@ -1,8 +1,9 @@
 <script lang="js" setup>
 import { onMounted, ref } from 'vue'
-import { getDeptList } from '@/api/Dept'
+import { getDeptList, createDept } from '@/api/Dept'
 import { formatTimeToStr } from '@/utils/date'
 import Treeselect from '@/components/Treeselect/index.vue'
+import { errorMsg, successMsg } from '@/utils/message'
 
 const deptList = ref()
 const total = ref(0)
@@ -24,6 +25,7 @@ const queryParams = ref({
 })
 const title = ref('')
 const isShowDialog = ref(false)
+const formRef = ref()
 const form = ref({
   parentId: '',
   deptName: '',
@@ -36,17 +38,19 @@ const form = ref({
 const rules = ref({
   parentId: [{ required: true, message: '上级部门不能为空', trigger: 'blur' }],
   deptName: [{ required: true, message: '部门名称不能为空', trigger: 'blur' }],
-  sort: [{ required: true, message: '菜单顺序不能为空', trigger: 'blur' }],
+  // sort: [{ required: true, message: '菜单顺序不能为空', trigger: 'blur' }],
   leader: [{ required: true, message: '负责人不能为空', trigger: 'blur' }],
   email: [
     {
       type: 'email',
+      required: true,
       message: "'请输入正确的邮箱地址",
       trigger: ['blur', 'change']
     }
   ],
   phone: [
     {
+      required: true,
       pattern: /^1[3|4|5|6|7|8|9][0-9]\d{8}$/,
       message: '请输入正确的手机号码',
       trigger: 'blur'
@@ -69,6 +73,7 @@ const setParent = (node) => {
 }
 const deptCreate = (row) => {
   parentId.value = row.deptId.toString()
+  form.value.parentId = row.deptId
   isShowDialog.value = true
 }
 const formatTime = (rowData) => formatTimeToStr(rowData.CreatedAt)
@@ -92,6 +97,41 @@ const resetQuery = () => {
     page: 1,
     pageSize: 10,
     deptName: '',
+    status: ''
+  }
+}
+const confirmSubmit = () => {
+  formRef.value.validate((value) => {
+    if (value) {
+      createDept(form.value).then(res => {
+        if (res.code === 200) {
+          successMsg(res.msg)
+          queryParams.value = {
+            page: 1,
+            pageSize: 10,
+            deptName: '',
+            status: ''
+          }
+          isShowDialog.value = false
+          title.value = ''
+          requestDept()
+        }
+      })
+    } else {
+      errorMsg('请完善必填信息')
+    }
+  })
+}
+const canlcelDialog = () => {
+  isShowDialog.value = false
+  title.value = ''
+  form.value = {
+    parentId: '',
+    deptName: '',
+    sort: 0,
+    leader: '',
+    email: '',
+    phone: '',
     status: ''
   }
 }
@@ -239,8 +279,12 @@ onMounted(() => {
           :title="title"
           width="600px"
           :close-on-click-modal="false"
+          :close-on-press-escape="false"
+          :destroy-on-close="true"
+          :show-close="false"
         >
           <el-form
+            ref="formRef"
             :model="form"
             :rules="rules"
             label-width="80px"
@@ -275,7 +319,7 @@ onMounted(() => {
               <el-col :span="12">
                 <el-form-item
                   label="显示排序"
-                  prop="orderNum"
+                  prop="sort"
                 >
                   <el-input-number
                     v-model="form.sort"
@@ -337,8 +381,11 @@ onMounted(() => {
             slot="footer"
             class="dialog-footer"
           >
-            <el-button type="primary">确 定</el-button>
-            <el-button>取 消</el-button>
+            <el-button
+              type="primary"
+              @click="confirmSubmit"
+            >确 定</el-button>
+            <el-button @click="canlcelDialog">取 消</el-button>
           </div>
         </el-dialog>
       </div>
@@ -372,6 +419,10 @@ onMounted(() => {
     .operate-btn {
       padding: 5px 0 !important;
     }
+  }
+
+  .dialog-footer {
+    text-align: right;
   }
 }
 </style>
