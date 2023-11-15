@@ -25,3 +25,16 @@ export const getDeptList = (data) => {
     data
   })
 }
+
+/**
+ * 删除部门信息
+ * @param data
+ * @returns string
+ */
+export const delDeptInfo = (data) => {
+  return service({
+    url: '/dept/delDeptInfo',
+    method: 'DELETE',
+    data
+  })
+}

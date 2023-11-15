@@ -1,9 +1,9 @@
 <script lang="js" setup>
 import { onMounted, ref } from 'vue'
-import { getDeptList, createDept } from '@/api/Dept'
+import { getDeptList, createDept, delDeptInfo } from '@/api/Dept'
 import { formatTimeToStr } from '@/utils/date'
 import Treeselect from '@/components/Treeselect/index.vue'
-import { errorMsg, successMsg } from '@/utils/message'
+import { errorMsg, successMsg, confirmBox } from '@/utils/message'
 
 const deptList = ref()
 const total = ref(0)
@@ -63,9 +63,10 @@ const defaultProps = {
   value: 'deptId'
 }
 const parentId = ref('1')
+const isEdit = ref(false)
 const ShowDialog = () => {
   title.value = '添加部门'
-  parentId.value = ''
+  parentId.value = '0'
   isShowDialog.value = true
 }
 const setParent = (node) => {
@@ -114,6 +115,7 @@ const confirmSubmit = () => {
           }
           isShowDialog.value = false
           title.value = ''
+          isEdit.value = false
           requestDept()
         }
       })
@@ -134,6 +136,38 @@ const canlcelDialog = () => {
     phone: '',
     status: ''
   }
+  isEdit.value = false
+}
+const removeDept = (data) => {
+  const msg = '删除部门前，确保删除的部门不包含下级部门'
+  confirmBox(msg, '确定删除', '取消', 'warning')
+    .then(() => {
+      delDeptInfo(data).then((res) => {
+        if (res.code === 200) {
+          successMsg(res.msg)
+          requestDept()
+        } else {
+          errorMsg(res.msg)
+        }
+      })
+    })
+    .catch(() => {})
+}
+const changeDept = (data) => {
+  console.log(data)
+  parentId.value = data.parentId.toString()
+  form.value = {
+    parentId: data.parentId,
+    deptName: data.deptName,
+    sort: data.sort,
+    leader: data.leader,
+    email: data.email,
+    phone: data.phone,
+    status: data.status
+  }
+  title.value = '修改部门'
+  isEdit.value = true
+  isShowDialog.value = true
 }
 onMounted(() => {
   requestDept()
@@ -240,6 +274,7 @@ onMounted(() => {
                   type="primary"
                   text
                   class="operate-btn"
+                  @click="changeDept(scope.row)"
                 >
                   <svg-icon icon-class="table-update" />
                   修改
@@ -259,6 +294,7 @@ onMounted(() => {
                   type="danger"
                   text
                   class="operate-btn"
+                  @click="removeDept(scope.row)"
                 >
                   <svg-icon icon-class="table-delete" />
                   删除
@@ -301,6 +337,7 @@ onMounted(() => {
                     :placeholder="'请选择上级部门'"
                     :parent-id="parentId"
                     :default-props="defaultProps"
+                    :is-edit="isEdit"
                     @get-selected-node="setParent"
                   />
                 </el-form-item>

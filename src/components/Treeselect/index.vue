@@ -17,6 +17,11 @@ const prop = defineProps({
   defaultProps: {
     type: Object,
     required: true
+  },
+  isEdit: {
+    type: Boolean,
+    required: true,
+    default: false
   }
 })
 const emit = defineEmits(['getSelectedNode'])
@@ -29,7 +34,7 @@ nextTick(() => {
   watch(
     () => prop.parentId,
     (newVal) => {
-      if (!newVal) {
+      if (newVal === '0') {
         value.value = ''
       } else {
         value.value = treeRef.value.getNode(newVal).data.deptName
@@ -51,6 +56,7 @@ nextTick(() => {
       node-key="deptId"
       check-strictly
       :render-after-expand="false"
+      :disabled="prop.isEdit"
       @node-click="nodeClick"
     />
   </div>
