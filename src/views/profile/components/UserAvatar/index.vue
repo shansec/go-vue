@@ -90,7 +90,7 @@ const realTime = (data) => {
       title="点击上传头像"
       class="img-circle img-lg"
       @click="editCropper"
-    />
+    >
     <el-dialog
       v-model="open"
       :title="title"
@@ -98,7 +98,11 @@ const realTime = (data) => {
       :close-on-click-modal="false"
     >
       <el-row>
-        <el-col :xs="24" :md="12" :style="{ height: '350px' }">
+        <el-col
+          :xs="24"
+          :md="12"
+          :style="{ height: '350px' }"
+        >
           <vue-cropper
             ref="cropper"
             :img="options.img"
@@ -110,15 +114,25 @@ const realTime = (data) => {
             @realTime="realTime"
           />
         </el-col>
-        <el-col :xs="24" :md="12" :style="{ height: '350px' }">
+        <el-col
+          :xs="24"
+          :md="12"
+          :style="{ height: '350px' }"
+        >
           <div class="avatar-upload-preview">
-            <img :src="previews.url" :style="previews.img" />
+            <img
+              :src="previews.url"
+              :style="previews.img"
+            >
           </div>
         </el-col>
       </el-row>
-      <br />
+      <br>
       <el-row>
-        <el-col :lg="2" :md="2">
+        <el-col
+          :lg="2"
+          :md="2"
+        >
           <el-upload
             action="#"
             :http-request="requestUpload"
@@ -131,30 +145,59 @@ const realTime = (data) => {
             </el-button>
           </el-upload>
         </el-col>
-        <el-col :lg="{ span: 1, offset: 2 }" :md="2">
-          <el-button size="small" @click="changeScale(1)">
+        <el-col
+          :lg="{ span: 1, offset: 2 }"
+          :md="2"
+        >
+          <el-button
+            size="small"
+            @click="changeScale(1)"
+          >
             <el-icon :size="15"><Plus /></el-icon>
           </el-button>
         </el-col>
-        <el-col :lg="{ span: 1, offset: 1 }" :md="2">
-          <el-button size="small" @click="changeScale(-1)">
+        <el-col
+          :lg="{ span: 1, offset: 1 }"
+          :md="2"
+        >
+          <el-button
+            size="small"
+            @click="changeScale(-1)"
+          >
             <el-icon :size="15"><Minus /></el-icon>
           </el-button>
         </el-col>
-        <el-col :lg="{ span: 1, offset: 1 }" :md="2">
-          <el-button size="small" @click="rotateLeft()">
+        <el-col
+          :lg="{ span: 1, offset: 1 }"
+          :md="2"
+        >
+          <el-button
+            size="small"
+            @click="rotateLeft()"
+          >
             <el-icon :size="15"><RefreshLeft /></el-icon>
           </el-button>
         </el-col>
-        <el-col :lg="{ span: 1, offset: 1 }" :md="2">
-          <el-button size="small" @click="rotateRight()">
+        <el-col
+          :lg="{ span: 1, offset: 1 }"
+          :md="2"
+        >
+          <el-button
+            size="small"
+            @click="rotateRight()"
+          >
             <el-icon :size="15"><RefreshRight /></el-icon>
           </el-button>
         </el-col>
-        <el-col :lg="{ span: 2, offset: 6 }" :md="2">
-          <el-button type="primary" size="small" @click="uploadImg()"
-            >提 交</el-button
-          >
+        <el-col
+          :lg="{ span: 2, offset: 6 }"
+          :md="2"
+        >
+          <el-button
+            type="primary"
+            size="small"
+            @click="uploadImg()"
+          >提 交</el-button>
         </el-col>
       </el-row>
     </el-dialog>

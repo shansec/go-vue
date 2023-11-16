@@ -14,7 +14,10 @@ const classObj = computed(() => {
 </script>
 
 <template>
-  <div class="container-layout" :class="classObj">
+  <div
+    class="container-layout"
+    :class="classObj"
+  >
     <Sidebar />
     <div class="main-container">
       <MyHeader />

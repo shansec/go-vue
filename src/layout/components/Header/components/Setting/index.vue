@@ -13,8 +13,14 @@ const showSetting = () => {
 
 <template>
   <div class="setting">
-    <el-tooltip content="主题设置" placement="bottom">
-      <el-icon :size="18" @click="showSetting">
+    <el-tooltip
+      content="主题设置"
+      placement="bottom"
+    >
+      <el-icon
+        :size="18"
+        @click="showSetting"
+      >
         <svg-icon icon-class="system" />
       </el-icon>
     </el-tooltip>

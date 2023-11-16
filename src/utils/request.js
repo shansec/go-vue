@@ -36,7 +36,7 @@ service.interceptors.response.use(
       // 存储到缓存中
       storage.set('token', token)
     }
-    if (response.data.code === 200) {
+    if (response.data.code === 200 || response.data.code === 101) {
       if (response.headers.msg) {
         response.data.msg = decodeURI(response.headers.msg)
       }

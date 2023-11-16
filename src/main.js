@@ -21,12 +21,14 @@ import '@/assets/iconfont/iconfont.css'
 import '@/assets/iconfont/iconfont.js'
 import SvgIcon from '@/components/SvgIcon/index.vue'
 import Pagination from '@/components/Pagination/index.vue'
+import BasicLayout from '@/components/BasicLayout/index.vue'
 
 const app = createApp(App)
 registerEleIcon(app)
 
 app.component('SvgIcon', SvgIcon)
 app.component('Pagination', Pagination)
+app.component('BasicLayout', BasicLayout)
 app.use(pinia)
 app.use(router)
 app.use(ElementPlus, { locale: zhCn }).mount('#app')

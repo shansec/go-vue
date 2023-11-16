@@ -4,16 +4,20 @@ import DepartTree from '@/views/authorize/sys-user/components/DepartTree/index.v
 </script>
 
 <template>
-  <div class="user-container">
-    <el-row>
-      <el-col :span="4">
-        <DepartTree />
-      </el-col>
-      <el-col :span="20">
-        <UserTable />
-      </el-col>
-    </el-row>
-  </div>
+  <BasicLayout>
+    <template #wrapper>
+      <div class="user-container">
+        <el-row>
+          <el-col :span="4">
+            <DepartTree />
+          </el-col>
+          <el-col :span="20">
+            <UserTable />
+          </el-col>
+        </el-row>
+      </div>
+    </template>
+  </BasicLayout>
 </template>
 
 <style scoped lang="scss">

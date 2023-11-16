@@ -92,7 +92,11 @@ onMounted(() => {
 <template>
   <div class="table">
     <div class="query-box">
-      <el-form :model="queryParams" :inline="true" label-width="70px">
+      <el-form
+        :model="queryParams"
+        :inline="true"
+        label-width="70px"
+      >
         <el-form-item label="用户昵称">
           <el-input
             v-model.trim="queryParams.nickName"
@@ -100,10 +104,16 @@ onMounted(() => {
           />
         </el-form-item>
         <el-form-item label="手机号码">
-          <el-input v-model="queryParams.phone" placeholder="请输入手机号码" />
+          <el-input
+            v-model="queryParams.phone"
+            placeholder="请输入手机号码"
+          />
         </el-form-item>
         <el-form-item label="状态">
-          <el-select v-model="queryParams.status" placeholder="用户状态">
+          <el-select
+            v-model="queryParams.status"
+            placeholder="用户状态"
+          >
             <el-option
               v-for="status in userStatus"
               :key="status.value"
@@ -113,7 +123,10 @@ onMounted(() => {
           </el-select>
         </el-form-item>
         <el-form-item>
-          <el-button type="primary" @click="inquireUser">
+          <el-button
+            type="primary"
+            @click="inquireUser"
+          >
             <svg-icon icon-class="table-search" />
             查询
           </el-button>
@@ -130,13 +143,41 @@ onMounted(() => {
       style="width: 100%"
       header-row-class-name="header-row"
     >
-      <el-table-column prop="ID" label="编号" width="100" />
-      <el-table-column prop="userName" label="登录名" width="180" />
-      <el-table-column prop="nickName" label="昵称" width="120" />
-      <el-table-column prop="phone" label="手机号" width="180" />
-      <el-table-column prop="email" label="邮箱" width="220" />
-      <el-table-column prop="sysRole.roleName" label="部门" width="120" />
-      <el-table-column prop="status" label="状态" width="120">
+      <el-table-column
+        prop="ID"
+        label="编号"
+        width="100"
+      />
+      <el-table-column
+        prop="userName"
+        label="登录名"
+        width="180"
+      />
+      <el-table-column
+        prop="nickName"
+        label="昵称"
+        width="120"
+      />
+      <el-table-column
+        prop="phone"
+        label="手机号"
+        width="180"
+      />
+      <el-table-column
+        prop="email"
+        label="邮箱"
+        width="220"
+      />
+      <el-table-column
+        prop="sysRole.roleName"
+        label="部门"
+        width="120"
+      />
+      <el-table-column
+        prop="status"
+        label="状态"
+        width="120"
+      >
         <template #default="scope">
           <el-switch
             v-model="scope.row.status"

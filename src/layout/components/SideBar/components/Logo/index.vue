@@ -19,8 +19,14 @@ const goHome = () => {
 </script>
 
 <template>
-  <div :class="isCollaps ? 'collapsed_logo' : 'logo'" @click="goHome">
-    <img src="../../../../../assets/go-vue.png" alt="logo" />
+  <div
+    :class="isCollaps ? 'collapsed_logo' : 'logo'"
+    @click="goHome"
+  >
+    <img
+      src="../../../../../assets/go-vue.png"
+      alt="logo"
+    >
     <span v-if="!collapsed">Go-Vue</span>
   </div>
 </template>
