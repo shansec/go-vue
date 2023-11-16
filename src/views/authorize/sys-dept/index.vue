@@ -1,6 +1,11 @@
 <script lang="js" setup>
 import { nextTick, onMounted, ref } from 'vue'
-import { getDeptList, createDept, delDeptInfo, updateDeptInfo } from '@/api/Dept'
+import {
+  getDeptList,
+  createDept,
+  delDeptInfo,
+  updateDeptInfo
+} from '@/api/Dept'
 import { formatTimeToStr } from '@/utils/date'
 import Treeselect from '@/components/Treeselect/index.vue'
 import { errorMsg, successMsg, confirmBox } from '@/utils/message'
