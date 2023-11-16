@@ -34,11 +34,7 @@ nextTick(() => {
   watch(
     () => prop.parentId,
     (newVal) => {
-      if (newVal === '0') {
-        value.value = ''
-      } else {
-        value.value = treeRef.value.getNode(newVal).data.deptName
-      }
+      value.value = treeRef.value.getNode(newVal).data.deptName
     },
     { immediate: true }
   )

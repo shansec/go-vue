@@ -1,11 +1,12 @@
 <script lang="js" setup>
-import { onMounted, ref } from 'vue'
-import { getDeptList, createDept, delDeptInfo } from '@/api/Dept'
+import { nextTick, onMounted, ref } from 'vue'
+import { getDeptList, createDept, delDeptInfo, updateDeptInfo } from '@/api/Dept'
 import { formatTimeToStr } from '@/utils/date'
 import Treeselect from '@/components/Treeselect/index.vue'
 import { errorMsg, successMsg, confirmBox } from '@/utils/message'
 
 const deptList = ref()
+const treeList = ref([])
 const total = ref(0)
 const deptStatus = ref([
   {
@@ -27,7 +28,8 @@ const title = ref('')
 const isShowDialog = ref(false)
 const formRef = ref()
 const form = ref({
-  parentId: '',
+  deptId: 0,
+  parentId: 0,
   deptName: '',
   sort: 0,
   leader: '',
@@ -64,21 +66,26 @@ const defaultProps = {
 }
 const parentId = ref('1')
 const isEdit = ref(false)
+const btnType = ref('create')
 const ShowDialog = () => {
   title.value = '添加部门'
+  btnType.value = 'create'
   parentId.value = '0'
+  form.value.parentId = 0
   isShowDialog.value = true
 }
 const setParent = (node) => {
   form.value.parentId = node.deptId
 }
 const deptCreate = (row) => {
+  title.value = '添加部门'
+  btnType.value = 'create'
   parentId.value = row.deptId.toString()
   form.value.parentId = row.deptId
   isShowDialog.value = true
 }
 const formatTime = (rowData) => formatTimeToStr(rowData.CreatedAt)
-const requestDept = () => {
+const requestDeptOfTable = () => {
   getDeptList(queryParams.value).then((res) => {
     if (res.code === 200) {
       deptList.value = res.data.list
@@ -88,10 +95,19 @@ const requestDept = () => {
     }
   })
 }
+const requestDeptOfSelect = () => {
+  getDeptList(queryParams.value).then((res) => {
+    if (res.code === 200) {
+      const dept = { deptId: 0, deptName: '主类目', parentId: 0, children: [] }
+      dept.children = res.data.list
+      treeList.value.push(dept)
+    }
+  })
+}
 const inquireDept = () => {
   queryParams.value.page = 1
   queryParams.value.pageSize = 10
-  requestDept()
+  requestDeptOfTable()
 }
 const resetQuery = () => {
   queryParams.value = {
@@ -103,7 +119,7 @@ const resetQuery = () => {
 }
 const confirmSubmit = () => {
   formRef.value.validate((value) => {
-    if (value) {
+    if (value && btnType.value === 'create') {
       createDept(form.value).then((res) => {
         if (res.code === 200) {
           successMsg(res.msg)
@@ -116,7 +132,25 @@ const confirmSubmit = () => {
           isShowDialog.value = false
           title.value = ''
           isEdit.value = false
-          requestDept()
+          formRef.value.resetFields()
+          requestDeptOfTable()
+        }
+      })
+    } else if (value && btnType.value === 'update') {
+      updateDeptInfo(form.value).then((res) => {
+        if (res.code === 200) {
+          successMsg(res.msg)
+          queryParams.value = {
+            page: 1,
+            pageSize: 10,
+            deptName: '',
+            status: ''
+          }
+          isShowDialog.value = false
+          title.value = ''
+          isEdit.value = false
+          formRef.value.resetFields()
+          requestDeptOfTable()
         }
       })
     } else {
@@ -124,19 +158,11 @@ const confirmSubmit = () => {
     }
   })
 }
-const canlcelDialog = () => {
+const cancelDialog = () => {
   isShowDialog.value = false
   title.value = ''
-  form.value = {
-    parentId: '',
-    deptName: '',
-    sort: 0,
-    leader: '',
-    email: '',
-    phone: '',
-    status: ''
-  }
   isEdit.value = false
+  formRef.value.resetFields()
 }
 const removeDept = (data) => {
   const msg = '删除部门前，确保删除的部门不包含下级部门'
@@ -145,7 +171,9 @@ const removeDept = (data) => {
       delDeptInfo(data).then((res) => {
         if (res.code === 200) {
           successMsg(res.msg)
-          requestDept()
+          treeList.value = []
+          requestDeptOfTable()
+          requestDeptOfSelect()
         } else {
           errorMsg(res.msg)
         }
@@ -154,23 +182,27 @@ const removeDept = (data) => {
     .catch(() => {})
 }
 const changeDept = (data) => {
-  console.log(data)
   parentId.value = data.parentId.toString()
-  form.value = {
-    parentId: data.parentId,
-    deptName: data.deptName,
-    sort: data.sort,
-    leader: data.leader,
-    email: data.email,
-    phone: data.phone,
-    status: data.status
-  }
   title.value = '修改部门'
+  btnType.value = 'update'
   isEdit.value = true
   isShowDialog.value = true
+  nextTick(() => {
+    form.value = {
+      deptId: data.deptId,
+      parentId: data.parentId,
+      deptName: data.deptName,
+      sort: data.sort,
+      leader: data.leader,
+      email: data.email,
+      phone: data.phone,
+      status: data.status
+    }
+  })
 }
 onMounted(() => {
-  requestDept()
+  requestDeptOfTable()
+  requestDeptOfSelect()
 })
 </script>
 
@@ -333,7 +365,7 @@ onMounted(() => {
                 >
                   <treeselect
                     v-model="form.parentId"
-                    :data="deptList"
+                    :data="treeList"
                     :placeholder="'请选择上级部门'"
                     :parent-id="parentId"
                     :default-props="defaultProps"
@@ -402,7 +434,10 @@ onMounted(() => {
                 </el-form-item>
               </el-col>
               <el-col :span="12">
-                <el-form-item label="部门状态">
+                <el-form-item
+                  label="部门状态"
+                  prop="status"
+                >
                   <el-radio-group v-model="form.status">
                     <el-radio
                       v-for="dept in deptStatus"
@@ -422,7 +457,7 @@ onMounted(() => {
               type="primary"
               @click="confirmSubmit"
             >确 定</el-button>
-            <el-button @click="canlcelDialog">取 消</el-button>
+            <el-button @click="cancelDialog">取 消</el-button>
           </div>
         </el-dialog>
       </div>

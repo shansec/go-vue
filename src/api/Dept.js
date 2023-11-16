@@ -38,3 +38,16 @@ export const delDeptInfo = (data) => {
     data
   })
 }
+
+/**
+ * 修改部门信息
+ * @param data
+ * @returns string
+ */
+export const updateDeptInfo = (data) => {
+  return service({
+    url: '/dept/updateDeptInfo',
+    method: 'PUT',
+    data
+  })
+}
