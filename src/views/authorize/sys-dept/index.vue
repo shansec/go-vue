@@ -31,7 +31,7 @@ const queryParams = ref({
 })
 const title = ref('')
 const isShowDialog = ref(false)
-const formRef = ref()
+const deptFormRef = ref()
 const form = ref({
   deptId: 0,
   parentId: 0,
@@ -123,7 +123,7 @@ const resetQuery = () => {
   }
 }
 const confirmSubmit = () => {
-  formRef.value.validate((value) => {
+  deptFormRef.value.validate((value) => {
     if (value && btnType.value === 'create') {
       createDept(form.value).then((res) => {
         if (res.code === 200) {
@@ -137,7 +137,7 @@ const confirmSubmit = () => {
           isShowDialog.value = false
           title.value = ''
           isEdit.value = false
-          formRef.value.resetFields()
+          deptFormRef.value.resetFields()
           requestDeptOfTable()
         }
       })
@@ -154,7 +154,7 @@ const confirmSubmit = () => {
           isShowDialog.value = false
           title.value = ''
           isEdit.value = false
-          formRef.value.resetFields()
+          deptFormRef.value.resetFields()
           requestDeptOfTable()
         }
       })
@@ -167,7 +167,7 @@ const cancelDialog = () => {
   isShowDialog.value = false
   title.value = ''
   isEdit.value = false
-  formRef.value.resetFields()
+  deptFormRef.value.resetFields()
 }
 const removeDept = (data) => {
   const msg = '删除部门前，确保删除的部门不包含下级部门'
@@ -357,7 +357,7 @@ onMounted(() => {
           :show-close="false"
         >
           <el-form
-            ref="formRef"
+            ref="deptFormRef"
             :model="form"
             :rules="rules"
             label-width="80px"
@@ -496,10 +496,6 @@ onMounted(() => {
     .operate-btn {
       padding: 5px 0 !important;
     }
-  }
-
-  .dialog-footer {
-    text-align: right;
   }
 }
 </style>

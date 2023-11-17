@@ -1,6 +1,7 @@
 <script lang="js" setup>
 import { getDeptList } from '@/api/Dept'
-import { onMounted, ref } from 'vue'
+import { onMounted, ref, watch } from 'vue'
+import { Search } from '@element-plus/icons-vue'
 
 const deptList = ref()
 const queryParams = ref({
@@ -13,6 +14,7 @@ const defaultProps = {
   label: 'deptName',
   value: 'deptId'
 }
+const treeRef = ref()
 const requestDept = () => {
   getDeptList(queryParams.value).then((res) => {
     if (res.code === 200) {
@@ -22,6 +24,15 @@ const requestDept = () => {
     }
   })
 }
+const filterTreeNode = (key, data) => {
+  return data.deptName.includes(key)
+}
+watch(
+  () => queryParams.value.deptName,
+  (key) => {
+    treeRef.value.filter(key)
+  }
+)
 onMounted(() => {
   requestDept()
 })
@@ -30,23 +41,27 @@ onMounted(() => {
 <template>
   <div class="tree">
     <div class="query-box">
-      <el-form
-        :model="queryParams"
-        :inline="true"
-        label-width="70px"
-      >
-        <el-form-item label="部门名称">
-          <el-input
-            v-model.trim="queryParams.deptName"
-            placeholder="请输入部门名称"
-          />
-        </el-form-item>
-      </el-form>
+      <el-input
+        v-model.trim="queryParams.deptName"
+        :prefix-icon="Search"
+        placeholder="请输入部门名称"
+      />
     </div>
     <el-tree
+      ref="treeRef"
       :data="deptList"
       :props="defaultProps"
       :default-expand-all="true"
+      :filter-node-method="filterTreeNode"
     />
   </div>
 </template>
+
+<style lang="scss" scoped>
+.tree {
+  .query-box {
+    padding-right: 10px;
+    margin-bottom: 18px;
+  }
+}
+</style>

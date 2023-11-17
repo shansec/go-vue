@@ -1,6 +1,19 @@
 import service from '@/utils/request.js'
 
 /**
+ * 添加用户
+ * @param data
+ * @returns string
+ */
+export const createUser = (data) => {
+  return service({
+    url: '/user/register',
+    method: 'POST',
+    data
+  })
+}
+
+/**
  * 修改密码
  * @param data data 包含 原密码 和 旧密码
  * @returns string

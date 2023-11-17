@@ -12,7 +12,7 @@ const prop = defineProps({
   parentId: {
     type: String,
     default: '',
-    required: true
+    required: false
   },
   defaultProps: {
     type: Object,
@@ -20,7 +20,7 @@ const prop = defineProps({
   },
   isEdit: {
     type: Boolean,
-    required: true,
+    required: false,
     default: false
   }
 })
@@ -34,6 +34,7 @@ nextTick(() => {
   watch(
     () => prop.parentId,
     (newVal) => {
+      if (!newVal) return
       value.value = treeRef.value.getNode(newVal).data.deptName
     },
     { immediate: true }
