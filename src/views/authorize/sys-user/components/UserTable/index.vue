@@ -1,11 +1,15 @@
 <script lang="js" setup>
 import { onMounted, ref } from 'vue'
-import { getUsersInfo, updateUserStatus, delUserInfo, createUser } from '@/api/User'
+import {
+  getUsersInfo,
+  updateUserStatus,
+  delUserInfo,
+  createUser
+} from '@/api/User'
 import { getDeptList } from '@/api/Dept'
 import { formatTimeToStr } from '@/utils/date'
 import { confirmBox, successMsg } from '@/utils/message'
 import Treeselect from '@/components/Treeselect/index.vue'
-
 
 const userList = ref()
 const queryParams = ref({
@@ -56,11 +60,19 @@ const userRules = {
   password: [{ required: true, message: '用户密码不能为空', trigger: 'blur' }],
   email: [
     { required: true, message: '邮箱地址不能为空', trigger: 'blur' },
-    { type: 'email', message: "'请输入正确的邮箱地址", trigger: ['blur', 'change'] }
+    {
+      type: 'email',
+      message: "'请输入正确的邮箱地址",
+      trigger: ['blur', 'change']
+    }
   ],
   phone: [
     { required: true, message: '手机号码不能为空', trigger: 'blur' },
-    { pattern: /^1[3|4|5|6|7|8|9][0-9]\d{8}$/, message: '请输入正确的手机号码', trigger: 'blur' }
+    {
+      pattern: /^1[3|4|5|6|7|8|9][0-9]\d{8}$/,
+      message: '请输入正确的手机号码',
+      trigger: 'blur'
+    }
   ]
 }
 const treeList = ref([])
@@ -145,7 +157,7 @@ const ShowDialog = () => {
   isShowDialog.value = true
 }
 const confirmSubmit = () => {
-  createUser(userForm.value).then(res => {
+  createUser(userForm.value).then((res) => {
     if (res.code === 200) {
       successMsg(res.msg)
       requestUsersInfo()
@@ -476,9 +488,7 @@ onMounted(() => {
         class="dialog-footer"
         @click="confirmSubmit"
       >
-        <el-button
-          type="primary"
-        >确 定</el-button>
+        <el-button type="primary">确 定</el-button>
         <el-button @click="cancelShow">取 消</el-button>
       </div>
     </el-dialog>
