@@ -5,6 +5,7 @@ import { modifyPassword } from '@/api/User'
 import { useUserStore } from '@/store/modules/user'
 import storage from '@/utils/storage'
 import { successMsg } from '@/utils/message'
+import { awaitWrap } from '@/utils/await'
 
 const router = useRouter()
 const userStore = useUserStore()
@@ -38,18 +39,26 @@ const rules = reactive({
   ]
 })
 
-const submit = async() => {
-  form.value.validate((value) => {
+const submit = () => {
+  form.value.validate(async(value) => {
     if (value) {
-      modifyPassword(user)
-        .then((response) => {
-          if (response.code === 200) {
-            storage.clear()
-            successMsg('修改密码成功，请重新登录！')
-            router.push({ path: '/login' })
-          }
-        })
-        .catch(() => {})
+      const [err, data] = await awaitWrap(modifyPassword(user))
+      if (data !== null) {
+        storage.clear()
+        successMsg('修改密码成功，请重新登录！')
+        router.push({ path: '/login' })
+      } else {
+        console.log(err)
+      }
+      // modifyPassword(user)
+      //   .then((response) => {
+      //     if (response.code === 200) {
+      //       storage.clear()
+      //       successMsg('修改密码成功，请重新登录！')
+      //       router.push({ path: '/login' })
+      //     }
+      //   })
+      //   .catch(() => {})
     }
   })
 }

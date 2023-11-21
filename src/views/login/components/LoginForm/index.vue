@@ -7,7 +7,8 @@ import { login } from '@/api/User.js'
 import { getCaptcha } from '@/api/Captcha'
 import { useUserStore } from '@/store/modules/user.js'
 import storage from '@/utils/storage'
-import { errorMsg, successMsg } from '@/utils/message'
+import { successMsg } from '@/utils/message'
+import { awaitWrap } from '@/utils/await'
 
 const ruleFormRef = ref(null)
 const loading = ref(false)
@@ -28,49 +29,71 @@ const rules = reactive({
     { min: 6, max: 6, message: '请输入6位验证码', trigger: 'blur' }
   ]
 })
-const submitForm = async() => {
+const submitForm = () => {
   loading.value = true
-  ruleFormRef.value.validate((value) => {
+  ruleFormRef.value.validate(async(value) => {
     if (value) {
-      login(loginForm)
-        .then((res) => {
-          if (res.code === 200) {
-            const userData = res.data
-            userStore.setToken(userData.token)
-            userStore.setUserInfo(userData.user)
-            // 存到缓存
-            storage.set('token', userData.token)
-            successMsg('登录成功')
-            router.push({
-              path: '/'
-            })
-          } else {
-            errorMsg(res.msg)
-            requestCaptcha()
-          }
-          loading.value = false
+      const [err, data] = await awaitWrap(login(loginForm))
+      if (data !== null) {
+        const userData = data.data
+        userStore.setToken(userData.token)
+        userStore.setUserInfo(userData.user)
+        // 存到缓存
+        storage.set('token', userData.token)
+        successMsg('登录成功')
+        router.push({
+          path: '/'
         })
-        .catch(() => {
-          loading.value = false
-        })
+        loading.value = false
+      } else {
+        console.log(err)
+      }
+      // login(loginForm)
+      //   .then((res) => {
+      //     if (res.code === 200) {
+      //       const userData = res.data
+      //       userStore.setToken(userData.token)
+      //       userStore.setUserInfo(userData.user)
+      //       // 存到缓存
+      //       storage.set('token', userData.token)
+      //       successMsg('登录成功')
+      //       router.push({
+      //         path: '/'
+      //       })
+      //     } else {
+      //       errorMsg(res.msg)
+      //       requestCaptcha()
+      //     }
+      //     loading.value = false
+      //   })
+      //   .catch(() => {
+      //     loading.value = false
+      //   })
     } else {
       loading.value = false
     }
   })
 }
-const requestCaptcha = () => {
-  getCaptcha()
-    .then((response) => {
-      if (response.code === 200) {
-        captcha.value = response.data
-        loginForm.captchaId = response.data.captchaId
-      } else {
-        errorMsg(response.msg)
-      }
-    })
-    .catch((err) => {
-      errorMsg(err)
-    })
+const requestCaptcha = async() => {
+  const [err, data] = await awaitWrap(getCaptcha())
+  if (data !== null) {
+    captcha.value = data.data
+    loginForm.captchaId = data.data.captchaId
+  } else {
+    console.log(err)
+  }
+  // getCaptcha()
+  //   .then((response) => {
+  //     if (response.code === 200) {
+  //       captcha.value = response.data
+  //       loginForm.captchaId = response.data.captchaId
+  //     } else {
+  //       errorMsg(response.msg)
+  //     }
+  //   })
+  //   .catch((err) => {
+  //     errorMsg(err)
+  //   })
 }
 
 onMounted(() => {

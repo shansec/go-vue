@@ -1,5 +1,4 @@
 import { defineStore } from 'pinia'
-import { getUserInfo } from '@/api/User'
 
 export const useUserStore = defineStore({
   id: 'userStore',
@@ -30,23 +29,6 @@ export const useUserStore = defineStore({
     },
     setRoles() {
       this.roles = ['admin']
-    },
-    getUserInformation() {
-      return new Promise((resolve, reject) => {
-        getUserInfo()
-          .then((res) => {
-            if (!res || !res.data) {
-              this.setUserInfo()
-              resolve()
-            }
-            const user = res.data.user
-            this.setUserInfo(user)
-            resolve(res)
-          })
-          .catch((error) => {
-            reject(error)
-          })
-      })
     }
   }
 })
