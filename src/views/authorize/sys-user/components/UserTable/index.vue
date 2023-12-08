@@ -24,21 +24,21 @@ const total = ref(0)
 const userStatus = ref([
   {
     name: '正常',
-    value: '1'
+    value: 1
   },
   {
     name: '禁用',
-    value: '2'
+    value: 2
   }
 ])
 const userSex = ref([
   {
     name: '男',
-    value: '1'
+    value: 1
   },
   {
     name: '女',
-    value: '2'
+    value: 2
   }
 ])
 const title = ref('添加用户')
@@ -47,7 +47,7 @@ const userFormRef = ref()
 const userForm = ref({
   username: '',
   nickName: '',
-  deptId: 0,
+  deptsId: '',
   password: '',
   email: '',
   phone: '',
@@ -57,14 +57,14 @@ const userForm = ref({
 const userRules = {
   username: [{ required: true, message: '用户名称不能为空', trigger: 'blur' }],
   nickName: [{ required: true, message: '用户昵称不能为空', trigger: 'blur' }],
-  deptId: [{ required: true, message: '归属部门不能为空', trigger: 'blur' }],
+  deptsId: [{ required: true, message: '归属部门不能为空', trigger: 'blur' }],
   password: [{ required: true, message: '用户密码不能为空', trigger: 'blur' }],
   email: [
     { required: true, message: '邮箱地址不能为空', trigger: 'blur' },
     {
       type: 'email',
       message: "'请输入正确的邮箱地址",
-      trigger: ['blur', 'change']
+      trigger: ['blur']
     }
   ],
   phone: [
@@ -82,6 +82,8 @@ const defaultProps = {
   label: 'deptName',
   value: 'deptId'
 }
+const activeValue = ref(1)
+const inActiveValue = ref(2)
 const requestUsersInfo = async() => {
   const [err, data] = await awaitWrap(getUsersInfo(queryParams.value))
   if (data !== null) {
@@ -134,6 +136,7 @@ const showMessage = (scope) => {
         userList.value = userList.value.filter((user) => {
           return user.uuid !== scope.row.uuid
         })
+        total.value = userList.value.length
       } else {
         console.log(err)
       }
@@ -182,26 +185,27 @@ const resetQuery = () => {
   requestUsersInfo()
 }
 const setDept = (node) => {
-  userForm.value.deptId = node.deptId
+  userForm.value.deptsId = node.deptId
 }
 const ShowDialog = () => {
   title.value = '添加用户'
   isShowDialog.value = true
 }
-const confirmSubmit = async() => {
-  const [err, data] = await awaitWrap(createUser(userForm.value))
-  if (data !== null) {
-    successMsg(data.msg)
-    requestUsersInfo()
-  } else {
-    console.log(err)
-  }
-  // createUser(userForm.value).then((res) => {
-  //   if (res.code === 200) {
-  //     successMsg(res.msg)
-  //     requestUsersInfo()
-  //   }
-  // })
+const confirmCreateUser = () => {
+  userFormRef.value.validate(async(value) => {
+    if (value) {
+      const [err, data] = await awaitWrap(createUser(userForm.value))
+      if (data !== null) {
+        successMsg(data.msg)
+        requestUsersInfo()
+        title.value = ''
+        isShowDialog.value = false
+        userFormRef.value.resetFields()
+      } else {
+        console.log(err)
+      }
+    }
+  })
 }
 const cancelShow = () => {
   title.value = ''
@@ -314,8 +318,8 @@ onMounted(() => {
           <el-switch
             v-model="scope.row.status"
             :disabled="scope.row.ID === 4"
-            active-value="1"
-            inactive-value="2"
+            :active-value="activeValue"
+            :inactive-value="inActiveValue"
             :before-change="updateStatus.bind(this, scope.row.uuid)"
           />
         </template>
@@ -392,7 +396,7 @@ onMounted(() => {
           <el-col :span="12">
             <el-form-item
               label="归属部门"
-              prop="deptId"
+              prop="deptsId"
             >
               <treeselect
                 v-model="userForm.parentId"
@@ -525,9 +529,11 @@ onMounted(() => {
       <div
         slot="footer"
         class="dialog-footer"
-        @click="confirmSubmit"
       >
-        <el-button type="primary">确 定</el-button>
+        <el-button
+          type="primary"
+          @click="confirmCreateUser"
+        >确 定</el-button>
         <el-button @click="cancelShow">取 消</el-button>
       </div>
     </el-dialog>
