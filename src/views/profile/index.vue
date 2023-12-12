@@ -4,18 +4,27 @@ import userAvatar from './components/UserAvatar/index.vue'
 import userInfo from './components/UserInfo/index.vue'
 import resetPwd from './components/ResetPwd/index.vue'
 import { getUserInfo } from '@/api/User'
+import { awaitWrap } from '@/utils/await'
 
 const user = ref({})
 const activeTab = ref('userinfo')
 const roleName = ref(null)
 const deptName = ref(null)
 
-const getUser = () => {
-  getUserInfo().then((response) => {
-    user.value = response.data.user
+const getUser = async() => {
+  const [err, data] = await awaitWrap(getUserInfo())
+  if (data !== null) {
+    user.value = data.data.user
     roleName.value = user.value.sysRole.roleName
     deptName.value = '技术部'
-  })
+  } else {
+    console.log(err)
+  }
+  // getUserInfo().then((response) => {
+  //   user.value = response.data.user
+  //   roleName.value = user.value.sysRole.roleName
+  //   deptName.value = '技术部'
+  // })
 }
 onMounted(() => {
   getUser()

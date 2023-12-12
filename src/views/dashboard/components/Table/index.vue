@@ -24,6 +24,7 @@
 import { Commits } from '@/api/Github'
 import { formatTimeToStr } from '@/utils/date.js'
 import { onMounted, ref } from 'vue'
+import { awaitWrap } from '@/utils/await'
 
 defineOptions({
   name: 'DashboardTable'
@@ -32,10 +33,11 @@ defineOptions({
 const loading = ref(true)
 const dataTimeline = ref([])
 
-const loadCommits = () => {
-  Commits(0).then(({ data }) => {
+const loadCommits = async() => {
+  const [err, data] = await awaitWrap(Commits(0))
+  if (data !== null) {
     loading.value = false
-    data.forEach((element, index) => {
+    data.data.forEach((element, index) => {
       if (element.commit.message && index < 10) {
         dataTimeline.value.push({
           from: formatTimeToStr(element.commit.author.date, 'yyyy-MM-dd'),
@@ -45,7 +47,22 @@ const loadCommits = () => {
         })
       }
     })
-  })
+  } else {
+    console.log(err)
+  }
+  // Commits(0).then(({ data }) => {
+  //   loading.value = false
+  //   data.forEach((element, index) => {
+  //     if (element.commit.message && index < 10) {
+  //       dataTimeline.value.push({
+  //         from: formatTimeToStr(element.commit.author.date, 'yyyy-MM-dd'),
+  //         title: element.commit.author.name,
+  //         showDayAndMonth: true,
+  //         message: element.commit.message
+  //       })
+  //     }
+  //   })
+  // })
 }
 
 onMounted(() => {

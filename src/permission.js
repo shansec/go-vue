@@ -6,6 +6,8 @@ import getPageTitle from '@/utils/get-page-title'
 import pinia from '@/store'
 import { Message } from '@element-plus/icons-vue'
 import storage from '@/utils/storage'
+import { awaitWrap } from '@/utils/await'
+import { getUserInfo } from '@/api/User'
 
 NProgress.configure({ showSpinner: false })
 
@@ -25,11 +27,12 @@ router.beforeEach(async(to, from) => {
       if (hasRoles) {
         return true
       } else {
-        try {
-          await userStore.getUserInformation()
-          return true
-        } catch (error) {
-          Message.error(error || 'has Error')
+        const [err, data] = await awaitWrap(getUserInfo())
+        if (data !== null) {
+          const user = data.data.user
+          userStore.setUserInfo(user)
+        } else {
+          Message.error(err || 'has Error')
           NProgress.done()
           return { name: 'Login' }
         }

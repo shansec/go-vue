@@ -29,6 +29,7 @@ registerEleIcon(app)
 app.component('SvgIcon', SvgIcon)
 app.component('Pagination', Pagination)
 app.component('BasicLayout', BasicLayout)
+
 app.use(pinia)
 app.use(router)
 app.use(ElementPlus, { locale: zhCn }).mount('#app')
