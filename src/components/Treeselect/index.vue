@@ -1,5 +1,5 @@
 <script lang="js" setup>
-import { nextTick, ref, watch } from 'vue'
+import { nextTick, ref, watch, computed } from 'vue'
 const prop = defineProps({
   data: {
     type: Array,
@@ -22,11 +22,23 @@ const prop = defineProps({
     type: Boolean,
     required: false,
     default: false
+  },
+  curValue: {
+    type: Number,
+    required: false,
+    default: 0
   }
 })
 const emit = defineEmits(['getSelectedNode'])
-const value = ref('')
 const treeRef = ref()
+const value = computed({
+  get() {
+    return prop.curValue ? prop.curValue : ''
+  },
+  set(newvalue) {
+    console.log(newvalue)
+  }
+})
 const nodeClick = (node) => {
   emit('getSelectedNode', node)
 }
