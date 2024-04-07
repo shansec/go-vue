@@ -25,4 +25,3 @@ jobs:
           force_update: true
           # debug 为 true 表示启用 debug 开关，会显示所有执行命令
           debug: true
-
