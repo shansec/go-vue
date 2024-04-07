@@ -4,7 +4,8 @@ import {
   getUsersInfo,
   updateUserStatus,
   delUserInfo,
-  createUser
+  createUser,
+  updateUserInfo
 } from '@/api/User'
 import { getDeptList } from '@/api/Dept'
 import { formatTimeToStr } from '@/utils/date'
@@ -43,22 +44,25 @@ const userSex = ref([
 ])
 const title = ref('添加用户')
 const isShowDialog = ref(false)
+const passEditable = ref(true)
 const userFormRef = ref()
 const userForm = ref({
   username: '',
   nickName: '',
-  deptsId: '',
+  deptsId: 0,
   password: '',
   email: '',
   phone: '',
   status: '',
   sex: ''
 })
-const userRules = {
+const userRules = ref({
   username: [{ required: true, message: '用户名称不能为空', trigger: 'blur' }],
   nickName: [{ required: true, message: '用户昵称不能为空', trigger: 'blur' }],
   deptsId: [{ required: true, message: '归属部门不能为空', trigger: 'blur' }],
-  password: [{ required: true, message: '用户密码不能为空', trigger: 'blur' }],
+  password: [
+    { required: passEditable, message: '用户密码不能为空', trigger: 'blur' }
+  ],
   email: [
     { required: true, message: '邮箱地址不能为空', trigger: 'blur' },
     {
@@ -75,7 +79,7 @@ const userRules = {
       trigger: 'blur'
     }
   ]
-}
+})
 const treeList = ref([])
 const defaultProps = {
   children: 'children',
@@ -84,6 +88,7 @@ const defaultProps = {
 }
 const activeValue = ref(1)
 const inActiveValue = ref(2)
+const filterStatus = (value) => String(value)
 const requestUsersInfo = async() => {
   const [err, data] = await awaitWrap(getUsersInfo(queryParams.value))
   if (data !== null) {
@@ -122,8 +127,18 @@ const requestUserList = ({ page, limit }) => {
   requestUsersInfo()
 }
 const formatTime = (rowData) => formatTimeToStr(rowData.CreatedAt)
-const updateRowInfo = (scope) => {
-  console.log(scope.$index)
+const updateRowInfo = ({ $index, row }) => {
+  const { userName, nickName, deptsId, email, phone, status, sex } = row
+  title.value = '编辑用户'
+  userForm.value.username = userName
+  userForm.value.nickName = nickName
+  userForm.value.deptsId = deptsId
+  userForm.value.email = email
+  userForm.value.phone = phone
+  userForm.value.status = status
+  userForm.value.sex = sex
+  passEditable.value = false
+  isShowDialog.value = true
 }
 const showMessage = (scope) => {
   const msg = `确定删除编号为 ${scope.row.ID} 的用户吗？`
@@ -152,21 +167,14 @@ const showMessage = (scope) => {
 const updateStatus = (mark) => {
   return new Promise((resolve, reject) => {
     const param = { uuid: mark }
-    const [data] = awaitWrap(updateUserStatus(param))
-    if (data !== null) {
-      successMsg(data.msg)
-      resolve(true)
-    } else {
-      reject(false)
-    }
-    // updateUserStatus(param)
-    //   .then((response) => {
-    //     successMsg(response.msg)
-    //     resolve(true)
-    //   })
-    //   .catch(() => {
-    //     reject(false)
-    //   })
+    updateUserStatus(param)
+      .then((response) => {
+        successMsg(response.msg)
+        resolve(true)
+      })
+      .catch(() => {
+        reject(false)
+      })
   })
 }
 const inquireUser = () => {
@@ -193,8 +201,19 @@ const ShowDialog = () => {
 }
 const confirmCreateUser = () => {
   userFormRef.value.validate(async(value) => {
-    if (value) {
+    if (value && passEditable.value) {
       const [err, data] = await awaitWrap(createUser(userForm.value))
+      if (data !== null) {
+        successMsg(data.msg)
+        requestUsersInfo()
+        title.value = ''
+        isShowDialog.value = false
+        userFormRef.value.resetFields()
+      } else {
+        console.log(err)
+      }
+    } else if (value && !passEditable.value) {
+      const [err, data] = await awaitWrap(updateUserInfo(userForm.value))
       if (data !== null) {
         successMsg(data.msg)
         requestUsersInfo()
@@ -210,6 +229,7 @@ const confirmCreateUser = () => {
 const cancelShow = () => {
   title.value = ''
   isShowDialog.value = false
+  passEditable.value = true
   userFormRef.value.resetFields()
 }
 onMounted(() => {
@@ -247,7 +267,7 @@ onMounted(() => {
               v-for="status in userStatus"
               :key="status.value"
               :label="status.name"
-              :value="status.value"
+              :value="filterStatus(status.value)"
             />
           </el-select>
         </el-form-item>
@@ -399,8 +419,9 @@ onMounted(() => {
               prop="deptsId"
             >
               <treeselect
-                v-model="userForm.parentId"
+                v-model="userForm.deptsId"
                 :data="treeList"
+                :cur-value="userForm.deptsId"
                 :placeholder="'请选择归属部门'"
                 :default-props="defaultProps"
                 @get-selected-node="setDept"
@@ -451,6 +472,7 @@ onMounted(() => {
                 v-model="userForm.password"
                 placeholder="请输入用户密码"
                 type="password"
+                :disabled="!passEditable"
               />
             </el-form-item>
           </el-col>
