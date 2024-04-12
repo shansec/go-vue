@@ -2,7 +2,7 @@ import service from '@/utils/request'
 
 export const getCaptcha = () => {
   return service({
-    url: '/base/captcha',
+    url: '/v1/base/captcha',
     method: 'GET'
   })
 }

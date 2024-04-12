@@ -7,7 +7,7 @@ import service from '@/utils/request.js'
  */
 export const createDept = (data) => {
   return service({
-    url: '/dept/createDept',
+    url: '/v1/dept/createDept',
     method: 'POST',
     data
   })
@@ -20,7 +20,7 @@ export const createDept = (data) => {
  */
 export const getDeptList = (data) => {
   return service({
-    url: '/dept/getDeptList',
+    url: '/v1/dept/getDeptList',
     method: 'POST',
     data
   })
@@ -33,7 +33,7 @@ export const getDeptList = (data) => {
  */
 export const delDeptInfo = (data) => {
   return service({
-    url: '/dept/delDeptInfo',
+    url: '/v1/dept/delDeptInfo',
     method: 'DELETE',
     data
   })
@@ -46,7 +46,7 @@ export const delDeptInfo = (data) => {
  */
 export const updateDeptInfo = (data) => {
   return service({
-    url: '/dept/updateDeptInfo',
+    url: '/v1/dept/updateDeptInfo',
     method: 'PUT',
     data
   })

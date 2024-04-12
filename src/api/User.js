@@ -7,7 +7,7 @@ import service from '@/utils/request.js'
  */
 export const createUser = (data) => {
   return service({
-    url: '/user/register',
+    url: '/v1/user/register',
     method: 'POST',
     data
   })
@@ -20,7 +20,7 @@ export const createUser = (data) => {
  */
 export const modifyPassword = (data) => {
   return service({
-    url: '/user/modifyPassword',
+    url: '/v1/user/modifyPassword',
     method: 'POST',
     data
   })
@@ -34,7 +34,7 @@ export const modifyPassword = (data) => {
  */
 export const login = (data) => {
   return service({
-    url: '/base/login',
+    url: '/v1/base/login',
     method: 'POST',
     data
   })
@@ -47,7 +47,7 @@ export const login = (data) => {
  */
 export const updateUserInfo = (data) => {
   return service({
-    url: '/user/updateUserInfo',
+    url: '/v1/user/updateUserInfo',
     method: 'POST',
     data
   })
@@ -59,7 +59,7 @@ export const updateUserInfo = (data) => {
  */
 export const getUserInfo = () => {
   return service({
-    url: '/user/getUserInfo',
+    url: '/v1/user/getUserInfo',
     method: 'GET'
   })
 }
@@ -70,7 +70,7 @@ export const getUserInfo = () => {
  */
 export const getUsersInfo = (data) => {
   return service({
-    url: '/user/getUsersInfo',
+    url: '/v1/user/getUsersInfo',
     method: 'POST',
     data
   })
@@ -82,7 +82,7 @@ export const getUsersInfo = (data) => {
  */
 export const updateUserStatus = (data) => {
   return service({
-    url: '/user/updateUserStatus',
+    url: '/v1/user/updateUserStatus',
     method: 'PUT',
     data
   })
@@ -94,7 +94,7 @@ export const updateUserStatus = (data) => {
  */
 export const delUserInfo = (data) => {
   return service({
-    url: '/user/delUserInfo',
+    url: '/v1/user/delUserInfo',
     method: 'DELETE',
     data
   })
