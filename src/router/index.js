@@ -2,6 +2,8 @@ import { createRouter, createWebHistory } from 'vue-router'
 import Layout from '@/layout/index.vue'
 import userRoutes from '@/router/modules/user'
 import deptRoutes from '@/router/modules/dept'
+import systemRoutes from '@/router/modules/system'
+import autoCodeRoutes from '@/router/modules/autocode'
 
 export const constantRoutes = [
   {
@@ -32,6 +34,7 @@ export const constantRoutes = [
   },
   ...userRoutes,
   ...deptRoutes,
+  ...autoCodeRoutes,
   {
     path: '/profile',
     component: Layout,
@@ -45,6 +48,7 @@ export const constantRoutes = [
       }
     ]
   },
+  ...systemRoutes,
   { path: '/:catchAll(.*)', redirect: '/404', hidden: true }
 ]
 

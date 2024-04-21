@@ -16,6 +16,7 @@ module.exports = {
     'vue/no-v-for-template-key': 0,
     'vue/no-multiple-template-root': 0,
     'vue/no-template-shadow': 0,
+    'vue/no-v-text-v-html-on-component': 0,
     'vue/max-attributes-per-line': 1,
     'vue/singleline-html-element-content-newline': 'off',
     'vue/multiline-html-element-content-newline': 'off',
