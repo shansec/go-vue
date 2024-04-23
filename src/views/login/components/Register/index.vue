@@ -13,7 +13,7 @@ const ruleFormRef = ref(null)
 const loading = ref(false)
 const registerForm = reactive({
   username: '',
-  password: '',
+  password: ''
 })
 
 const router = useRouter()
