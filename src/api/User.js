@@ -1,7 +1,7 @@
 import service from '@/utils/request.js'
 
-// @Tags SysUser
 // @Summary 用户注册账号
+// @Tags SysUser
 // @Produce json
 // @Param   data body systemReq.Register true "用户注册"
 // @Success 200 {object} response.Response{data=systemRes.SysUserResponse, msg=string}	"用户注册"
@@ -14,8 +14,8 @@ export const createUser = (data) => {
   })
 }
 
-// @Tags SysUser
 // @Summary 修改密码
+// @Tags SysUser
 // @Produce json
 // @Param   data body systemReq.ChangePassword true "修改密码"
 // @Success 200 {object} response.Response{msg=string}	"修改密码,返回修改结果"
@@ -28,8 +28,8 @@ export const modifyPassword = (data) => {
   })
 }
 
-// @Tags SysUser
 // @Summary 用户登录
+// @Tags SysUser
 // @Produce json
 // @Param   data body systemReq.Login true "用户登录"
 // @Success 200 {object} response.Response{data=systemRes.Login, msg=string}	"用户登录"
@@ -42,8 +42,8 @@ export const login = (data) => {
   })
 }
 
-// @Tags SysUser
 // @Summary 更新用户信息
+// @Tags SysUser
 // @Produce json
 // @Param   data body system.SysUser true "更新用户信息"
 // @Success 200 {object} response.Response{msg=string} "更新用户信息，返回操作结果"
