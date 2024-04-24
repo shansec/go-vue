@@ -24,12 +24,12 @@ export const useSettingStore = defineStore({
     themeColor: THEME_COLOR
   }),
   actions: {
-    CHANGE_SETTING(key, value) {
+    CHANGE_SETTING (key, value) {
       if (Reflect.has(this, key)) {
         this[key] = value
       }
     },
-    changeThemeSetting(key, val) {
+    changeThemeSetting (key, val) {
       this.CHANGE_SETTING(key, val)
     }
   }

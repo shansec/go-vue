@@ -9,7 +9,6 @@ import {
 import { formatTimeToStr } from '@/utils/date'
 import Treeselect from '@/components/Treeselect/index.vue'
 import { errorMsg, successMsg, confirmBox } from '@/utils/message'
-import { awaitWrap } from '@/utils/await'
 
 const deptList = ref()
 const treeList = ref([])
@@ -91,41 +90,18 @@ const deptCreate = (row) => {
   isShowDialog.value = true
 }
 const formatTime = (rowData) => formatTimeToStr(rowData.CreatedAt)
-const requestDeptOfTable = async() => {
-  const [err, data] = await awaitWrap(getDeptList(queryParams.value))
-  if (data !== null) {
-    deptList.value = data.data.list
-    queryParams.value.page = data.data.page
-    queryParams.value.pageSize = data.data.pageSize
-    total.value = data.data.total
-  } else {
-    console.log(err)
-  }
-  // getDeptList(queryParams.value).then((res) => {
-  //   if (res.code === 200) {
-  //     deptList.value = res.data.list
-  //     queryParams.value.page = res.data.page
-  //     queryParams.value.pageSize = res.data.pageSize
-  //     total.value = res.data.total
-  //   }
-  // })
+const requestDeptOfTable = async () => {
+  const res = await getDeptList(queryParams.value)
+  deptList.value = res.data.list
+  queryParams.value.page = res.data.page
+  queryParams.value.pageSize = res.data.pageSize
+  total.value = res.data.total
 }
-const requestDeptOfSelect = async() => {
-  const [err, data] = await awaitWrap(getDeptList(queryParams.value))
-  if (data !== null) {
-    const dept = { deptId: 0, deptName: '主类目', parentId: 0, children: [] }
-    dept.children = data.data.list
-    treeList.value.push(dept)
-  } else {
-    console.log(err)
-  }
-  // getDeptList(queryParams.value).then((res) => {
-  //   if (res.code === 200) {
-  //     const dept = { deptId: 0, deptName: '主类目', parentId: 0, children: [] }
-  //     dept.children = res.data.list
-  //     treeList.value.push(dept)
-  //   }
-  // })
+const requestDeptOfSelect = async () => {
+  const res = await getDeptList(queryParams.value)
+  const dept = { deptId: 0, deptName: '主类目', parentId: 0, children: [] }
+  dept.children = res.data.list
+  treeList.value.push(dept)
 }
 const inquireDept = () => {
   queryParams.value.page = 1
@@ -141,75 +117,51 @@ const resetQuery = () => {
   }
 }
 const confirmSubmit = () => {
-  deptFormRef.value.validate(async(value) => {
+  deptFormRef.value.validate(async (value) => {
     if (value && btnType.value === 'create') {
-      const [err, data] = await awaitWrap(createDept(form.value))
-      if (data !== null) {
-        successMsg(data.msg)
-        queryParams.value = {
-          page: 1,
-          pageSize: 10,
-          deptName: '',
-          status: ''
+      try {
+        const res = await createDept(form.value)
+        if (res.code === 200) {
+          successMsg(res.msg)
+          queryParams.value = {
+            page: 1,
+            pageSize: 10,
+            deptName: '',
+            status: ''
+          }
+          isShowDialog.value = false
+          title.value = ''
+          isEdit.value = false
+          deptFormRef.value.resetFields()
+          requestDeptOfTable()
+        } else {
+          errorMsg('创建部门失败！')
         }
-        isShowDialog.value = false
-        title.value = ''
-        isEdit.value = false
-        deptFormRef.value.resetFields()
-        requestDeptOfTable()
-      } else {
-        console.log(err)
+      } catch (e) {
+        errorMsg('创建部门失败！')
       }
-      // createDept(form.value).then((res) => {
-      //   if (res.code === 200) {
-      //     successMsg(res.msg)
-      //     queryParams.value = {
-      //       page: 1,
-      //       pageSize: 10,
-      //       deptName: '',
-      //       status: ''
-      //     }
-      //     isShowDialog.value = false
-      //     title.value = ''
-      //     isEdit.value = false
-      //     deptFormRef.value.resetFields()
-      //     requestDeptOfTable()
-      //   }
-      // })
     } else if (value && btnType.value === 'update') {
-      const [err, data] = await awaitWrap(updateDeptInfo(form.value))
-      if (data !== null) {
-        successMsg(data.msg)
-        queryParams.value = {
-          page: 1,
-          pageSize: 10,
-          deptName: '',
-          status: ''
+      try {
+        const res = await updateDeptInfo(form.value)
+        if (res.code === 200) {
+          successMsg(res.msg)
+          queryParams.value = {
+            page: 1,
+            pageSize: 10,
+            deptName: '',
+            status: ''
+          }
+          isShowDialog.value = false
+          title.value = ''
+          isEdit.value = false
+          deptFormRef.value.resetFields()
+          requestDeptOfTable()
+        } else {
+          errorMsg('更新部门信息失败！')
         }
-        isShowDialog.value = false
-        title.value = ''
-        isEdit.value = false
-        deptFormRef.value.resetFields()
-        requestDeptOfTable()
-      } else {
-        console.log(err)
+      } catch (e) {
+        errorMsg('更新部门信息失败！')
       }
-      // updateDeptInfo(form.value).then((res) => {
-      //   if (res.code === 200) {
-      //     successMsg(res.msg)
-      //     queryParams.value = {
-      //       page: 1,
-      //       pageSize: 10,
-      //       deptName: '',
-      //       status: ''
-      //     }
-      //     isShowDialog.value = false
-      //     title.value = ''
-      //     isEdit.value = false
-      //     deptFormRef.value.resetFields()
-      //     requestDeptOfTable()
-      //   }
-      // })
     } else {
       errorMsg('请完善必填信息')
     }
@@ -223,29 +175,21 @@ const cancelDialog = () => {
 }
 const removeDept = (data) => {
   const msg = '删除部门前，确保删除的部门不包含下级部门'
-  confirmBox(msg, '确定删除', '取消', 'warning')
-    .then(async() => {
-      const [err, data] = await awaitWrap(delDeptInfo(data))
-      if (data !== null) {
-        successMsg(data.msg)
+  confirmBox(msg, '确定删除', '取消', 'warning').then(async () => {
+    try {
+      const res = await delDeptInfo(data)
+      if (res.code === 200) {
+        successMsg(res.msg)
         treeList.value = []
         requestDeptOfTable()
         requestDeptOfSelect()
       } else {
-        console.log(err)
+        errorMsg('删除部门信息失败！')
       }
-      // delDeptInfo(data).then((res) => {
-      //   if (res.code === 200) {
-      //     successMsg(res.msg)
-      //     treeList.value = []
-      //     requestDeptOfTable()
-      //     requestDeptOfSelect()
-      //   } else {
-      //     errorMsg(res.msg)
-      //   }
-      // })
-    })
-    .catch(() => {})
+    } catch (e) {
+      errorMsg('删除部门信息失败！')
+    }
+  })
 }
 const changeDept = (data) => {
   parentId.value = data.parentId.toString()

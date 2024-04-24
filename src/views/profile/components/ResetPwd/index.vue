@@ -4,8 +4,7 @@ import { useRouter } from 'vue-router'
 import { modifyPassword } from '@/api/User'
 import { useUserStore } from '@/store/modules/user'
 import storage from '@/utils/storage'
-import { successMsg } from '@/utils/message'
-import { awaitWrap } from '@/utils/await'
+import { errorMsg, successMsg } from '@/utils/message'
 
 const router = useRouter()
 const userStore = useUserStore()
@@ -40,25 +39,20 @@ const rules = reactive({
 })
 
 const submit = () => {
-  form.value.validate(async(value) => {
+  form.value.validate(async (value) => {
     if (value) {
-      const [err, data] = await awaitWrap(modifyPassword(user))
-      if (data !== null) {
-        storage.clear()
-        successMsg('修改密码成功，请重新登录！')
-        router.push({ path: '/login' })
-      } else {
-        console.log(err)
+      try {
+        const res = await modifyPassword(user)
+        if (res.code === 200) {
+          storage.clear()
+          successMsg('修改密码成功，请重新登录！')
+          await router.push({ path: '/login' })
+        } else {
+          errorMsg('修改密码失败！')
+        }
+      } catch (e) {
+        errorMsg('修改密码失败！')
       }
-      // modifyPassword(user)
-      //   .then((response) => {
-      //     if (response.code === 200) {
-      //       storage.clear()
-      //       successMsg('修改密码成功，请重新登录！')
-      //       router.push({ path: '/login' })
-      //     }
-      //   })
-      //   .catch(() => {})
     }
   })
 }

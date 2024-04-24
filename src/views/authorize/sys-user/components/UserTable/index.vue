@@ -11,7 +11,6 @@ import { getDeptList } from '@/api/Dept'
 import { formatTimeToStr } from '@/utils/date'
 import { confirmBox, successMsg } from '@/utils/message'
 import Treeselect from '@/components/Treeselect/index.vue'
-import { awaitWrap } from '@/utils/await'
 
 const userList = ref()
 const queryParams = ref({
@@ -89,37 +88,16 @@ const defaultProps = {
 const activeValue = ref(1)
 const inActiveValue = ref(2)
 const filterStatus = (value) => String(value)
-const requestUsersInfo = async() => {
-  const [err, data] = await awaitWrap(getUsersInfo(queryParams.value))
-  if (data !== null) {
-    userList.value = data.data.list
-    queryParams.value.page = data.data.page
-    queryParams.value.pageSize = data.data.pageSize
-    total.value = data.data.total
-  } else {
-    console.log(err)
-  }
-  // getUsersInfo(queryParams.value).then((response) => {
-  //   if (response.code === 200) {
-  //     userList.value = response.data.list
-  //     queryParams.value.page = response.data.page
-  //     queryParams.value.pageSize = response.data.pageSize
-  //     total.value = response.data.total
-  //   }
-  // })
+const requestUsersInfo = async () => {
+  const res = await getUsersInfo(queryParams.value)
+  userList.value = res.data.list
+  queryParams.value.page = res.data.page
+  queryParams.value.pageSize = res.data.pageSize
+  total.value = res.data.total
 }
-const requestDept = async() => {
-  const [err, data] = await awaitWrap(getDeptList(queryParams.value))
-  if (data !== null) {
-    treeList.value = data.data.list
-  } else {
-    console.log(err)
-  }
-  // getDeptList(queryParams.value).then((res) => {
-  //   if (res.code === 200) {
-  //     treeList.value = res.data.list
-  //   }
-  // })
+const requestDept = async () => {
+  const res = await getDeptList(queryParams.value)
+  treeList.value = res.data.list
 }
 const requestUserList = ({ page, limit }) => {
   queryParams.value.page = page
@@ -142,27 +120,23 @@ const updateRowInfo = ({ $index, row }) => {
 }
 const showMessage = (scope) => {
   const msg = `确定删除编号为 ${scope.row.ID} 的用户吗？`
-  confirmBox(msg, '确定', '取消', 'warning')
-    .then(async() => {
+  confirmBox(msg, '确定', '取消', 'warning').then(async () => {
+    try {
       const param = { uuid: scope.row.uuid }
-      const [err, data] = await awaitWrap(delUserInfo(param))
-      if (data !== null) {
-        successMsg(data.msg)
+      const res = await delUserInfo(param)
+      if (res.code === 200) {
+        successMsg(res.msg)
         userList.value = userList.value.filter((user) => {
           return user.uuid !== scope.row.uuid
         })
         total.value = userList.value.length
       } else {
-        console.log(err)
+        errorMsg('删除用户失败！')
       }
-      // delUserInfo(param).then((res) => {
-      //   successMsg(res.msg)
-      //   userList.value = userList.value.filter((user) => {
-      //     return user.uuid !== scope.row.uuid
-      //   })
-      // })
-    })
-    .catch(() => {})
+    } catch (e) {
+      errorMsg('删除用户失败！')
+    }
+  })
 }
 const updateStatus = (mark) => {
   return new Promise((resolve, reject) => {
@@ -200,28 +174,36 @@ const ShowDialog = () => {
   isShowDialog.value = true
 }
 const confirmCreateUser = () => {
-  userFormRef.value.validate(async(value) => {
+  userFormRef.value.validate(async (value) => {
     if (value && passEditable.value) {
-      const [err, data] = await awaitWrap(createUser(userForm.value))
-      if (data !== null) {
-        successMsg(data.msg)
-        requestUsersInfo()
-        title.value = ''
-        isShowDialog.value = false
-        userFormRef.value.resetFields()
-      } else {
-        console.log(err)
+      try {
+        const res = await createUser(userForm.value)
+        if (res.code === 200) {
+          successMsg(res.msg)
+          requestUsersInfo()
+          title.value = ''
+          isShowDialog.value = false
+          userFormRef.value.resetFields()
+        } else {
+          errorMsg('添加用户失败！')
+        }
+      } catch (e) {
+        errorMsg('添加用户失败！')
       }
     } else if (value && !passEditable.value) {
-      const [err, data] = await awaitWrap(updateUserInfo(userForm.value))
-      if (data !== null) {
-        successMsg(data.msg)
-        requestUsersInfo()
-        title.value = ''
-        isShowDialog.value = false
-        userFormRef.value.resetFields()
-      } else {
-        console.log(err)
+      try {
+        const res = await updateUserInfo(userForm.value)
+        if (res.code === 200) {
+          successMsg(res.msg)
+          requestUsersInfo()
+          title.value = ''
+          isShowDialog.value = false
+          userFormRef.value.resetFields()
+        } else {
+          errorMsg('更新用户信息失败！')
+        }
+      } catch (e) {
+        errorMsg('更新用户信息失败！')
       }
     }
   })

@@ -16,7 +16,7 @@ const prop = defineProps({
   },
   pageSizes: {
     type: Array,
-    default() {
+    default () {
       return [10, 20, 30, 50]
     }
   },
@@ -51,18 +51,18 @@ const handleCurrentChange = (val) => {
   }
 }
 const currentPage = computed({
-  get() {
+  get () {
     return prop.page
   },
-  set(val) {
+  set (val) {
     emit('update:page', val)
   }
 })
 const pageSize = computed({
-  get() {
+  get () {
     return prop.limit
   },
-  set(val) {
+  set (val) {
     emit('update:limit', val)
   }
 })

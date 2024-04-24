@@ -8,26 +8,26 @@ export const useUserStore = defineStore({
     roles: []
   }),
   getters: {
-    getToken(state) {
+    getToken (state) {
       return state.token
     },
-    getUserInfo(state) {
+    getUserInfo (state) {
       return state.userInfo
     }
   },
   actions: {
-    setToken(token) {
+    setToken (token) {
       this.token = token
     },
-    setInfoToNUll() {
+    setInfoToNUll () {
       this.token = ''
       this.userInfo = {}
     },
-    setUserInfo(userData) {
+    setUserInfo (userData) {
       this.userInfo = userData
       this.setRoles()
     },
-    setRoles() {
+    setRoles () {
       this.roles = ['admin']
     }
   }

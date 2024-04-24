@@ -2,7 +2,6 @@
 import { getDeptList } from '@/api/Dept'
 import { onMounted, ref, watch } from 'vue'
 import { Search } from '@element-plus/icons-vue'
-import { awaitWrap } from '@/utils/await'
 
 const deptList = ref()
 const queryParams = ref({
@@ -16,22 +15,11 @@ const defaultProps = {
   value: 'deptId'
 }
 const treeRef = ref()
-const requestDept = async() => {
-  const [err, data] = await awaitWrap(getDeptList(queryParams.value))
-  if (data !== null) {
-    deptList.value = data.data.list
-    queryParams.value.page = data.data.page
-    queryParams.value.pageSize = data.data.pageSize
-  } else {
-    console.log(err)
-  }
-  // getDeptList(queryParams.value).then((res) => {
-  //   if (res.code === 200) {
-  //     deptList.value = res.data.list
-  //     queryParams.value.page = res.data.page
-  //     queryParams.value.pageSize = res.data.pageSize
-  //   }
-  // })
+const requestDept = async () => {
+  const res = await getDeptList(queryParams.value)
+  deptList.value = res.data.list
+  queryParams.value.page = res.data.page
+  queryParams.value.pageSize = res.data.pageSize
 }
 const filterTreeNode = (key, data) => {
   return data.deptName.includes(key)

@@ -3,8 +3,7 @@ import { ref } from 'vue'
 import { useRouter } from 'vue-router'
 import { updateUserInfo } from '@/api/User'
 import storage from '@/utils/storage'
-import { successMsg } from '@/utils/message'
-import { awaitWrap } from '@/utils/await'
+import { errorMsg, successMsg } from '@/utils/message'
 
 const props = defineProps({
   user: {
@@ -34,25 +33,20 @@ const rules = {
 const form = ref(null)
 const router = useRouter()
 const submit = () => {
-  form.value.validate(async(valid) => {
+  form.value.validate(async (valid) => {
     if (valid) {
-      const [err, data] = await awaitWrap(updateUserInfo(props.user))
-      if (data !== null) {
-        storage.clear()
-        successMsg(`${data.msg},请重新登录！`)
-        router.push({ path: '/login' })
-      } else {
-        console.log(err)
+      try {
+        const res = await updateUserInfo(props.user)
+        if (res.code === 200) {
+          storage.clear()
+          successMsg(`${data.msg},请重新登录！`)
+          await router.push({ path: '/login' })
+        } else {
+          errorMsg('更新用户信息失败！')
+        }
+      } catch (e) {
+        errorMsg('更新用户信息失败！')
       }
-      // updateUserInfo(props.user).then((response) => {
-      //   if (response.code === 200) {
-      //     storage.clear()
-      //     successMsg(`${response.msg},请重新登录！`)
-      //     router.push({ path: '/login' })
-      //   } else {
-      //     errorMsg(response.msg)
-      //   }
-      // })
     }
   })
 }

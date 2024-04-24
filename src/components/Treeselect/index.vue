@@ -32,10 +32,10 @@ const prop = defineProps({
 const emit = defineEmits(['getSelectedNode'])
 const treeRef = ref()
 const value = computed({
-  get() {
+  get () {
     return prop.curValue ? prop.curValue : ''
   },
-  set(newvalue) {
+  set (newvalue) {
     console.log(newvalue)
   }
 })

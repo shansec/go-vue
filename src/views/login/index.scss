@@ -62,8 +62,8 @@
       }
 
       .el-row {
-        margin-bottom: 16px;
-        height: 40px;
+        margin-bottom: 20px;
+        height: 50px;
 
         .el-col {
           height: 100%;
@@ -71,19 +71,34 @@
       }
 
       .captcha {
+        height: 50px;
+
         --tw-bg-opacity: 1 !important;
 
         background-color: rgb(195 212 242 / var(--tw-bg-opacity))!important;
       }
 
       :deep .el-input__inner {
-        height: 40px;
+        height: 50px;
       }
 
       .login_btn {
-        margin-top: 20px;
+        margin-bottom: 16px;
         width: 100%;
-        height: 47px;
+        height: 40px;
+      }
+
+      .trigger-box {
+        display: flex;
+        justify-content: space-around;
+        align-items: center;
+        width: 100%;
+
+        .box {
+          min-width: 120px;
+          height: 40px;
+          line-height: 40px;
+        }
       }
     }
   }

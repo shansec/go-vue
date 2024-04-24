@@ -30,10 +30,10 @@ const predefineColors = ref([
   '#c71585'
 ])
 const drawer = computed({
-  get() {
+  get () {
     return settingStore.showThemeSetting
   },
-  set() {
+  set () {
     changeTheme('showThemeSetting', !settingStore.showThemeSetting)
   }
 })
