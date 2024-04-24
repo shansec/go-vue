@@ -17,7 +17,27 @@ module.exports = {
     'vue/no-multiple-template-root': 0,
     'vue/no-template-shadow': 0,
     'vue/no-v-text-v-html-on-component': 0,
-    'vue/max-attributes-per-line': 1,
+    'vue/max-attributes-per-line': [
+      'error',
+      {
+        singleline: {
+          max: 4
+        },
+        multiline: {
+          max: 1
+        }
+      }
+    ],
+    'vue/html-self-closing': [
+      'error',
+      {
+        html: {
+          void: 'always',
+          normal: 'always',
+          component: 'always'
+        }
+      }
+    ],
     'vue/singleline-html-element-content-newline': 'off',
     'vue/multiline-html-element-content-newline': 'off',
     'vue/multi-word-component-names': 'off',

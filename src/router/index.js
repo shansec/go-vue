@@ -12,6 +12,13 @@ export const constantRoutes = [
     hidden: true
   },
   {
+    path: '/init',
+    name: 'Init',
+    component: () => import('@/views/init/index.vue'),
+    hidden: true,
+    meta: { title: '初始化' }
+  },
+  {
     path: '/login',
     name: 'Login',
     component: () => import('@/views/login/index.vue'),
@@ -39,6 +46,7 @@ export const constantRoutes = [
     path: '/profile',
     component: Layout,
     redirect: '/profile/index',
+    hidden: true,
     children: [
       {
         path: 'index',

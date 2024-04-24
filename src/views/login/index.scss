@@ -36,7 +36,7 @@
 
     .login-form {
       position: relative;
-      padding: 40px;
+      padding: 25px 40px;
       width: 50%;
       max-width: 480px;
       border-radius: 10px;
@@ -89,15 +89,16 @@
       }
 
       .trigger-box {
-        display: flex;
-        justify-content: space-around;
-        align-items: center;
         width: 100%;
+        display: flex;
+        justify-content: flex-end;
+        align-items: center;
+        margin-bottom: 8px;
 
-        .box {
-          min-width: 120px;
-          height: 40px;
-          line-height: 40px;
+        span {
+          font-size: 16px;
+          color: #409eff;
+          cursor: pointer;
         }
       }
     }

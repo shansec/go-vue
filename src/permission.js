@@ -11,7 +11,7 @@ import { getUserInfo } from '@/api/User'
 
 NProgress.configure({ showSpinner: false })
 
-const whiteList = ['/login']
+const whiteList = ['/login', '/init']
 
 router.beforeEach(async (to, from) => {
   NProgress.start()

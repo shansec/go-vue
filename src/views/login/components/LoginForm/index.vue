@@ -76,10 +76,7 @@ onMounted(() => {
 
 <template>
   <div class="avatar_box">
-    <img
-      src="../../../../assets/go-vue.png"
-      alt="头像"
-    >
+    <img src="../../../../assets/go-vue.png" alt="头像" />
     <h2 class="title">Go-Vue</h2>
   </div>
   <el-form
@@ -127,10 +124,7 @@ onMounted(() => {
     <el-row :gutter="10">
       <el-col :span="16">
         <el-form-item prop="captcha">
-          <el-input
-            v-model="loginForm.captcha"
-            placeholder="请输入验证码"
-          />
+          <el-input v-model="loginForm.captcha" placeholder="请输入验证码" />
         </el-form-item>
       </el-col>
       <el-col :span="8">
@@ -141,22 +135,19 @@ onMounted(() => {
         />
       </el-col>
     </el-row>
+    <div class="trigger-box">
+      <span @click="triLoginMethod">{{
+        loginForm.isPhoneLogin ? '账号登录' : '手机号登录'
+      }}</span>
+    </div>
     <el-button
       :loading="loading"
       type="primary"
       class="login_btn"
       @click="submitForm()"
-    >登录
+    >
+      登录
     </el-button>
-    <div class="trigger-box">
-      <el-button
-        class="box"
-        @click="triLoginMethod"
-      >{{
-        loginForm.isPhoneLogin ? '账号登录' : '手机号登录'
-      }}</el-button>
-      <el-button class="box">初始化</el-button>
-    </div>
   </el-form>
 </template>
 <style lang="scss" scoped>
