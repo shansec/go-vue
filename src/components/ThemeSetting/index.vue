@@ -95,10 +95,7 @@ const changeThemeColor = (val) => {
     <!--        <span :style="{ color: settingStore.themeColor }">主题设置</span>-->
     <!--      </div>-->
     <!--    </div>-->
-    <el-drawer
-      v-model="drawer"
-      size="300px"
-    >
+    <el-drawer v-model="drawer" size="300px">
       <template #header>
         <h3>主题设置</h3>
       </template>

@@ -21,10 +21,7 @@ const delAllTag = () => {
 
 <template>
   <el-dropdown trigger="hover">
-    <el-button
-      size="small"
-      type="primary"
-    >
+    <el-button size="small" type="primary">
       <span>更多</span>
       <el-icon class="el-icon--right"><arrow-down /></el-icon>
     </el-button>

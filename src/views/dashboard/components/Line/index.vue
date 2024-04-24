@@ -1,10 +1,7 @@
 <template>
   <div class="dashboard-line-box">
     <div class="dashboard-line-title">访问趋势</div>
-    <div
-      ref="echart"
-      class="dashboard-line"
-    />
+    <div ref="echart" class="dashboard-line" />
   </div>
 </template>
 <script setup>

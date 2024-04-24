@@ -11,10 +11,7 @@ const goHome = () => {
 <template>
   <div class="error-404-container">
     <div class="img-prompt">
-      <img
-        src="@/assets/errorpage/404_bg.png"
-        alt="404"
-      >
+      <img src="@/assets/errorpage/404_bg.png" alt="404" />
     </div>
     <div class="text-prompt">
       <div class="text-prompt-text">页面不存在！</div>
@@ -22,10 +19,7 @@ const goHome = () => {
       <div class="text-prompt-info">
         请检查URL地址是否正确，或者点击回到首页。
       </div>
-      <div
-        class="text-prompt-return"
-        @click="goHome"
-      >回到首页</div>
+      <div class="text-prompt-return" @click="goHome">回到首页</div>
     </div>
   </div>
 </template>

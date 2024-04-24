@@ -50,17 +50,11 @@ const modifyDialogShow = () => {
       <template #dropdown>
         <el-dropdown-menu>
           <el-dropdown-item @click="modifyDialogShow">
-            <svg-icon
-              class="svg-icon"
-              icon-class="user-setting"
-            />
+            <svg-icon class="svg-icon" icon-class="user-setting" />
             <span>个人中心</span>
           </el-dropdown-item>
           <el-dropdown-item @click="logout">
-            <svg-icon
-              class="svg-icon"
-              icon-class="header-logout"
-            />
+            <svg-icon class="svg-icon" icon-class="header-logout" />
             <span>退出登录</span>
           </el-dropdown-item>
         </el-dropdown-menu>

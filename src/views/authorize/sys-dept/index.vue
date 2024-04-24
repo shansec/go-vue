@@ -221,11 +221,7 @@ onMounted(() => {
     <template #wrapper>
       <div class="dept-container">
         <div class="query-box">
-          <el-form
-            :model="queryParams"
-            :inline="true"
-            label-width="70px"
-          >
+          <el-form :model="queryParams" :inline="true" label-width="70px">
             <el-form-item label="部门名称">
               <el-input
                 v-model.trim="queryParams.deptName"
@@ -233,10 +229,7 @@ onMounted(() => {
               />
             </el-form-item>
             <el-form-item label="状态">
-              <el-select
-                v-model="queryParams.status"
-                placeholder="部门状态"
-              >
+              <el-select v-model="queryParams.status" placeholder="部门状态">
                 <el-option
                   v-for="status in deptStatus"
                   :key="status.value"
@@ -246,10 +239,7 @@ onMounted(() => {
               </el-select>
             </el-form-item>
             <el-form-item>
-              <el-button
-                type="primary"
-                @click="inquireDept"
-              >
+              <el-button type="primary" @click="inquireDept">
                 <svg-icon icon-class="table-search" />
                 查询
               </el-button>
@@ -257,10 +247,7 @@ onMounted(() => {
                 <svg-icon icon-class="table-reset" />
                 重置
               </el-button>
-              <el-button
-                type="primary"
-                @click="ShowDialog"
-              >
+              <el-button type="primary" @click="ShowDialog">
                 <svg-icon icon-class="table-add" />
                 增加
               </el-button>
@@ -274,32 +261,16 @@ onMounted(() => {
           row-key="deptId"
           border
         >
-          <el-table-column
-            prop="deptName"
-            label="部门名称"
-            width="500"
-          />
-          <el-table-column
-            prop="sort"
-            label="排序"
-            width="200"
-          />
-          <el-table-column
-            prop="status"
-            label="状态"
-            width="120"
-          >
+          <el-table-column prop="deptName" label="部门名称" width="500" />
+          <el-table-column prop="sort" label="排序" width="200" />
+          <el-table-column prop="status" label="状态" width="120">
             <template #default="scope">
               <el-tag
                 v-if="scope.row.status === '1'"
                 type="success"
                 size="large"
               >可用</el-tag>
-              <el-tag
-                v-else
-                type="danger"
-                size="large"
-              >禁用</el-tag>
+              <el-tag v-else type="danger" size="large">禁用</el-tag>
             </template>
           </el-table-column>
           <el-table-column
@@ -369,10 +340,7 @@ onMounted(() => {
           >
             <el-row>
               <el-col :span="24">
-                <el-form-item
-                  label="上级部门"
-                  prop="parentId"
-                >
+                <el-form-item label="上级部门" prop="parentId">
                   <treeselect
                     v-model="form.parentId"
                     :data="treeList"
@@ -385,10 +353,7 @@ onMounted(() => {
                 </el-form-item>
               </el-col>
               <el-col :span="12">
-                <el-form-item
-                  label="部门名称"
-                  prop="deptName"
-                >
+                <el-form-item label="部门名称" prop="deptName">
                   <el-input
                     v-model="form.deptName"
                     placeholder="请输入部门名称"
@@ -396,10 +361,7 @@ onMounted(() => {
                 </el-form-item>
               </el-col>
               <el-col :span="12">
-                <el-form-item
-                  label="显示排序"
-                  prop="sort"
-                >
+                <el-form-item label="显示排序" prop="sort">
                   <el-input-number
                     v-model="form.sort"
                     controls-position="right"
@@ -408,10 +370,7 @@ onMounted(() => {
                 </el-form-item>
               </el-col>
               <el-col :span="12">
-                <el-form-item
-                  label="负责人"
-                  prop="leader"
-                >
+                <el-form-item label="负责人" prop="leader">
                   <el-input
                     v-model="form.leader"
                     placeholder="请输入负责人"
@@ -420,10 +379,7 @@ onMounted(() => {
                 </el-form-item>
               </el-col>
               <el-col :span="12">
-                <el-form-item
-                  label="联系电话"
-                  prop="phone"
-                >
+                <el-form-item label="联系电话" prop="phone">
                   <el-input
                     v-model="form.phone"
                     placeholder="请输入联系电话"
@@ -432,10 +388,7 @@ onMounted(() => {
                 </el-form-item>
               </el-col>
               <el-col :span="12">
-                <el-form-item
-                  label="邮箱"
-                  prop="email"
-                >
+                <el-form-item label="邮箱" prop="email">
                   <el-input
                     v-model="form.email"
                     placeholder="请输入邮箱"
@@ -444,10 +397,7 @@ onMounted(() => {
                 </el-form-item>
               </el-col>
               <el-col :span="12">
-                <el-form-item
-                  label="部门状态"
-                  prop="status"
-                >
+                <el-form-item label="部门状态" prop="status">
                   <el-radio-group v-model="form.status">
                     <el-radio
                       v-for="dept in deptStatus"
@@ -459,14 +409,8 @@ onMounted(() => {
               </el-col>
             </el-row>
           </el-form>
-          <div
-            slot="footer"
-            class="dialog-footer"
-          >
-            <el-button
-              type="primary"
-              @click="confirmSubmit"
-            >确 定</el-button>
+          <div slot="footer" class="dialog-footer">
+            <el-button type="primary" @click="confirmSubmit">确 定</el-button>
             <el-button @click="cancelDialog">取 消</el-button>
           </div>
         </el-dialog>

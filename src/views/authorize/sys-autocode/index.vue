@@ -106,10 +106,7 @@ onMounted(() => {
     <template #wrapper>
       <div class="package-container">
         <div class="query-box">
-          <el-form
-            :model="queryParams"
-            :inline="true"
-          >
+          <el-form :model="queryParams" :inline="true">
             <el-form-item label="包名">
               <el-input
                 v-model.trim="queryParams.package_name"
@@ -117,10 +114,7 @@ onMounted(() => {
               />
             </el-form-item>
             <el-form-item>
-              <el-button
-                type="primary"
-                @click="inquireDept"
-              >
+              <el-button type="primary" @click="inquireDept">
                 <svg-icon icon-class="table-search" />
                 查询
               </el-button>
@@ -128,10 +122,7 @@ onMounted(() => {
                 <svg-icon icon-class="table-reset" />
                 重置
               </el-button>
-              <el-button
-                type="primary"
-                @click="ShowDialog"
-              >
+              <el-button type="primary" @click="ShowDialog">
                 <svg-icon icon-class="table-add" />
                 增加
               </el-button>
@@ -144,26 +135,10 @@ onMounted(() => {
           header-row-class-name="header-row"
           border
         >
-          <el-table-column
-            prop="ID"
-            label="id"
-            width="100"
-          />
-          <el-table-column
-            prop="package_name"
-            label="包名"
-            width="500"
-          />
-          <el-table-column
-            prop="label"
-            label="展示名"
-            width="200"
-          />
-          <el-table-column
-            prop="desc"
-            label="描述"
-            width="220"
-          />
+          <el-table-column prop="ID" label="id" width="100" />
+          <el-table-column prop="package_name" label="包名" width="500" />
+          <el-table-column prop="label" label="展示名" width="200" />
+          <el-table-column prop="desc" label="描述" width="220" />
           <el-table-column label="操作">
             <template #default="scope">
               <div class="operate-box">
@@ -205,10 +180,7 @@ onMounted(() => {
           >
             <el-row>
               <el-col :span="24">
-                <el-form-item
-                  label="包名"
-                  prop="package_name"
-                >
+                <el-form-item label="包名" prop="package_name">
                   <el-input
                     v-model="form.package_name"
                     placeholder="请输入包名"
@@ -218,39 +190,21 @@ onMounted(() => {
             </el-row>
             <el-row>
               <el-col :span="24">
-                <el-form-item
-                  label="展示名"
-                  prop="label"
-                >
-                  <el-input
-                    v-model="form.label"
-                    placeholder="请输入展示名"
-                  />
+                <el-form-item label="展示名" prop="label">
+                  <el-input v-model="form.label" placeholder="请输入展示名" />
                 </el-form-item>
               </el-col>
             </el-row>
             <el-row>
               <el-col :span="24">
-                <el-form-item
-                  label="描述"
-                  prop="desc"
-                >
-                  <el-input
-                    v-model="form.desc"
-                    placeholder="请输入描述"
-                  />
+                <el-form-item label="描述" prop="desc">
+                  <el-input v-model="form.desc" placeholder="请输入描述" />
                 </el-form-item>
               </el-col>
             </el-row>
           </el-form>
-          <div
-            slot="footer"
-            class="dialog-footer"
-          >
-            <el-button
-              type="primary"
-              @click="confirmSubmit"
-            >确 定</el-button>
+          <div slot="footer" class="dialog-footer">
+            <el-button type="primary" @click="confirmSubmit">确 定</el-button>
             <el-button @click="cancelDialog">取 消</el-button>
           </div>
         </el-dialog>
