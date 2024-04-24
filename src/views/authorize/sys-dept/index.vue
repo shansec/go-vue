@@ -9,7 +9,6 @@ import {
 import { formatTimeToStr } from '@/utils/date'
 import Treeselect from '@/components/Treeselect/index.vue'
 import { errorMsg, successMsg, confirmBox } from '@/utils/message'
-import { awaitWrap } from '@/utils/await'
 
 const deptList = ref()
 const treeList = ref([])
@@ -91,41 +90,18 @@ const deptCreate = (row) => {
   isShowDialog.value = true
 }
 const formatTime = (rowData) => formatTimeToStr(rowData.CreatedAt)
-const requestDeptOfTable = async() => {
-  const [err, data] = await awaitWrap(getDeptList(queryParams.value))
-  if (data !== null) {
-    deptList.value = data.data.list
-    queryParams.value.page = data.data.page
-    queryParams.value.pageSize = data.data.pageSize
-    total.value = data.data.total
-  } else {
-    console.log(err)
-  }
-  // getDeptList(queryParams.value).then((res) => {
-  //   if (res.code === 200) {
-  //     deptList.value = res.data.list
-  //     queryParams.value.page = res.data.page
-  //     queryParams.value.pageSize = res.data.pageSize
-  //     total.value = res.data.total
-  //   }
-  // })
+const requestDeptOfTable = async () => {
+  const res = await getDeptList(queryParams.value)
+  deptList.value = res.data.list
+  queryParams.value.page = res.data.page
+  queryParams.value.pageSize = res.data.pageSize
+  total.value = res.data.total
 }
-const requestDeptOfSelect = async() => {
-  const [err, data] = await awaitWrap(getDeptList(queryParams.value))
-  if (data !== null) {
-    const dept = { deptId: 0, deptName: '主类目', parentId: 0, children: [] }
-    dept.children = data.data.list
-    treeList.value.push(dept)
-  } else {
-    console.log(err)
-  }
-  // getDeptList(queryParams.value).then((res) => {
-  //   if (res.code === 200) {
-  //     const dept = { deptId: 0, deptName: '主类目', parentId: 0, children: [] }
-  //     dept.children = res.data.list
-  //     treeList.value.push(dept)
-  //   }
-  // })
+const requestDeptOfSelect = async () => {
+  const res = await getDeptList(queryParams.value)
+  const dept = { deptId: 0, deptName: '主类目', parentId: 0, children: [] }
+  dept.children = res.data.list
+  treeList.value.push(dept)
 }
 const inquireDept = () => {
   queryParams.value.page = 1
@@ -141,75 +117,51 @@ const resetQuery = () => {
   }
 }
 const confirmSubmit = () => {
-  deptFormRef.value.validate(async(value) => {
+  deptFormRef.value.validate(async (value) => {
     if (value && btnType.value === 'create') {
-      const [err, data] = await awaitWrap(createDept(form.value))
-      if (data !== null) {
-        successMsg(data.msg)
-        queryParams.value = {
-          page: 1,
-          pageSize: 10,
-          deptName: '',
-          status: ''
+      try {
+        const res = await createDept(form.value)
+        if (res.code === 200) {
+          successMsg(res.msg)
+          queryParams.value = {
+            page: 1,
+            pageSize: 10,
+            deptName: '',
+            status: ''
+          }
+          isShowDialog.value = false
+          title.value = ''
+          isEdit.value = false
+          deptFormRef.value.resetFields()
+          requestDeptOfTable()
+        } else {
+          errorMsg('创建部门失败！')
         }
-        isShowDialog.value = false
-        title.value = ''
-        isEdit.value = false
-        deptFormRef.value.resetFields()
-        requestDeptOfTable()
-      } else {
-        console.log(err)
+      } catch (e) {
+        errorMsg('创建部门失败！')
       }
-      // createDept(form.value).then((res) => {
-      //   if (res.code === 200) {
-      //     successMsg(res.msg)
-      //     queryParams.value = {
-      //       page: 1,
-      //       pageSize: 10,
-      //       deptName: '',
-      //       status: ''
-      //     }
-      //     isShowDialog.value = false
-      //     title.value = ''
-      //     isEdit.value = false
-      //     deptFormRef.value.resetFields()
-      //     requestDeptOfTable()
-      //   }
-      // })
     } else if (value && btnType.value === 'update') {
-      const [err, data] = await awaitWrap(updateDeptInfo(form.value))
-      if (data !== null) {
-        successMsg(data.msg)
-        queryParams.value = {
-          page: 1,
-          pageSize: 10,
-          deptName: '',
-          status: ''
+      try {
+        const res = await updateDeptInfo(form.value)
+        if (res.code === 200) {
+          successMsg(res.msg)
+          queryParams.value = {
+            page: 1,
+            pageSize: 10,
+            deptName: '',
+            status: ''
+          }
+          isShowDialog.value = false
+          title.value = ''
+          isEdit.value = false
+          deptFormRef.value.resetFields()
+          requestDeptOfTable()
+        } else {
+          errorMsg('更新部门信息失败！')
         }
-        isShowDialog.value = false
-        title.value = ''
-        isEdit.value = false
-        deptFormRef.value.resetFields()
-        requestDeptOfTable()
-      } else {
-        console.log(err)
+      } catch (e) {
+        errorMsg('更新部门信息失败！')
       }
-      // updateDeptInfo(form.value).then((res) => {
-      //   if (res.code === 200) {
-      //     successMsg(res.msg)
-      //     queryParams.value = {
-      //       page: 1,
-      //       pageSize: 10,
-      //       deptName: '',
-      //       status: ''
-      //     }
-      //     isShowDialog.value = false
-      //     title.value = ''
-      //     isEdit.value = false
-      //     deptFormRef.value.resetFields()
-      //     requestDeptOfTable()
-      //   }
-      // })
     } else {
       errorMsg('请完善必填信息')
     }
@@ -223,29 +175,21 @@ const cancelDialog = () => {
 }
 const removeDept = (data) => {
   const msg = '删除部门前，确保删除的部门不包含下级部门'
-  confirmBox(msg, '确定删除', '取消', 'warning')
-    .then(async() => {
-      const [err, data] = await awaitWrap(delDeptInfo(data))
-      if (data !== null) {
-        successMsg(data.msg)
+  confirmBox(msg, '确定删除', '取消', 'warning').then(async () => {
+    try {
+      const res = await delDeptInfo(data)
+      if (res.code === 200) {
+        successMsg(res.msg)
         treeList.value = []
         requestDeptOfTable()
         requestDeptOfSelect()
       } else {
-        console.log(err)
+        errorMsg('删除部门信息失败！')
       }
-      // delDeptInfo(data).then((res) => {
-      //   if (res.code === 200) {
-      //     successMsg(res.msg)
-      //     treeList.value = []
-      //     requestDeptOfTable()
-      //     requestDeptOfSelect()
-      //   } else {
-      //     errorMsg(res.msg)
-      //   }
-      // })
-    })
-    .catch(() => {})
+    } catch (e) {
+      errorMsg('删除部门信息失败！')
+    }
+  })
 }
 const changeDept = (data) => {
   parentId.value = data.parentId.toString()
@@ -277,11 +221,7 @@ onMounted(() => {
     <template #wrapper>
       <div class="dept-container">
         <div class="query-box">
-          <el-form
-            :model="queryParams"
-            :inline="true"
-            label-width="70px"
-          >
+          <el-form :model="queryParams" :inline="true" label-width="70px">
             <el-form-item label="部门名称">
               <el-input
                 v-model.trim="queryParams.deptName"
@@ -289,10 +229,7 @@ onMounted(() => {
               />
             </el-form-item>
             <el-form-item label="状态">
-              <el-select
-                v-model="queryParams.status"
-                placeholder="部门状态"
-              >
+              <el-select v-model="queryParams.status" placeholder="部门状态">
                 <el-option
                   v-for="status in deptStatus"
                   :key="status.value"
@@ -302,10 +239,7 @@ onMounted(() => {
               </el-select>
             </el-form-item>
             <el-form-item>
-              <el-button
-                type="primary"
-                @click="inquireDept"
-              >
+              <el-button type="primary" @click="inquireDept">
                 <svg-icon icon-class="table-search" />
                 查询
               </el-button>
@@ -313,10 +247,7 @@ onMounted(() => {
                 <svg-icon icon-class="table-reset" />
                 重置
               </el-button>
-              <el-button
-                type="primary"
-                @click="ShowDialog"
-              >
+              <el-button type="primary" @click="ShowDialog">
                 <svg-icon icon-class="table-add" />
                 增加
               </el-button>
@@ -330,32 +261,17 @@ onMounted(() => {
           row-key="deptId"
           border
         >
-          <el-table-column
-            prop="deptName"
-            label="部门名称"
-            width="500"
-          />
-          <el-table-column
-            prop="sort"
-            label="排序"
-            width="200"
-          />
-          <el-table-column
-            prop="status"
-            label="状态"
-            width="120"
-          >
+          <el-table-column prop="deptName" label="部门名称" width="500" />
+          <el-table-column prop="sort" label="排序" width="200" />
+          <el-table-column prop="status" label="状态" width="120">
             <template #default="scope">
               <el-tag
                 v-if="scope.row.status === '1'"
                 type="success"
                 size="large"
-              >可用</el-tag>
-              <el-tag
-                v-else
-                type="danger"
-                size="large"
-              >禁用</el-tag>
+                >可用</el-tag
+              >
+              <el-tag v-else type="danger" size="large">禁用</el-tag>
             </template>
           </el-table-column>
           <el-table-column
@@ -425,10 +341,7 @@ onMounted(() => {
           >
             <el-row>
               <el-col :span="24">
-                <el-form-item
-                  label="上级部门"
-                  prop="parentId"
-                >
+                <el-form-item label="上级部门" prop="parentId">
                   <treeselect
                     v-model="form.parentId"
                     :data="treeList"
@@ -441,10 +354,7 @@ onMounted(() => {
                 </el-form-item>
               </el-col>
               <el-col :span="12">
-                <el-form-item
-                  label="部门名称"
-                  prop="deptName"
-                >
+                <el-form-item label="部门名称" prop="deptName">
                   <el-input
                     v-model="form.deptName"
                     placeholder="请输入部门名称"
@@ -452,10 +362,7 @@ onMounted(() => {
                 </el-form-item>
               </el-col>
               <el-col :span="12">
-                <el-form-item
-                  label="显示排序"
-                  prop="sort"
-                >
+                <el-form-item label="显示排序" prop="sort">
                   <el-input-number
                     v-model="form.sort"
                     controls-position="right"
@@ -464,10 +371,7 @@ onMounted(() => {
                 </el-form-item>
               </el-col>
               <el-col :span="12">
-                <el-form-item
-                  label="负责人"
-                  prop="leader"
-                >
+                <el-form-item label="负责人" prop="leader">
                   <el-input
                     v-model="form.leader"
                     placeholder="请输入负责人"
@@ -476,10 +380,7 @@ onMounted(() => {
                 </el-form-item>
               </el-col>
               <el-col :span="12">
-                <el-form-item
-                  label="联系电话"
-                  prop="phone"
-                >
+                <el-form-item label="联系电话" prop="phone">
                   <el-input
                     v-model="form.phone"
                     placeholder="请输入联系电话"
@@ -488,10 +389,7 @@ onMounted(() => {
                 </el-form-item>
               </el-col>
               <el-col :span="12">
-                <el-form-item
-                  label="邮箱"
-                  prop="email"
-                >
+                <el-form-item label="邮箱" prop="email">
                   <el-input
                     v-model="form.email"
                     placeholder="请输入邮箱"
@@ -500,29 +398,21 @@ onMounted(() => {
                 </el-form-item>
               </el-col>
               <el-col :span="12">
-                <el-form-item
-                  label="部门状态"
-                  prop="status"
-                >
+                <el-form-item label="部门状态" prop="status">
                   <el-radio-group v-model="form.status">
                     <el-radio
                       v-for="dept in deptStatus"
                       :key="dept.value"
                       :label="dept.value"
-                    >{{ dept.name }}</el-radio>
+                      >{{ dept.name }}</el-radio
+                    >
                   </el-radio-group>
                 </el-form-item>
               </el-col>
             </el-row>
           </el-form>
-          <div
-            slot="footer"
-            class="dialog-footer"
-          >
-            <el-button
-              type="primary"
-              @click="confirmSubmit"
-            >确 定</el-button>
+          <div slot="footer" class="dialog-footer">
+            <el-button type="primary" @click="confirmSubmit">确 定</el-button>
             <el-button @click="cancelDialog">取 消</el-button>
           </div>
         </el-dialog>

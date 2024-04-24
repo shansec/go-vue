@@ -2,7 +2,6 @@
 import { onMounted, ref } from 'vue'
 import { createPackage, getPackageList, deletePackage } from '@/api/AutoCode'
 import { errorMsg, successMsg, confirmBox } from '@/utils/message'
-import { awaitWrap } from '@/utils/await'
 
 const packageList = ref()
 const total = ref(0)
@@ -27,16 +26,12 @@ const rules = ref({
 })
 
 const isEdit = ref(false)
-const requestPackages = async() => {
-  const [err, data] = await awaitWrap(getPackageList(queryParams.value))
-  if (data !== null) {
-    packageList.value = data.data.list
-    queryParams.value.page = data.data.page
-    queryParams.value.pageSize = data.data.pageSize
-    total.value = data.data.total
-  } else {
-    console.log(err)
-  }
+const requestPackages = async () => {
+  const res = await getPackageList(queryParams.value)
+  packageList.value = res.data.list
+  queryParams.value.page = res.data.page
+  queryParams.value.pageSize = res.data.pageSize
+  total.value = res.data.total
 }
 const inquireDept = () => {
   queryParams.value.page = 1
@@ -51,22 +46,26 @@ const resetQuery = () => {
   }
 }
 const confirmSubmit = () => {
-  packageFormRef.value.validate(async(value) => {
+  packageFormRef.value.validate(async (value) => {
     if (value) {
-      const [err, data] = await awaitWrap(createPackage(form.value))
-      if (data !== null) {
-        successMsg(data.msg)
-        queryParams.value = {
-          page: 1,
-          pageSize: 10,
-          package_name: ''
+      try {
+        const pkg = await createPackage(form.value)
+        if (pkg.code === 200) {
+          successMsg(pkg.msg)
+          queryParams.value = {
+            page: 1,
+            pageSize: 10,
+            package_name: ''
+          }
+          isShowDialog.value = false
+          isEdit.value = false
+          packageFormRef.value.resetFields()
+          await requestPackages()
+        } else {
+          errorMsg('创建失败！')
         }
-        isShowDialog.value = false
-        isEdit.value = false
-        packageFormRef.value.resetFields()
-        await requestPackages()
-      } else {
-        console.log(err)
+      } catch (error) {
+        errorMsg('创建失败！')
       }
     } else {
       errorMsg('请完善必填信息')
@@ -80,17 +79,19 @@ const cancelDialog = () => {
 }
 const removeDept = (row) => {
   const msg = '确定要删除这条记录吗？'
-  confirmBox(msg, '确定删除', '取消', 'warning')
-    .then(async() => {
-      const [err, data] = await awaitWrap(deletePackage(row))
-      if (data !== null) {
-        successMsg(data.msg)
+  confirmBox(msg, '确定删除', '取消', 'warning').then(async () => {
+    try {
+      const delPkg = await deletePackage(row)
+      if (delPkg.code === 200) {
+        successMsg(delPkg.msg)
         await requestPackages()
       } else {
-        console.log(err)
+        errorMsg('删除失败！')
       }
-    })
-    .catch(() => {})
+    } catch (e) {
+      errorMsg('删除失败！')
+    }
+  })
 }
 const ShowDialog = () => {
   isShowDialog.value = true
@@ -105,10 +106,7 @@ onMounted(() => {
     <template #wrapper>
       <div class="package-container">
         <div class="query-box">
-          <el-form
-            :model="queryParams"
-            :inline="true"
-          >
+          <el-form :model="queryParams" :inline="true">
             <el-form-item label="包名">
               <el-input
                 v-model.trim="queryParams.package_name"
@@ -116,10 +114,7 @@ onMounted(() => {
               />
             </el-form-item>
             <el-form-item>
-              <el-button
-                type="primary"
-                @click="inquireDept"
-              >
+              <el-button type="primary" @click="inquireDept">
                 <svg-icon icon-class="table-search" />
                 查询
               </el-button>
@@ -127,10 +122,7 @@ onMounted(() => {
                 <svg-icon icon-class="table-reset" />
                 重置
               </el-button>
-              <el-button
-                type="primary"
-                @click="ShowDialog"
-              >
+              <el-button type="primary" @click="ShowDialog">
                 <svg-icon icon-class="table-add" />
                 增加
               </el-button>
@@ -143,26 +135,10 @@ onMounted(() => {
           header-row-class-name="header-row"
           border
         >
-          <el-table-column
-            prop="ID"
-            label="id"
-            width="100"
-          />
-          <el-table-column
-            prop="package_name"
-            label="包名"
-            width="500"
-          />
-          <el-table-column
-            prop="label"
-            label="展示名"
-            width="200"
-          />
-          <el-table-column
-            prop="desc"
-            label="描述"
-            width="220"
-          />
+          <el-table-column prop="ID" label="id" width="100" />
+          <el-table-column prop="package_name" label="包名" width="500" />
+          <el-table-column prop="label" label="展示名" width="200" />
+          <el-table-column prop="desc" label="描述" width="220" />
           <el-table-column label="操作">
             <template #default="scope">
               <div class="operate-box">
@@ -204,10 +180,7 @@ onMounted(() => {
           >
             <el-row>
               <el-col :span="24">
-                <el-form-item
-                  label="包名"
-                  prop="package_name"
-                >
+                <el-form-item label="包名" prop="package_name">
                   <el-input
                     v-model="form.package_name"
                     placeholder="请输入包名"
@@ -217,39 +190,21 @@ onMounted(() => {
             </el-row>
             <el-row>
               <el-col :span="24">
-                <el-form-item
-                  label="展示名"
-                  prop="label"
-                >
-                  <el-input
-                    v-model="form.label"
-                    placeholder="请输入展示名"
-                  />
+                <el-form-item label="展示名" prop="label">
+                  <el-input v-model="form.label" placeholder="请输入展示名" />
                 </el-form-item>
               </el-col>
             </el-row>
             <el-row>
               <el-col :span="24">
-                <el-form-item
-                  label="描述"
-                  prop="desc"
-                >
-                  <el-input
-                    v-model="form.desc"
-                    placeholder="请输入描述"
-                  />
+                <el-form-item label="描述" prop="desc">
+                  <el-input v-model="form.desc" placeholder="请输入描述" />
                 </el-form-item>
               </el-col>
             </el-row>
           </el-form>
-          <div
-            slot="footer"
-            class="dialog-footer"
-          >
-            <el-button
-              type="primary"
-              @click="confirmSubmit"
-            >确 定</el-button>
+          <div slot="footer" class="dialog-footer">
+            <el-button type="primary" @click="confirmSubmit">确 定</el-button>
             <el-button @click="cancelDialog">取 消</el-button>
           </div>
         </el-dialog>

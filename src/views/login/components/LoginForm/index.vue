@@ -1,20 +1,21 @@
 <script lang="js" setup>
 import { onMounted, reactive, ref } from 'vue'
 import { useRouter } from 'vue-router'
-import { Avatar } from '@element-plus/icons-vue'
+import { UserFilled, PhoneFilled } from '@element-plus/icons-vue'
 
 import { login } from '@/api/User.js'
 import { getCaptcha } from '@/api/Captcha'
 import { useUserStore } from '@/store/modules/user.js'
 import storage from '@/utils/storage'
 import { successMsg } from '@/utils/message'
-import { awaitWrap } from '@/utils/await'
 
 const ruleFormRef = ref(null)
 const loading = ref(false)
 const loginForm = reactive({
   username: 'admin',
   password: 'admin',
+  phone: '13412345678',
+  isPhoneLogin: false,
   captcha: '',
   captchaId: ''
 })
@@ -24,76 +25,50 @@ const userStore = useUserStore()
 const rules = reactive({
   username: [{ required: true, message: '请输入账号', trigger: 'blur' }],
   password: [{ required: true, message: '请输入密码', trigger: 'blur' }],
+  phone: [{ required: true, message: '请输入手机号', trigger: 'blur' }],
   captcha: [
-    { required: true, message: '请输入验证码', trigger: 'blur' },
-    { min: 6, max: 6, message: '请输入6位验证码', trigger: 'blur' }
+    { message: '请输入验证码', trigger: 'blur' }
   ]
 })
 const submitForm = () => {
   loading.value = true
   ruleFormRef.value.validate(async(value) => {
     if (value) {
-      const [err, data] = await awaitWrap(login(loginForm))
-      if (data !== null) {
-        const userData = data.data
-        userStore.setToken(userData.token)
-        userStore.setUserInfo(userData.user)
-        // 存到缓存
-        storage.set('token', userData.token)
-        successMsg('登录成功')
-        router.push({
-          path: '/'
-        })
+      try {
+        const res = await login(loginForm)
+        if (res.code === 200) {
+          const userData = res.data
+          userStore.setToken(userData.token)
+          userStore.setUserInfo(userData.user)
+          // 存到缓存
+          storage.set('token', userData.token)
+          successMsg('登录成功')
+          await router.push({
+            path: '/'
+          })
+          loading.value = false
+        }
+      } catch (e) {
         loading.value = false
-      } else {
-        console.log(err)
       }
-      // login(loginForm)
-      //   .then((res) => {
-      //     if (res.code === 200) {
-      //       const userData = res.data
-      //       userStore.setToken(userData.token)
-      //       userStore.setUserInfo(userData.user)
-      //       // 存到缓存
-      //       storage.set('token', userData.token)
-      //       successMsg('登录成功')
-      //       router.push({
-      //         path: '/'
-      //       })
-      //     } else {
-      //       errorMsg(res.msg)
-      //       requestCaptcha()
-      //     }
-      //     loading.value = false
-      //   })
-      //   .catch(() => {
-      //     loading.value = false
-      //   })
     } else {
       loading.value = false
     }
   })
 }
 const requestCaptcha = async() => {
-  const [err, data] = await awaitWrap(getCaptcha())
-  if (data !== null) {
-    captcha.value = data.data
-    loginForm.captchaId = data.data.captchaId
-  } else {
-    console.log(err)
-  }
-  // getCaptcha()
-  //   .then((response) => {
-  //     if (response.code === 200) {
-  //       captcha.value = response.data
-  //       loginForm.captchaId = response.data.captchaId
-  //     } else {
-  //       errorMsg(response.msg)
-  //     }
-  //   })
-  //   .catch((err) => {
-  //     errorMsg(err)
-  //   })
+  const res = await getCaptcha()
+  rules.captcha.push({
+    max: res.data.captchaLength,
+    min: res.data.captchaLength,
+    message: `请输入${res.data.captchaLength}位验证码`,
+    trigger: 'blur'
+  })
+  captcha.value = res.data
+  loginForm.captchaId = res.data.captchaId
+}
+const triLoginMethod = () => {
+  loginForm.isPhoneLogin = !loginForm.isPhoneLogin
 }
 
 onMounted(() => {
@@ -119,13 +94,24 @@ onMounted(() => {
   >
     <el-row>
       <el-col :span="24">
-        <el-form-item prop="username">
-          <el-input
-            v-model="loginForm.username"
-            :suffix-icon="Avatar"
-            placeholder="请输入用户名"
-          />
-        </el-form-item>
+        <template v-if="!loginForm.isPhoneLogin">
+          <el-form-item prop="username">
+            <el-input
+              v-model="loginForm.username"
+              :suffix-icon="UserFilled"
+              placeholder="请输入用户名"
+            />
+          </el-form-item>
+        </template>
+        <template v-else>
+          <el-form-item prop="phone">
+            <el-input
+              v-model="loginForm.phone"
+              :suffix-icon="PhoneFilled"
+              placeholder="请输入手机号"
+            />
+          </el-form-item>
+        </template>
       </el-col>
     </el-row>
     <el-row>
@@ -157,18 +143,22 @@ onMounted(() => {
         />
       </el-col>
     </el-row>
-    <el-form-item style="width: 100%">
+    <el-button
+      :loading="loading"
+      type="primary"
+      class="login_btn"
+      @click="submitForm()"
+    >登录
+    </el-button>
+    <div class="trigger-box">
       <el-button
-        :loading="loading"
-        type="primary"
-        class="login_btn"
-        @click="submitForm()"
-      >登录
-      </el-button>
-    </el-form-item>
+        class="box"
+        @click="triLoginMethod"
+      >{{ loginForm.isPhoneLogin ? '账号登录' : '手机号登录' }}</el-button>
+      <el-button class="box">初始化</el-button>
+    </div>
   </el-form>
 </template>
-
 <style lang="scss" scoped>
 @import '../../index';
 </style>

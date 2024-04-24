@@ -11,7 +11,6 @@ import { getDeptList } from '@/api/Dept'
 import { formatTimeToStr } from '@/utils/date'
 import { confirmBox, successMsg } from '@/utils/message'
 import Treeselect from '@/components/Treeselect/index.vue'
-import { awaitWrap } from '@/utils/await'
 
 const userList = ref()
 const queryParams = ref({
@@ -89,37 +88,16 @@ const defaultProps = {
 const activeValue = ref(1)
 const inActiveValue = ref(2)
 const filterStatus = (value) => String(value)
-const requestUsersInfo = async() => {
-  const [err, data] = await awaitWrap(getUsersInfo(queryParams.value))
-  if (data !== null) {
-    userList.value = data.data.list
-    queryParams.value.page = data.data.page
-    queryParams.value.pageSize = data.data.pageSize
-    total.value = data.data.total
-  } else {
-    console.log(err)
-  }
-  // getUsersInfo(queryParams.value).then((response) => {
-  //   if (response.code === 200) {
-  //     userList.value = response.data.list
-  //     queryParams.value.page = response.data.page
-  //     queryParams.value.pageSize = response.data.pageSize
-  //     total.value = response.data.total
-  //   }
-  // })
+const requestUsersInfo = async () => {
+  const res = await getUsersInfo(queryParams.value)
+  userList.value = res.data.list
+  queryParams.value.page = res.data.page
+  queryParams.value.pageSize = res.data.pageSize
+  total.value = res.data.total
 }
-const requestDept = async() => {
-  const [err, data] = await awaitWrap(getDeptList(queryParams.value))
-  if (data !== null) {
-    treeList.value = data.data.list
-  } else {
-    console.log(err)
-  }
-  // getDeptList(queryParams.value).then((res) => {
-  //   if (res.code === 200) {
-  //     treeList.value = res.data.list
-  //   }
-  // })
+const requestDept = async () => {
+  const res = await getDeptList(queryParams.value)
+  treeList.value = res.data.list
 }
 const requestUserList = ({ page, limit }) => {
   queryParams.value.page = page
@@ -142,27 +120,23 @@ const updateRowInfo = ({ $index, row }) => {
 }
 const showMessage = (scope) => {
   const msg = `确定删除编号为 ${scope.row.ID} 的用户吗？`
-  confirmBox(msg, '确定', '取消', 'warning')
-    .then(async() => {
+  confirmBox(msg, '确定', '取消', 'warning').then(async () => {
+    try {
       const param = { uuid: scope.row.uuid }
-      const [err, data] = await awaitWrap(delUserInfo(param))
-      if (data !== null) {
-        successMsg(data.msg)
+      const res = await delUserInfo(param)
+      if (res.code === 200) {
+        successMsg(res.msg)
         userList.value = userList.value.filter((user) => {
           return user.uuid !== scope.row.uuid
         })
         total.value = userList.value.length
       } else {
-        console.log(err)
+        errorMsg('删除用户失败！')
       }
-      // delUserInfo(param).then((res) => {
-      //   successMsg(res.msg)
-      //   userList.value = userList.value.filter((user) => {
-      //     return user.uuid !== scope.row.uuid
-      //   })
-      // })
-    })
-    .catch(() => {})
+    } catch (e) {
+      errorMsg('删除用户失败！')
+    }
+  })
 }
 const updateStatus = (mark) => {
   return new Promise((resolve, reject) => {
@@ -200,28 +174,36 @@ const ShowDialog = () => {
   isShowDialog.value = true
 }
 const confirmCreateUser = () => {
-  userFormRef.value.validate(async(value) => {
+  userFormRef.value.validate(async (value) => {
     if (value && passEditable.value) {
-      const [err, data] = await awaitWrap(createUser(userForm.value))
-      if (data !== null) {
-        successMsg(data.msg)
-        requestUsersInfo()
-        title.value = ''
-        isShowDialog.value = false
-        userFormRef.value.resetFields()
-      } else {
-        console.log(err)
+      try {
+        const res = await createUser(userForm.value)
+        if (res.code === 200) {
+          successMsg(res.msg)
+          requestUsersInfo()
+          title.value = ''
+          isShowDialog.value = false
+          userFormRef.value.resetFields()
+        } else {
+          errorMsg('添加用户失败！')
+        }
+      } catch (e) {
+        errorMsg('添加用户失败！')
       }
     } else if (value && !passEditable.value) {
-      const [err, data] = await awaitWrap(updateUserInfo(userForm.value))
-      if (data !== null) {
-        successMsg(data.msg)
-        requestUsersInfo()
-        title.value = ''
-        isShowDialog.value = false
-        userFormRef.value.resetFields()
-      } else {
-        console.log(err)
+      try {
+        const res = await updateUserInfo(userForm.value)
+        if (res.code === 200) {
+          successMsg(res.msg)
+          requestUsersInfo()
+          title.value = ''
+          isShowDialog.value = false
+          userFormRef.value.resetFields()
+        } else {
+          errorMsg('更新用户信息失败！')
+        }
+      } catch (e) {
+        errorMsg('更新用户信息失败！')
       }
     }
   })
@@ -241,11 +223,7 @@ onMounted(() => {
 <template>
   <div class="table">
     <div class="query-box">
-      <el-form
-        :model="queryParams"
-        :inline="true"
-        label-width="70px"
-      >
+      <el-form :model="queryParams" :inline="true" label-width="70px">
         <el-form-item label="用户昵称">
           <el-input
             v-model.trim="queryParams.nickName"
@@ -253,16 +231,10 @@ onMounted(() => {
           />
         </el-form-item>
         <el-form-item label="手机号码">
-          <el-input
-            v-model="queryParams.phone"
-            placeholder="请输入手机号码"
-          />
+          <el-input v-model="queryParams.phone" placeholder="请输入手机号码" />
         </el-form-item>
         <el-form-item label="状态">
-          <el-select
-            v-model="queryParams.status"
-            placeholder="用户状态"
-          >
+          <el-select v-model="queryParams.status" placeholder="用户状态">
             <el-option
               v-for="status in userStatus"
               :key="status.value"
@@ -272,10 +244,7 @@ onMounted(() => {
           </el-select>
         </el-form-item>
         <el-form-item>
-          <el-button
-            type="primary"
-            @click="inquireUser"
-          >
+          <el-button type="primary" @click="inquireUser">
             <svg-icon icon-class="table-search" />
             查询
           </el-button>
@@ -283,10 +252,7 @@ onMounted(() => {
             <svg-icon icon-class="table-reset" />
             重置
           </el-button>
-          <el-button
-            type="primary"
-            @click="ShowDialog"
-          >
+          <el-button type="primary" @click="ShowDialog">
             <svg-icon icon-class="table-add" />
             增加
           </el-button>
@@ -299,41 +265,13 @@ onMounted(() => {
       style="width: 100%"
       header-row-class-name="header-row"
     >
-      <el-table-column
-        prop="ID"
-        label="编号"
-        width="100"
-      />
-      <el-table-column
-        prop="userName"
-        label="登录名"
-        width="180"
-      />
-      <el-table-column
-        prop="nickName"
-        label="昵称"
-        width="120"
-      />
-      <el-table-column
-        prop="phone"
-        label="手机号"
-        width="180"
-      />
-      <el-table-column
-        prop="email"
-        label="邮箱"
-        width="220"
-      />
-      <el-table-column
-        prop="sysRole.roleName"
-        label="部门"
-        width="120"
-      />
-      <el-table-column
-        prop="status"
-        label="状态"
-        width="120"
-      >
+      <el-table-column prop="ID" label="编号" width="100" />
+      <el-table-column prop="userName" label="登录名" width="180" />
+      <el-table-column prop="nickName" label="昵称" width="120" />
+      <el-table-column prop="phone" label="手机号" width="180" />
+      <el-table-column prop="email" label="邮箱" width="220" />
+      <el-table-column prop="sysRole.roleName" label="部门" width="120" />
+      <el-table-column prop="status" label="状态" width="120">
         <template #default="scope">
           <el-switch
             v-model="scope.row.status"
@@ -403,10 +341,7 @@ onMounted(() => {
       >
         <el-row>
           <el-col :span="12">
-            <el-form-item
-              label="用户昵称"
-              prop="nickName"
-            >
+            <el-form-item label="用户昵称" prop="nickName">
               <el-input
                 v-model="userForm.nickName"
                 placeholder="请输入用户昵称"
@@ -414,10 +349,7 @@ onMounted(() => {
             </el-form-item>
           </el-col>
           <el-col :span="12">
-            <el-form-item
-              label="归属部门"
-              prop="deptsId"
-            >
+            <el-form-item label="归属部门" prop="deptsId">
               <treeselect
                 v-model="userForm.deptsId"
                 :data="treeList"
@@ -429,10 +361,7 @@ onMounted(() => {
             </el-form-item>
           </el-col>
           <el-col :span="12">
-            <el-form-item
-              label="手机号码"
-              prop="phone"
-            >
+            <el-form-item label="手机号码" prop="phone">
               <el-input
                 v-model="userForm.phone"
                 placeholder="请输入手机号码"
@@ -441,10 +370,7 @@ onMounted(() => {
             </el-form-item>
           </el-col>
           <el-col :span="12">
-            <el-form-item
-              label="邮箱"
-              prop="email"
-            >
+            <el-form-item label="邮箱" prop="email">
               <el-input
                 v-model="userForm.email"
                 placeholder="请输入邮箱"
@@ -453,10 +379,7 @@ onMounted(() => {
             </el-form-item>
           </el-col>
           <el-col :span="12">
-            <el-form-item
-              label="用户名称"
-              prop="username"
-            >
+            <el-form-item label="用户名称" prop="username">
               <el-input
                 v-model="userForm.username"
                 placeholder="请输入用户名称"
@@ -464,10 +387,7 @@ onMounted(() => {
             </el-form-item>
           </el-col>
           <el-col :span="12">
-            <el-form-item
-              label="用户密码"
-              prop="password"
-            >
+            <el-form-item label="用户密码" prop="password">
               <el-input
                 v-model="userForm.password"
                 placeholder="请输入用户密码"
@@ -478,10 +398,7 @@ onMounted(() => {
           </el-col>
           <el-col :span="12">
             <el-form-item label="用户性别">
-              <el-select
-                v-model="userForm.sex"
-                placeholder="请选择"
-              >
+              <el-select v-model="userForm.sex" placeholder="请选择">
                 <el-option
                   v-for="user in userSex"
                   :key="user.value"
@@ -498,7 +415,8 @@ onMounted(() => {
                   v-for="status in userStatus"
                   :key="status.value"
                   :label="status.value"
-                >{{ status.name }}</el-radio>
+                  >{{ status.name }}</el-radio
+                >
               </el-radio-group>
             </el-form-item>
           </el-col>
@@ -548,14 +466,8 @@ onMounted(() => {
           </el-col>
         </el-row>
       </el-form>
-      <div
-        slot="footer"
-        class="dialog-footer"
-      >
-        <el-button
-          type="primary"
-          @click="confirmCreateUser"
-        >确 定</el-button>
+      <div slot="footer" class="dialog-footer">
+        <el-button type="primary" @click="confirmCreateUser">确 定</el-button>
         <el-button @click="cancelShow">取 消</el-button>
       </div>
     </el-dialog>

@@ -65,16 +65,6 @@ const uploadImg = () => {
     const formData = new FormData()
     formData.append('upload[]', data)
     console.log('头像上传')
-    // uploadAvatar(formData).then((response) => {
-    //   if (response.code === 200) {
-    //     this.open = false
-    //     this.options.img = process.env.VUE_APP_BASE_API + response.data
-    //     // this.msgSuccess(response.msg)
-    //   } else {
-    //     // this.msgError(response.msg)
-    //   }
-    //   cropper.value.clearCrop()
-    // })
   })
 }
 // 实时预览
