@@ -64,7 +64,7 @@ service.interceptors.response.use(
  * @param params
  * @returns {Promise<axios.AxiosResponse<any>>}
  */
-export function post(url, data = {}, params = {}) {
+export function post (url, data = {}, params = {}) {
   return service({
     method: 'post',
     url,
@@ -79,7 +79,7 @@ export function post(url, data = {}, params = {}) {
  * @param params
  * @returns {Promise<axios.AxiosResponse<any>>}
  */
-export function get(url, params = {}) {
+export function get (url, params = {}) {
   return service({
     method: 'get',
     url,
@@ -94,7 +94,7 @@ export function get(url, params = {}) {
  * @param params
  * @returns {Promise<axios.AxiosResponse<any>>}
  */
-export function put(url, data = {}, params = {}) {
+export function put (url, data = {}, params = {}) {
   return service({
     method: 'put',
     url,
@@ -110,7 +110,7 @@ export function put(url, data = {}, params = {}) {
  * @returns {Promise<axios.AxiosResponse<any>>}
  * @private
  */
-export function _delete(url, params = {}) {
+export function _delete (url, params = {}) {
   return service({
     method: 'delete',
     url,

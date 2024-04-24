@@ -39,7 +39,7 @@ const rules = reactive({
 })
 
 const submit = () => {
-  form.value.validate(async(value) => {
+  form.value.validate(async (value) => {
     if (value) {
       try {
         const res = await modifyPassword(user)

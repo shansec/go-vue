@@ -21,19 +21,19 @@ export const useTagsSetting = defineStore({
   },
   getters: {},
   actions: {
-    setButtonMenu(val) {
+    setButtonMenu (val) {
       this.tagViewValue = val
     },
-    addView(view) {
+    addView (view) {
       this.setButtonMenu(view.path)
       const includeView = this.tagViews.some((v) => v.path === view.path)
       if (includeView) return
       this.tagViews.push({ ...view, title: view.meta.title || 'no-name' })
     },
-    delView(path) {
+    delView (path) {
       this.tagViews = this.tagViews.filter((v) => v.path !== path)
     },
-    toLastView(path) {
+    toLastView (path) {
       const indexTag = this.tagViews.findIndex((item) => item.path === path)
       const nextTag = this.tagViews[indexTag + 1] || this.tagViews[indexTag - 1]
       if (!nextTag) return
@@ -41,15 +41,15 @@ export const useTagsSetting = defineStore({
       this.addView(nextTag)
       this.delView(path)
     },
-    delOtherView(path) {
+    delOtherView (path) {
       this.tagViews = this.tagViews.filter(
         (item) => item.path === path || item.meta.affix
       )
     },
-    delAllView() {
+    delAllView () {
       this.tagViews = this.tagViews.filter((item) => item.meta.affix)
     },
-    goHome() {
+    goHome () {
       this.tagViewValue = '/dashboard'
       router.push('/dashboard')
     }

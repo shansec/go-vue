@@ -24,7 +24,7 @@ const rules = reactive({
 })
 const submitForm = () => {
   loading.value = true
-  ruleFormRef.value.validate(async(value) => {
+  ruleFormRef.value.validate(async (value) => {
     if (value) {
       const [err, data] = await awaitWrap(login(registerForm))
       if (data !== null) {

@@ -33,7 +33,7 @@ const rules = {
 const form = ref(null)
 const router = useRouter()
 const submit = () => {
-  form.value.validate(async(valid) => {
+  form.value.validate(async (valid) => {
     if (valid) {
       try {
         const res = await updateUserInfo(props.user)

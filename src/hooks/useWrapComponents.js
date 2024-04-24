@@ -12,7 +12,7 @@ export const useWrapComponents = (Component, route) => {
     } else {
       wrapper = {
         name: wrapperName,
-        render() {
+        render () {
           return h('div', { className: 'app-main-inner' }, Component)
         }
       }

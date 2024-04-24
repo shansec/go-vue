@@ -10,7 +10,7 @@ const activeTab = ref('userinfo')
 const roleName = ref(null)
 const deptName = ref(null)
 
-const getUser = async() => {
+const getUser = async () => {
   const res = await getUserInfo()
   user.value = res.data.user
   roleName.value = user.value.sysRole.roleName

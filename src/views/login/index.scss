@@ -72,7 +72,9 @@
 
       .captcha {
         height: 50px;
+
         --tw-bg-opacity: 1 !important;
+
         background-color: rgb(195 212 242 / var(--tw-bg-opacity))!important;
       }
 
@@ -81,16 +83,16 @@
       }
 
       .login_btn {
+        margin-bottom: 16px;
         width: 100%;
         height: 40px;
-        margin-bottom: 16px;
       }
 
       .trigger-box {
-        width: 100%;
         display: flex;
         justify-content: space-around;
         align-items: center;
+        width: 100%;
 
         .box {
           min-width: 120px;

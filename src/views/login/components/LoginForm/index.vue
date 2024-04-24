@@ -26,13 +26,11 @@ const rules = reactive({
   username: [{ required: true, message: '请输入账号', trigger: 'blur' }],
   password: [{ required: true, message: '请输入密码', trigger: 'blur' }],
   phone: [{ required: true, message: '请输入手机号', trigger: 'blur' }],
-  captcha: [
-    { message: '请输入验证码', trigger: 'blur' }
-  ]
+  captcha: [{ message: '请输入验证码', trigger: 'blur' }]
 })
 const submitForm = () => {
   loading.value = true
-  ruleFormRef.value.validate(async(value) => {
+  ruleFormRef.value.validate(async (value) => {
     if (value) {
       try {
         const res = await login(loginForm)
@@ -56,7 +54,7 @@ const submitForm = () => {
     }
   })
 }
-const requestCaptcha = async() => {
+const requestCaptcha = async () => {
   const res = await getCaptcha()
   rules.captcha.push({
     max: res.data.captchaLength,
@@ -154,7 +152,9 @@ onMounted(() => {
       <el-button
         class="box"
         @click="triLoginMethod"
-      >{{ loginForm.isPhoneLogin ? '账号登录' : '手机号登录' }}</el-button>
+      >{{
+        loginForm.isPhoneLogin ? '账号登录' : '手机号登录'
+      }}</el-button>
       <el-button class="box">初始化</el-button>
     </div>
   </el-form>

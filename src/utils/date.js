@@ -4,7 +4,7 @@
 // (new Date()).Format("yyyy-MM-dd hh:mm:ss.S") ==> 2006-07-02 08:09:04.423
 // (new Date()).Format("yyyy-M-d h:m:s.S")      ==> 2006-7-2 8:9:4.18
 // eslint-disable-next-line no-extend-native
-Date.prototype.Format = function(fmt) {
+Date.prototype.Format = function (fmt) {
   var o = {
     'M+': this.getMonth() + 1, // 月份
     'd+': this.getDate(), // 日
@@ -31,7 +31,7 @@ Date.prototype.Format = function(fmt) {
   return fmt
 }
 
-export function formatTimeToStr(times, pattern) {
+export function formatTimeToStr (times, pattern) {
   var d = new Date(times).Format('yyyy-MM-dd hh:mm:ss')
   if (pattern) {
     d = new Date(times).Format(pattern)

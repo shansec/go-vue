@@ -32,7 +32,7 @@ defineOptions({
 const loading = ref(true)
 const dataTimeline = ref([])
 
-const loadCommits = async() => {
+const loadCommits = async () => {
   const res = await Commits(0)
   loading.value = false
   res.data.forEach((element, index) => {

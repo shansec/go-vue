@@ -1,21 +1,21 @@
 const storage = {
-  set(key, value) {
+  set (key, value) {
     if (typeof value === 'object') {
       value = JSON.stringify(value)
     }
     localStorage.setItem(key, value)
   },
-  get(key) {
+  get (key) {
     let value = localStorage.getItem(key)
     if (value && value.indexOf('{') !== -1) {
       value = JSON.parse(value)
     }
     return value
   },
-  remove(key) {
+  remove (key) {
     localStorage.removeItem(key)
   },
-  clear() {
+  clear () {
     localStorage.clear()
   }
 }
