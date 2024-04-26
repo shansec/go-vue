@@ -1,6 +1,11 @@
 <script lang="js" setup>
 import { ref, reactive } from 'vue'
+import { useRouter } from 'vue-router'
 
+import { initDB } from '@/api/Init'
+import { successMsg } from '@/utils/message'
+
+const router = useRouter()
 const formRef = ref()
 const form = reactive({
   dbType: 'mysql',
@@ -8,7 +13,7 @@ const form = reactive({
   port: '3306',
   userName: 'root',
   password: '',
-  dbName: 'gva'
+  dbName: 'may_db'
 })
 const rules = reactive({
   dbType: [{ required: true, message: '请选择数据库类型', trigger: 'blur' }],
@@ -19,6 +24,26 @@ const rules = reactive({
   ],
   dbName: [{ required: true, message: '请输入数据库名称', trigger: 'blur' }]
 })
+
+const onSubmit = () => {
+  formRef.value.validate(async (value) => {
+    if (value) {
+      try {
+        const init = await initDB(form)
+        if (init.code === 200) {
+          successMsg(init.msg)
+          await router.push({
+            path: '/login'
+          })
+        }
+      } catch (e) {
+        errorMsg('参数校验不通过')
+      }
+    } else {
+      errorMsg('参数校验不通过')
+    }
+  })
+}
 </script>
 
 <template>
