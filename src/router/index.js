@@ -1,7 +1,6 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import Layout from '@/layout/index.vue'
-import userRoutes from '@/router/modules/user'
-import deptRoutes from '@/router/modules/dept'
+import adminRoutes from './modules/supervisor'
 import systemRoutes from '@/router/modules/system'
 import autoCodeRoutes from '@/router/modules/autocode'
 
@@ -39,8 +38,7 @@ export const constantRoutes = [
       }
     ]
   },
-  ...userRoutes,
-  ...deptRoutes,
+  ...adminRoutes,
   ...autoCodeRoutes,
   {
     path: '/profile',

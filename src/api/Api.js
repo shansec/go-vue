@@ -1,4 +1,4 @@
-import service from '@/util/request'
+import service from '@/utils/request'
 
 // @Summary 创建 api
 // @Tags SysApi
@@ -60,11 +60,11 @@ export const updateApi = (data) => {
 // @Success 200 {object} response.PageResult{list=[]system.SysApi, msg=string}	"api 列表获取成功"
 // @Failure 400 {object} response.Response "请求参数验证失败"
 // @Failure 500 {object} response.Response "获取部门列表失败"
-// @Router /api/getApiList [GET]
+// @Router /api/getApiList [POST]
 export const getApiList = (pageInfo) => {
   return service({
     url: '/api/getApiList',
     method: 'POST',
-    pageInfo
+    data: pageInfo
   })
 }
