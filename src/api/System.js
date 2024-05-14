@@ -9,7 +9,7 @@ import service from '@/utils/request'
 // @Router /system/status [GET]
 export const getSystemState = () => {
   return service({
-    url: '/v1/system/getServerInfo',
+    url: '/system/getServerInfo',
     method: 'get',
     donNotShowLoading: true
   })

@@ -5,7 +5,7 @@ import { errorMsg } from '@/utils/message'
 import router from '@/router'
 
 const service = axios.create({
-  baseURL: import.meta.env.VITE_BASE_API,
+  baseURL: import.meta.env.VITE_BASE_API + import.meta.env.VITE_ROUTER_PREFIX,
   timeout: 9999
 })
 // axios.defaults.baseURL = '/api'

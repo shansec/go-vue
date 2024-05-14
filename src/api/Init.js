@@ -9,7 +9,7 @@ import service from '@/utils/request'
 // @Router /init/initDB [POST]
 export const initDB = (data) => {
   return service({
-    url: '/v1/init/initDB',
+    url: '/init/initDB',
     method: 'POST',
     data
   })
@@ -21,7 +21,7 @@ export const initDB = (data) => {
 // @Router /init/checkDB [POST]
 export const checkDB = () => {
   return service({
-    url: '/v1/init/checkDB',
+    url: '/init/checkDB',
     method: 'POST'
   })
 }

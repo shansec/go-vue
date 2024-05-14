@@ -11,7 +11,7 @@ import service from '@/utils/request'
 // @Router /autocode/createPackage [POST]
 export const createPackage = (data) => {
   return service({
-    url: '/v1/autocode/createPackage',
+    url: '/autocode/createPackage',
     method: 'POST',
     data
   })
@@ -29,7 +29,7 @@ export const createPackage = (data) => {
 // @Router /autocode/getPackageList [POST]
 export const getPackageList = (data) => {
   return service({
-    url: '/v1/autocode/getPackageList',
+    url: '/autocode/getPackageList',
     method: 'POST',
     data
   })
@@ -47,7 +47,7 @@ export const getPackageList = (data) => {
 // @Router /autocode/delPackageInfo [DELETE]
 export const deletePackage = (data) => {
   return service({
-    url: '/v1/autocode/delPackageInfo',
+    url: '/autocode/delPackageInfo',
     method: 'DELETE',
     data
   })
