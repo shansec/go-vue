@@ -58,14 +58,7 @@ const ShowDialog = () => {
   form.value.parentId = 0
   isShowDialog.value = true
 }
-const requestApi = async () => {
-  console.log(queryParams.value)
-  const res = await getApiList(queryParams.value)
-  apiList.value = res.data.list
-  queryParams.value.page = res.data.page
-  queryParams.value.pageSize = res.data.pageSize
-  total.value = res.data.total
-}
+
 const inquireDept = () => {
   queryParams.value.page = 1
   queryParams.value.pageSize = 10
@@ -80,6 +73,28 @@ const resetQuery = () => {
     apiGroup: '',
     method: ''
   }
+}
+
+const pageDataChange = (payload) => {
+  console.log(payload)
+  queryParams.value.page = payload.page
+  queryParams.value.pageSize = payload.limit
+  requestApi()
+}
+
+const cancelDialog = () => {
+  isShowDialog.value = false
+  title.value = ''
+  isEdit.value = false
+  apiFormRef.value.resetFields()
+}
+const requestApi = async () => {
+  console.log(queryParams.value)
+  const res = await getApiList(queryParams.value)
+  apiList.value = res.data.list
+  queryParams.value.page = res.data.page
+  queryParams.value.pageSize = res.data.pageSize
+  total.value = res.data.total
 }
 const confirmSubmit = () => {
   apiFormRef.value.validate(async (value) => {
@@ -111,12 +126,6 @@ const confirmSubmit = () => {
       errorMsg('请完善必填信息')
     }
   })
-}
-const cancelDialog = () => {
-  isShowDialog.value = false
-  title.value = ''
-  isEdit.value = false
-  apiFormRef.value.resetFields()
 }
 const removeApi = (data) => {
   const msg = '是否删除 api 记录？'
@@ -250,6 +259,7 @@ onMounted(() => {
           :total="total"
           :page.sync="queryParams.page"
           :limit.sync="queryParams.pageSize"
+          @pagination="pageDataChange"
         />
         <!--  添加/修改 api 弹框  -->
         <el-dialog

@@ -4,7 +4,7 @@ const adminRoutes = [
   {
     path: '/supervisor',
     component: Layout,
-    meta: { title: '管理员', icon: 'peoples', affix: false },
+    meta: { title: '管理员', icon: 'admin', affix: false },
     children: [
       {
         path: 'user',
