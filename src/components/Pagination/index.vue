@@ -50,14 +50,6 @@ const handleCurrentChange = (val) => {
     scrollTo(0, 800)
   }
 }
-// const currentPage = computed({
-//   get () {
-//     return prop.page
-//   },
-//   set (val) {
-//     emit('update:page', val)
-//   }
-// })
 const pageSize = computed({
   get () {
     return prop.limit
@@ -73,7 +65,7 @@ const pageSize = computed({
     <el-pagination
       :background="prop.background"
       :current-page.sync="prop.currentPage"
-      :page-size.sync="prop.pageSize"
+      :page-size.sync="prop.limit"
       :layout="prop.layout"
       :page-sizes="prop.pageSizes"
       :total="prop.total"

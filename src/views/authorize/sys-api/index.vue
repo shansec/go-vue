@@ -1,25 +1,25 @@
 <script lang="js" setup>
-import { nextTick, onMounted, ref } from 'vue'
-import { getApiList, createApi, deleteApi } from '@/api/Api'
+import { onMounted, ref } from 'vue'
+import { getApiList, createApi, deleteApi, updateApi } from '@/api/Api'
 import { errorMsg, successMsg, confirmBox } from '@/utils/message'
 
 const apiList = ref()
 const total = ref(0)
 const methods = ref([
   {
-    name: 'POST',
+    name: 'POST(新增)',
     value: 'POST'
   },
   {
-    name: 'GET',
+    name: 'GET(查询)',
     value: 'GET'
   },
   {
-    name: 'PUT',
+    name: 'PUT(修改)',
     value: 'PUT'
   },
   {
-    name: 'DELETE',
+    name: 'DELETE(删除)',
     value: 'DELETE'
   }
 ])
@@ -32,6 +32,8 @@ const queryParams = ref({
   method: ''
 })
 const title = ref('')
+const type = ref('')
+const index = ref(0)
 const isShowDialog = ref(false)
 const apiFormRef = ref()
 const form = ref({
@@ -50,12 +52,22 @@ const rules = ref({
   ],
   method: [{ required: true, message: 'api 方法类型不能为空', trigger: 'blur' }]
 })
-const parentId = ref('1')
-const isEdit = ref(false)
+
 const ShowDialog = () => {
-  title.value = '添加部门'
-  parentId.value = '0'
-  form.value.parentId = 0
+  openDialog('create')
+}
+
+const openDialog = (key) => {
+  switch (key) {
+    case 'create':
+      title.value = '添加 api'
+      type.value = key
+      break
+    case 'update':
+      title.value = '修改 api'
+      type.value = key
+      break
+  }
   isShowDialog.value = true
 }
 
@@ -76,7 +88,6 @@ const resetQuery = () => {
 }
 
 const pageDataChange = (payload) => {
-  console.log(payload)
   queryParams.value.page = payload.page
   queryParams.value.pageSize = payload.limit
   requestApi()
@@ -85,56 +96,82 @@ const pageDataChange = (payload) => {
 const cancelDialog = () => {
   isShowDialog.value = false
   title.value = ''
-  isEdit.value = false
   apiFormRef.value.resetFields()
 }
 const requestApi = async () => {
-  console.log(queryParams.value)
   const res = await getApiList(queryParams.value)
   apiList.value = res.data.list
   queryParams.value.page = res.data.page
   queryParams.value.pageSize = res.data.pageSize
   total.value = res.data.total
 }
+
 const confirmSubmit = () => {
   apiFormRef.value.validate(async (value) => {
     if (value) {
-      try {
-        const res = await createApi(form.value)
-        if (res.code === 200) {
-          successMsg(res.msg)
-          queryParams.value = {
-            page: 1,
-            pageSize: 10,
-            path: '',
-            description: '',
-            apiGroup: '',
-            method: ''
+      switch (type.value) {
+        case 'update':
+          try {
+            const res = await updateApi(form.value)
+            if (res.code === 200) {
+              successMsg(res.msg)
+              queryParams.value = {
+                page: 1,
+                pageSize: 10,
+                path: '',
+                description: '',
+                apiGroup: '',
+                method: ''
+              }
+              isShowDialog.value = false
+              title.value = ''
+              apiFormRef.value.resetFields()
+            } else {
+              errorMsg('修改 api 失败！')
+            }
+          } catch (e) {
+            errorMsg('修改 api 失败！')
           }
-          isShowDialog.value = false
-          title.value = ''
-          isEdit.value = false
-          apiFormRef.value.resetFields()
-          requestApi()
-        } else {
-          errorMsg('创建 api 失败！')
-        }
-      } catch (e) {
-        errorMsg('创建 api 失败！')
+          break
+        case 'create':
+          try {
+            const res = await createApi(form.value)
+            if (res.code === 200) {
+              successMsg(res.msg)
+              queryParams.value = {
+                page: 1,
+                pageSize: 10,
+                path: '',
+                description: '',
+                apiGroup: '',
+                method: ''
+              }
+              isShowDialog.value = false
+              title.value = ''
+              apiFormRef.value.resetFields()
+            } else {
+              errorMsg('创建 api 失败！')
+            }
+          } catch (e) {
+            errorMsg('创建 api 失败！')
+          }
+          break
+        default:
+          errorMsg('未知操作')
       }
     } else {
       errorMsg('请完善必填信息')
     }
   })
 }
-const removeApi = (data) => {
+const removeApi = (data, index) => {
   const msg = '是否删除 api 记录？'
   confirmBox(msg, '确定删除', '取消', 'warning').then(async () => {
     try {
       const res = await deleteApi(data)
       if (res.code === 200) {
         successMsg(res.msg)
-        requestApi()
+        apiList.value.splice(index, 1)
       } else {
         errorMsg('删除 api 信息失败！')
       }
@@ -143,22 +180,10 @@ const removeApi = (data) => {
     }
   })
 }
-const changeApi = (data) => {
-  title.value = '修改 api'
-  isEdit.value = true
-  isShowDialog.value = true
-  nextTick(() => {
-    form.value = {
-      deptId: data.deptId,
-      parentId: data.parentId,
-      deptName: data.deptName,
-      sort: data.sort,
-      leader: data.leader,
-      email: data.email,
-      phone: data.phone,
-      status: data.status
-    }
-  })
+const changeApi = (row, $index) => {
+  form.value = JSON.parse(JSON.stringify(row))
+  index.value = $index
+  openDialog('update')
 }
 onMounted(() => {
   requestApi()
@@ -170,23 +195,23 @@ onMounted(() => {
     <template #wrapper>
       <div class="dept-container">
         <div class="query-box">
-          <el-form :model="queryParams" :inline="true" label-width="70px">
-            <el-form-item label="path">
+          <el-form :model="queryParams" :inline="true">
+            <el-form-item label="路径">
               <el-input
                 v-model.trim="queryParams.path"
                 placeholder="请输入 api 路径"
               />
             </el-form-item>
-            <el-form-item label="path">
-              <el-input
-                v-model.trim="queryParams.path"
-                placeholder="请输入 api 路径"
-              />
-            </el-form-item>
-            <el-form-item label="desc">
+            <el-form-item label="中文描述">
               <el-input
                 v-model.trim="queryParams.description"
-                placeholder="请输入 api 描述"
+                placeholder="请输入 api 中文描述"
+              />
+            </el-form-item>
+            <el-form-item label="所属组">
+              <el-input
+                v-model.trim="queryParams.description"
+                placeholder="请输入 api 所属组"
               />
             </el-form-item>
             <el-form-item label="method">
@@ -235,7 +260,7 @@ onMounted(() => {
                   type="primary"
                   text
                   class="operate-btn"
-                  @click="changeApi(scope.row)"
+                  @click="changeApi(scope.row, scope.$index)"
                 >
                   <svg-icon icon-class="table-update" />
                   修改
@@ -245,7 +270,7 @@ onMounted(() => {
                   type="danger"
                   text
                   class="operate-btn"
-                  @click="removeApi(scope.row)"
+                  @click="removeApi(scope.row, scope.$index)"
                 >
                   <svg-icon icon-class="table-delete" />
                   删除
@@ -265,7 +290,7 @@ onMounted(() => {
         <el-dialog
           v-model="isShowDialog"
           :title="title"
-          width="600px"
+          width="500px"
           :close-on-click-modal="false"
           :close-on-press-escape="false"
           :destroy-on-close="true"
@@ -275,7 +300,7 @@ onMounted(() => {
             ref="apiFormRef"
             :model="form"
             :rules="rules"
-            label-width="80px"
+            label-width="120px"
           >
             <el-row>
               <el-col :span="24">
