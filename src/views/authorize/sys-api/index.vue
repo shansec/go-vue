@@ -98,6 +98,9 @@ const cancelDialog = () => {
   title.value = ''
   apiFormRef.value.resetFields()
 }
+const getNextId = () => {
+  return Math.max(...apiList.value.map((api) => api.ID)) + 1
+}
 const requestApi = async () => {
   const res = await getApiList(queryParams.value)
   apiList.value = res.data.list
@@ -115,14 +118,11 @@ const confirmSubmit = () => {
             const res = await updateApi(form.value)
             if (res.code === 200) {
               successMsg(res.msg)
-              queryParams.value = {
-                page: 1,
-                pageSize: 10,
-                path: '',
-                description: '',
-                apiGroup: '',
-                method: ''
-              }
+              apiList.value.forEach((row, index) => {
+                if (row.ID === form.value.ID) {
+                  apiList.value[index] = { ...row, ...form.value }
+                }
+              })
               isShowDialog.value = false
               title.value = ''
               apiFormRef.value.resetFields()
@@ -138,14 +138,8 @@ const confirmSubmit = () => {
             const res = await createApi(form.value)
             if (res.code === 200) {
               successMsg(res.msg)
-              queryParams.value = {
-                page: 1,
-                pageSize: 10,
-                path: '',
-                description: '',
-                apiGroup: '',
-                method: ''
-              }
+              form.value.ID = getNextId()
+              apiList.value.push({ ...form.value })
               isShowDialog.value = false
               title.value = ''
               apiFormRef.value.resetFields()
@@ -247,11 +241,11 @@ onMounted(() => {
           row-key="deptId"
           border
         >
-          <el-table-column prop="ID" label="ID" width="100" />
-          <el-table-column prop="path" label="api路径" width="500" />
-          <el-table-column prop="description" label="api中文描述" width="500" />
-          <el-table-column prop="apiGroup" label="api所属组" width="200" />
-          <el-table-column prop="method" label="method" width="200" />
+          <el-table-column prop="ID" label="ID" />
+          <el-table-column prop="path" label="api路径" />
+          <el-table-column prop="description" label="api中文描述" />
+          <el-table-column prop="apiGroup" label="api所属组" />
+          <el-table-column prop="method" label="method" />
           <el-table-column label="操作">
             <template #default="scope">
               <div class="operate-box">
