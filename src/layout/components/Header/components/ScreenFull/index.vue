@@ -5,22 +5,10 @@ const { toggle, isFullscreen } = useFullscreen()
 
 <template>
   <div class="screen-full">
-    <el-tooltip
-      content="全屏"
-      placement="bottom"
-    >
-      <el-icon
-        :size="16"
-        @click="toggle"
-      >
-        <svg-icon
-          v-if="!isFullscreen"
-          icon-class="fullscreen"
-        />
-        <svg-icon
-          v-else
-          icon-class="exit-fullscreen"
-        />
+    <el-tooltip content="全屏" placement="bottom">
+      <el-icon :size="16" @click="toggle">
+        <svg-icon v-if="!isFullscreen" icon-class="fullscreen" />
+        <svg-icon v-else icon-class="exit-fullscreen" />
       </el-icon>
     </el-tooltip>
   </div>

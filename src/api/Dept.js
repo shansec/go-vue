@@ -10,7 +10,7 @@ import service from '@/utils/request.js'
 // @Router /dept/createDept [POST]
 export const createDept = (data) => {
   return service({
-    url: '/v1/dept/createDept',
+    url: '/dept/createDept',
     method: 'POST',
     data
   })
@@ -28,7 +28,7 @@ export const createDept = (data) => {
 // @Router /dept/getDeptList [POST]
 export const getDeptList = (data) => {
   return service({
-    url: '/v1/dept/getDeptList',
+    url: '/dept/getDeptList',
     method: 'POST',
     data
   })
@@ -46,7 +46,7 @@ export const getDeptList = (data) => {
 // @Router /dept/delDeptInfo [DELETE]
 export const delDeptInfo = (data) => {
   return service({
-    url: '/v1/dept/delDeptInfo',
+    url: '/dept/delDeptInfo',
     method: 'DELETE',
     data
   })
@@ -64,7 +64,7 @@ export const delDeptInfo = (data) => {
 // @Router /dept/updateDeptInfo [PUT]
 export const updateDeptInfo = (data) => {
   return service({
-    url: '/v1/dept/updateDeptInfo',
+    url: '/dept/updateDeptInfo',
     method: 'PUT',
     data
   })

@@ -8,7 +8,7 @@ import service from '@/utils/request.js'
 // @Router /base/register [POST]
 export const createUser = (data) => {
   return service({
-    url: '/v1/user/register',
+    url: '/user/register',
     method: 'POST',
     data
   })
@@ -22,7 +22,7 @@ export const createUser = (data) => {
 // @Router /base/login [POST]
 export const modifyPassword = (data) => {
   return service({
-    url: '/v1/user/modifyPassword',
+    url: '/user/modifyPassword',
     method: 'POST',
     data
   })
@@ -36,7 +36,7 @@ export const modifyPassword = (data) => {
 // @Router /base/login [POST]
 export const login = (data) => {
   return service({
-    url: '/v1/base/login',
+    url: '/base/login',
     method: 'POST',
     data
   })
@@ -50,7 +50,7 @@ export const login = (data) => {
 // @Router /user/updateUserInfo [PUT]
 export const updateUserInfo = (data) => {
   return service({
-    url: '/v1/user/updateUserInfo',
+    url: '/user/updateUserInfo',
     method: 'POST',
     data
   })
@@ -63,7 +63,7 @@ export const updateUserInfo = (data) => {
 // @Router /user/getUserInfo [GET]
 export const getUserInfo = () => {
   return service({
-    url: '/v1/user/getUserInfo',
+    url: '/user/getUserInfo',
     method: 'GET'
   })
 }
@@ -76,7 +76,7 @@ export const getUserInfo = () => {
 // @Router /user/getUsersInfo [GET]
 export const getUsersInfo = (data) => {
   return service({
-    url: '/v1/user/getUsersInfo',
+    url: '/user/getUsersInfo',
     method: 'POST',
     data
   })
@@ -90,7 +90,7 @@ export const getUsersInfo = (data) => {
 // @Router /user/updateUserStatus [GET]
 export const updateUserStatus = (data) => {
   return service({
-    url: '/v1/user/updateUserStatus',
+    url: '/user/updateUserStatus',
     method: 'PUT',
     data
   })
@@ -104,7 +104,7 @@ export const updateUserStatus = (data) => {
 // @Router /user/delUserInfo [Delete]
 export const delUserInfo = (data) => {
   return service({
-    url: '/v1/user/delUserInfo',
+    url: '/user/delUserInfo',
     method: 'DELETE',
     data
   })

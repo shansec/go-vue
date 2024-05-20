@@ -2,11 +2,14 @@
 import { computed, ref } from 'vue'
 
 import { useSettingStore } from '@/store/modules/settings.js'
+import { useUserStore } from '@/store/modules/user.js'
 import { THEME_COLOR } from '@/config/index.js'
+import { updateUserInfo } from '@/api/User'
 
 import SwitchDark from '@/components/SwitchDark/index.vue'
 
 const settingStore = useSettingStore()
+const userStore = useUserStore()
 // 保持一个子菜单打开
 const uniqueOpened = ref(settingStore.uniqueOpened)
 // 是否展示侧边栏Logo
@@ -72,12 +75,25 @@ const changeGreyAndWeakColor = (type, value) => {
  * 设置主题颜色
  * @param val 颜色值
  */
-const changeThemeColor = (val) => {
+const changeThemeColor = async (val) => {
+  const userInfo = userStore.getUserInfo
   if (!val) {
     themeColor.value = THEME_COLOR
+    userInfo.themeColor = THEME_COLOR
   }
-  document.documentElement.style.setProperty('--el-color-primary', val)
-  changeTheme('themeColor', val)
+  if (userInfo.themeColor === val) return
+  userInfo.themeColor = val
+  try {
+    const res = await updateUserInfo(userInfo)
+    if (res.code === 200) {
+      document.documentElement.style.setProperty('--el-color-primary', val)
+      changeTheme('themeColor', val)
+    } else {
+      errorMsg('修改主题颜色失败')
+    }
+  } catch (e) {
+    errorMsg('修改主题颜色失败')
+  }
 }
 </script>
 
@@ -95,10 +111,7 @@ const changeThemeColor = (val) => {
     <!--        <span :style="{ color: settingStore.themeColor }">主题设置</span>-->
     <!--      </div>-->
     <!--    </div>-->
-    <el-drawer
-      v-model="drawer"
-      size="300px"
-    >
+    <el-drawer v-model="drawer" size="300px">
       <template #header>
         <h3>主题设置</h3>
       </template>

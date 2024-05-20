@@ -1,7 +1,6 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import Layout from '@/layout/index.vue'
-import userRoutes from '@/router/modules/user'
-import deptRoutes from '@/router/modules/dept'
+import adminRoutes from './modules/supervisor'
 import systemRoutes from '@/router/modules/system'
 import autoCodeRoutes from '@/router/modules/autocode'
 
@@ -10,6 +9,13 @@ export const constantRoutes = [
     path: '/404',
     component: () => import('@/views/error-page/404.vue'),
     hidden: true
+  },
+  {
+    path: '/init',
+    name: 'Init',
+    component: () => import('@/views/init/index.vue'),
+    hidden: true,
+    meta: { title: '初始化' }
   },
   {
     path: '/login',
@@ -32,13 +38,13 @@ export const constantRoutes = [
       }
     ]
   },
-  ...userRoutes,
-  ...deptRoutes,
+  ...adminRoutes,
   ...autoCodeRoutes,
   {
     path: '/profile',
     component: Layout,
     redirect: '/profile/index',
+    hidden: true,
     children: [
       {
         path: 'index',

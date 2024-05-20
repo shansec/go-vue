@@ -38,10 +38,7 @@ watch(
 </script>
 
 <template>
-  <div
-    class="m-layout-header"
-    :style="headerType"
-  >
+  <div class="m-layout-header" :style="headerType">
     <div class="m-header-inner">
       <Index />
     </div>

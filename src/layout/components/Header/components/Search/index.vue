@@ -123,15 +123,9 @@ const change = (val) => {
 
 <template>
   <div class="search">
-    <el-tooltip
-      content="菜单搜索"
-      placement="bottom"
-    >
+    <el-tooltip content="菜单搜索" placement="bottom">
       <el-icon style="font-size: 20px">
-        <i
-          class="iconfont icon-sousuo"
-          @click="handleSearch"
-        />
+        <i class="iconfont icon-sousuo" @click="handleSearch" />
       </el-icon>
     </el-tooltip>
     <el-dialog

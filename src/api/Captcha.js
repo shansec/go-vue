@@ -9,7 +9,7 @@ import service from '@/utils/request'
 // @Router /base/captcha [GET]
 export const getCaptcha = () => {
   return service({
-    url: '/v1/base/captcha',
+    url: '/base/captcha',
     method: 'GET'
   })
 }
