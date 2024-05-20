@@ -24,7 +24,6 @@ import DepartTree from '@/views/authorize/sys-user/components/DepartTree/index.v
 .user-container {
   padding: 20px;
   width: 100%;
-  background: #fff;
   box-sizing: border-box;
 }
 </style>

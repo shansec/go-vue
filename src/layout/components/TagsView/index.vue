@@ -131,32 +131,13 @@ watch(route, () => {
 
     :deep(.el-tabs__item) {
       padding: 0 10px;
-
-      &::before {
-        display: inline-block;
-        margin-right: 6px;
-        width: 8px;
-        height: 8px;
-        background: #ccc;
-        border-radius: 50%;
-        content: '';
-      }
     }
 
     :deep(.el-tabs .el-tabs__header .el-tabs__item.is-active) {
       padding: 0 10px;
       color: var(--el-color-primary);
-      border-bottom: 2px solid var(--el-color-primary);
-
-      &::before {
-        display: inline-block;
-        margin-right: 6px;
-        width: 8px;
-        height: 8px;
-        background: var(--el-color-primary);
-        border-radius: 50%;
-        content: '';
-      }
+      border: 1px solid var(--el-color-primary);
+      border-radius: 3px;
     }
 
     .tabs {

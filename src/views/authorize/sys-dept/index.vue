@@ -71,38 +71,36 @@ const defaultProps = {
 }
 const parentId = ref('1')
 const isEdit = ref(false)
-const btnType = ref('create')
+const type = ref()
 const ShowDialog = () => {
-  title.value = '添加部门'
-  btnType.value = 'create'
+  openDialog('create')
+}
+const openDialog = (key) => {
+  switch (key) {
+    case 'create':
+      title.value = '添加部门'
+      type.value = key
+      break
+    case 'update':
+      title.value = '修改部门'
+      type.value = key
+      break
+  }
   parentId.value = '0'
   form.value.parentId = 0
   isShowDialog.value = true
 }
 const setParent = (node) => {
   form.value.parentId = node.deptId
+  console.log(form.value)
 }
 const deptCreate = (row) => {
-  title.value = '添加部门'
-  btnType.value = 'create'
+  openDialog('create')
   parentId.value = row.deptId.toString()
   form.value.parentId = row.deptId
   isShowDialog.value = true
 }
 const formatTime = (rowData) => formatTimeToStr(rowData.CreatedAt)
-const requestDeptOfTable = async () => {
-  const res = await getDeptList(queryParams.value)
-  deptList.value = res.data.list
-  queryParams.value.page = res.data.page
-  queryParams.value.pageSize = res.data.pageSize
-  total.value = res.data.total
-}
-const requestDeptOfSelect = async () => {
-  const res = await getDeptList(queryParams.value)
-  const dept = { deptId: 0, deptName: '主类目', parentId: 0, children: [] }
-  dept.children = res.data.list
-  treeList.value.push(dept)
-}
 const inquireDept = () => {
   queryParams.value.page = 1
   queryParams.value.pageSize = 10
@@ -116,62 +114,114 @@ const resetQuery = () => {
     status: ''
   }
 }
+const cancelDialog = () => {
+  isShowDialog.value = false
+  title.value = ''
+  isEdit.value = false
+  deptReset()
+}
+const changeDept = (data) => {
+  openDialog('update')
+  parentId.value = data.parentId.toString()
+  isEdit.value = true
+  isShowDialog.value = true
+  nextTick(() => {
+    form.value = {
+      deptId: data.deptId,
+      parentId: data.parentId,
+      deptName: data.deptName,
+      sort: data.sort,
+      leader: data.leader,
+      email: data.email,
+      phone: data.phone,
+      status: data.status
+    }
+  })
+}
+const deptReset = () => {
+  form.value = {
+    deptId: 0,
+    parentId: 0,
+    deptName: '',
+    sort: 0,
+    leader: '',
+    email: '',
+    phone: '',
+    status: ''
+  }
+}
+const requestDeptOfTable = async () => {
+  const res = await getDeptList(queryParams.value)
+  deptList.value = res.data.list
+  queryParams.value.page = res.data.page
+  queryParams.value.pageSize = res.data.pageSize
+  total.value = res.data.total
+}
+const requestDeptOfSelect = async () => {
+  const res = await getDeptList(queryParams.value)
+  const dept = { deptId: 0, deptName: '主类目', parentId: 0, children: [] }
+  dept.children = res.data.list
+  treeList.value.push(dept)
+}
 const confirmSubmit = () => {
   deptFormRef.value.validate(async (value) => {
-    if (value && btnType.value === 'create') {
-      try {
-        const res = await createDept(form.value)
-        if (res.code === 200) {
-          successMsg(res.msg)
-          queryParams.value = {
-            page: 1,
-            pageSize: 10,
-            deptName: '',
-            status: ''
+    if (value) {
+      switch (type.value) {
+        case 'create':
+          try {
+            const res = await createDept(form.value)
+            if (res.code === 200) {
+              successMsg(res.msg)
+              queryParams.value = {
+                page: 1,
+                pageSize: 10,
+                deptName: '',
+                status: ''
+              }
+              isShowDialog.value = false
+              title.value = ''
+              isEdit.value = false
+              deptReset()
+              requestDeptOfTable()
+              requestDeptOfSelect()
+            } else {
+              errorMsg('创建部门失败！')
+            }
+          } catch (e) {
+            errorMsg('创建部门失败！')
           }
-          isShowDialog.value = false
-          title.value = ''
-          isEdit.value = false
-          deptFormRef.value.resetFields()
-          requestDeptOfTable()
-        } else {
-          errorMsg('创建部门失败！')
-        }
-      } catch (e) {
-        errorMsg('创建部门失败！')
-      }
-    } else if (value && btnType.value === 'update') {
-      try {
-        const res = await updateDeptInfo(form.value)
-        if (res.code === 200) {
-          successMsg(res.msg)
-          queryParams.value = {
-            page: 1,
-            pageSize: 10,
-            deptName: '',
-            status: ''
+          break
+        case 'update':
+          try {
+            const res = await updateDeptInfo(form.value)
+            if (res.code === 200) {
+              successMsg(res.msg)
+              queryParams.value = {
+                page: 1,
+                pageSize: 10,
+                deptName: '',
+                status: ''
+              }
+              isShowDialog.value = false
+              title.value = ''
+              isEdit.value = false
+              deptReset()
+              requestDeptOfTable()
+              requestDeptOfSelect()
+            } else {
+              errorMsg('更新部门信息失败！')
+            }
+          } catch (e) {
+            errorMsg('更新部门信息失败！')
           }
-          isShowDialog.value = false
-          title.value = ''
-          isEdit.value = false
-          deptFormRef.value.resetFields()
-          requestDeptOfTable()
-        } else {
-          errorMsg('更新部门信息失败！')
-        }
-      } catch (e) {
-        errorMsg('更新部门信息失败！')
+          break
+        default:
+          errorMsg('未知操作')
       }
     } else {
       errorMsg('请完善必填信息')
     }
   })
-}
-const cancelDialog = () => {
-  isShowDialog.value = false
-  title.value = ''
-  isEdit.value = false
-  deptFormRef.value.resetFields()
 }
 const removeDept = (data) => {
   const msg = '删除部门前，确保删除的部门不包含下级部门'
@@ -191,25 +241,7 @@ const removeDept = (data) => {
     }
   })
 }
-const changeDept = (data) => {
-  parentId.value = data.parentId.toString()
-  title.value = '修改部门'
-  btnType.value = 'update'
-  isEdit.value = true
-  isShowDialog.value = true
-  nextTick(() => {
-    form.value = {
-      deptId: data.deptId,
-      parentId: data.parentId,
-      deptName: data.deptName,
-      sort: data.sort,
-      leader: data.leader,
-      email: data.email,
-      phone: data.phone,
-      status: data.status
-    }
-  })
-}
+
 onMounted(() => {
   requestDeptOfTable()
   requestDeptOfSelect()
@@ -249,7 +281,7 @@ onMounted(() => {
               </el-button>
               <el-button type="primary" @click="ShowDialog">
                 <svg-icon icon-class="table-add" />
-                增加
+                新增
               </el-button>
             </el-form-item>
           </el-form>
@@ -261,9 +293,9 @@ onMounted(() => {
           row-key="deptId"
           border
         >
-          <el-table-column prop="deptName" label="部门名称" width="500" />
-          <el-table-column prop="sort" label="排序" width="200" />
-          <el-table-column prop="status" label="状态" width="120">
+          <el-table-column prop="deptName" label="部门名称" />
+          <el-table-column prop="sort" label="排序" />
+          <el-table-column prop="status" label="状态">
             <template #default="scope">
               <el-tag
                 v-if="scope.row.status === '1'"
@@ -283,33 +315,30 @@ onMounted(() => {
             <template #default="scope">
               <div class="operate-box">
                 <el-button
-                  size="small"
                   type="primary"
                   text
                   class="operate-btn"
                   @click="changeDept(scope.row)"
                 >
-                  <svg-icon icon-class="table-update" />
-                  修改
+                  <el-icon><Edit /></el-icon>
+                  编辑
                 </el-button>
                 <el-button
-                  size="small"
                   type="primary"
                   text
                   class="operate-btn"
                   @click="deptCreate(scope.row)"
                 >
-                  <svg-icon icon-class="table-add" />
-                  增加
+                  <el-icon><Plus /></el-icon>
+                  新增下级部门
                 </el-button>
                 <el-button
-                  size="small"
                   type="danger"
                   text
                   class="operate-btn"
                   @click="removeDept(scope.row)"
                 >
-                  <svg-icon icon-class="table-delete" />
+                  <el-icon><Delete /></el-icon>
                   删除
                 </el-button>
               </div>
@@ -423,7 +452,6 @@ onMounted(() => {
 .dept-container {
   padding: 20px;
   width: 100%;
-  background: #fff;
   box-sizing: border-box;
 
   .header-row {

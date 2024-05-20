@@ -1,5 +1,13 @@
+<script lang="js" setup>
+import { useSettingStore } from '@/store/modules/settings.js'
+
+const settingStore = useSettingStore()
+</script>
 <template>
-  <div class="basic-layout">
+  <div
+    class="basic-layout"
+    :style="settingStore.isDark ? '' : 'background: #fff'"
+  >
     <slot name="wrapper" />
   </div>
 </template>

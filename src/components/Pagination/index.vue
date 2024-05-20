@@ -1,7 +1,7 @@
 <script lang="js" setup>
 import { scrollTo } from '@/utils/scroll-to'
-import { computed } from 'vue'
-const prop = defineProps({
+import { computed, ref } from 'vue'
+const props = defineProps({
   total: {
     required: true,
     type: Number
@@ -37,22 +37,23 @@ const prop = defineProps({
     default: false
   }
 })
+const pageInfo = ref(props)
 const emit = defineEmits(['pagination', 'update:page', 'update:limit'])
 const handleSizeChange = (val) => {
   emit('pagination', { page: 1, limit: val })
-  if (prop.autoScroll) {
+  if (pageInfo.value.autoScroll) {
     scrollTo(0, 800)
   }
 }
 const handleCurrentChange = (val) => {
   emit('pagination', { page: val, limit: pageSize.value })
-  if (prop.autoScroll) {
+  if (pageInfo.value.autoScroll) {
     scrollTo(0, 800)
   }
 }
 const pageSize = computed({
   get () {
-    return prop.limit
+    return pageInfo.value.limit
   },
   set (val) {
     emit('update:limit', val)
@@ -63,12 +64,12 @@ const pageSize = computed({
 <template>
   <div :class="{ hidden: hidden }" class="pagination-container">
     <el-pagination
-      :background="prop.background"
-      :current-page.sync="prop.currentPage"
-      :page-size.sync="prop.limit"
-      :layout="prop.layout"
-      :page-sizes="prop.pageSizes"
-      :total="prop.total"
+      :background="pageInfo.background"
+      :current-page.sync="pageInfo.currentPage"
+      :page-size.sync="pageInfo.limit"
+      :layout="pageInfo.layout"
+      :page-sizes="pageInfo.pageSizes"
+      :total="pageInfo.total"
       v-bind="$attrs"
       @size-change="handleSizeChange"
       @current-change="handleCurrentChange"
@@ -81,7 +82,6 @@ const pageSize = computed({
   display: flex;
   justify-content: flex-end;
   padding: 32px 16px;
-  background: #fff;
 }
 
 .pagination-container.hidden {

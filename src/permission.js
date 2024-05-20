@@ -1,5 +1,6 @@
 import router from '@/router'
 import { useUserStore } from '@/store/modules/user'
+import { useSettingStore } from '@/store/modules/settings.js'
 import NProgress from 'nprogress'
 import 'nprogress/nprogress.css'
 import getPageTitle from '@/utils/get-page-title'
@@ -17,6 +18,7 @@ router.beforeEach(async (to, from) => {
   NProgress.start()
   document.title = getPageTitle(to.meta.title)
   const userStore = useUserStore(pinia)
+  const settingStore = useSettingStore()
   const hasToken = storage.get('token')
   if (hasToken) {
     if (to.path === '/login') {
@@ -31,6 +33,11 @@ router.beforeEach(async (to, from) => {
         if (data !== null) {
           const user = data.data.user
           userStore.setUserInfo(user)
+          settingStore.changeThemeSetting('themeColor', user.themeColor)
+          document.documentElement.style.setProperty(
+            '--el-color-primary',
+            user.themeColor
+          )
         } else {
           Message.error(err || 'has Error')
           NProgress.done()

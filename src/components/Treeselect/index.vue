@@ -1,5 +1,5 @@
 <script lang="js" setup>
-import { nextTick, ref, watch, computed } from 'vue'
+import { nextTick, ref, watch } from 'vue'
 const prop = defineProps({
   data: {
     type: Array,
@@ -31,14 +31,7 @@ const prop = defineProps({
 })
 const emit = defineEmits(['getSelectedNode'])
 const treeRef = ref()
-const value = computed({
-  get () {
-    return prop.curValue ? prop.curValue : ''
-  },
-  set (newvalue) {
-    console.log(newvalue)
-  }
-})
+const curTreeVal = ref(prop.curValue)
 const nodeClick = (node) => {
   emit('getSelectedNode', node)
 }
@@ -47,7 +40,7 @@ nextTick(() => {
     () => prop.parentId,
     (newVal) => {
       if (!newVal) return
-      value.value = treeRef.value.getNode(newVal).data.deptName
+      curTreeVal.value = treeRef.value.getNode(newVal).data.deptName
     },
     { immediate: true }
   )
@@ -58,14 +51,14 @@ nextTick(() => {
   <div class="tree-container">
     <el-tree-select
       ref="treeRef"
-      v-model="value"
+      v-model="curTreeVal"
       :props="defaultProps"
       :data="prop.data"
       :placeholder="prop.placeholder"
-      node-key="deptId"
-      check-strictly
       :render-after-expand="false"
       :disabled="prop.isEdit"
+      node-key="deptId"
+      check-strictly
       @node-click="nodeClick"
     />
   </div>

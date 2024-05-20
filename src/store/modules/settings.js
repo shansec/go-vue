@@ -6,7 +6,7 @@ export const useSettingStore = defineStore({
   state: () => ({
     // 是否收缩
     collapsed: false,
-    idDark: false,
+    isDark: false,
     sideWidth: '300px',
     // 是否只保持一个子菜单的展开
     uniqueOpened: true,
@@ -31,6 +31,9 @@ export const useSettingStore = defineStore({
     },
     changeThemeSetting (key, val) {
       this.CHANGE_SETTING(key, val)
+    },
+    changeDark (val) {
+      this.isDark = val
     }
   }
 })

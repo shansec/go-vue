@@ -229,7 +229,7 @@ onMounted(() => {
               </el-button>
               <el-button type="primary" @click="ShowDialog">
                 <svg-icon icon-class="table-add" />
-                增加
+                新增
               </el-button>
             </el-form-item>
           </el-form>
@@ -250,23 +250,21 @@ onMounted(() => {
             <template #default="scope">
               <div class="operate-box">
                 <el-button
-                  size="small"
                   type="primary"
                   text
                   class="operate-btn"
                   @click="changeApi(scope.row, scope.$index)"
                 >
-                  <svg-icon icon-class="table-update" />
-                  修改
+                  <el-icon><Edit /></el-icon>
+                  编辑
                 </el-button>
                 <el-button
-                  size="small"
-                  type="danger"
+                  type="primary"
                   text
                   class="operate-btn"
                   @click="removeApi(scope.row, scope.$index)"
                 >
-                  <svg-icon icon-class="table-delete" />
+                  <el-icon><Delete /></el-icon>
                   删除
                 </el-button>
               </div>
@@ -352,7 +350,6 @@ onMounted(() => {
 .dept-container {
   padding: 20px;
   width: 100%;
-  background: #fff;
   box-sizing: border-box;
 
   .header-row {

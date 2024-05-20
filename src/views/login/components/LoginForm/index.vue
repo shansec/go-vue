@@ -6,6 +6,7 @@ import { UserFilled, PhoneFilled } from '@element-plus/icons-vue'
 import { login } from '@/api/User.js'
 import { getCaptcha } from '@/api/Captcha'
 import { useUserStore } from '@/store/modules/user.js'
+import { useSettingStore } from '@/store/modules/settings.js'
 import storage from '@/utils/storage'
 import { successMsg } from '@/utils/message'
 
@@ -22,6 +23,7 @@ const loginForm = reactive({
 const captcha = ref({})
 const router = useRouter()
 const userStore = useUserStore()
+const settingStore = useSettingStore()
 const rules = reactive({
   username: [{ required: true, message: '请输入账号', trigger: 'blur' }],
   password: [{ required: true, message: '请输入密码', trigger: 'blur' }],
@@ -38,6 +40,8 @@ const submitForm = () => {
           const userData = res.data
           userStore.setToken(userData.token)
           userStore.setUserInfo(userData.user)
+          settingStore.changeThemeSetting('themeColor', userData.themeColor)
+          document.documentElement.style.setProperty('--el-color-primary', val)
           // 存到缓存
           storage.set('token', userData.token)
           successMsg('登录成功')

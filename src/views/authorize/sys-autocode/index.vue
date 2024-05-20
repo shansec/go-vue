@@ -9,18 +9,18 @@ const total = ref(0)
 const queryParams = ref({
   page: 1,
   pageSize: 10,
-  package_name: ''
+  packageName: ''
 })
 const title = ref('创建包')
 const isShowDialog = ref(false)
 const packageFormRef = ref()
 const form = ref({
-  package_name: '',
+  packageName: '',
   label: '',
   desc: ''
 })
 const rules = ref({
-  package_name: [{ required: true, message: '包名不能为空', trigger: 'blur' }],
+  packageName: [{ required: true, message: '包名不能为空', trigger: 'blur' }],
   label: [{ required: true, message: '展示名不能为空', trigger: 'blur' }],
   desc: [{ required: true, message: '描述不能为空', trigger: 'blur' }]
 })
@@ -42,7 +42,7 @@ const resetQuery = () => {
   queryParams.value = {
     page: 1,
     pageSize: 10,
-    package_name: ''
+    packageName: ''
   }
 }
 const confirmSubmit = () => {
@@ -55,7 +55,7 @@ const confirmSubmit = () => {
           queryParams.value = {
             page: 1,
             pageSize: 10,
-            package_name: ''
+            packageName: ''
           }
           isShowDialog.value = false
           isEdit.value = false
@@ -109,7 +109,7 @@ onMounted(() => {
           <el-form :model="queryParams" :inline="true">
             <el-form-item label="包名">
               <el-input
-                v-model.trim="queryParams.package_name"
+                v-model.trim="queryParams.packageName"
                 placeholder="请输入包名"
               />
             </el-form-item>
@@ -124,7 +124,7 @@ onMounted(() => {
               </el-button>
               <el-button type="primary" @click="ShowDialog">
                 <svg-icon icon-class="table-add" />
-                增加
+                新增
               </el-button>
             </el-form-item>
           </el-form>
@@ -135,10 +135,10 @@ onMounted(() => {
           header-row-class-name="header-row"
           border
         >
-          <el-table-column prop="ID" label="id" width="100" />
-          <el-table-column prop="package_name" label="包名" width="500" />
-          <el-table-column prop="label" label="展示名" width="200" />
-          <el-table-column prop="desc" label="描述" width="220" />
+          <el-table-column prop="ID" label="id" />
+          <el-table-column prop="packageName" label="包名" />
+          <el-table-column prop="label" label="展示名" />
+          <el-table-column prop="desc" label="描述" />
           <el-table-column label="操作">
             <template #default="scope">
               <div class="operate-box">
@@ -180,9 +180,9 @@ onMounted(() => {
           >
             <el-row>
               <el-col :span="24">
-                <el-form-item label="包名" prop="package_name">
+                <el-form-item label="包名" prop="packageName">
                   <el-input
-                    v-model="form.package_name"
+                    v-model="form.packageName"
                     placeholder="请输入包名"
                   />
                 </el-form-item>
@@ -217,7 +217,6 @@ onMounted(() => {
 .package-container {
   padding: 20px;
   width: 100%;
-  background: #fff;
   box-sizing: border-box;
 
   .header-row {

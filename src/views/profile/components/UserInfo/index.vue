@@ -32,11 +32,12 @@ const rules = {
 }
 const form = ref(null)
 const router = useRouter()
+const userInfo = ref(props.user)
 const submit = () => {
   form.value.validate(async (valid) => {
     if (valid) {
       try {
-        const res = await updateUserInfo(props.user)
+        const res = await updateUserInfo(userInfo.value)
         if (res.code === 200) {
           storage.clear()
           successMsg(`${data.msg},请重新登录！`)
@@ -56,15 +57,15 @@ const close = () => {
 </script>
 
 <template>
-  <el-form ref="form" :model="user" :rules="rules" label-width="80px">
+  <el-form ref="form" :model="userInfo" :rules="rules" label-width="80px">
     <el-form-item label="用户昵称" prop="nickName">
-      <el-input v-model="user.nickName" />
+      <el-input v-model="userInfo.nickName" />
     </el-form-item>
     <el-form-item label="手机号码" prop="phone">
-      <el-input v-model="user.phone" maxlength="11" />
+      <el-input v-model="userInfo.phone" maxlength="11" />
     </el-form-item>
     <el-form-item label="邮箱" prop="email">
-      <el-input v-model="user.email" maxlength="50" />
+      <el-input v-model="userInfo.email" maxlength="50" />
     </el-form-item>
     <!--    <el-form-item label="性别">-->
     <!--      <el-radio-group v-model="user.sex">-->
