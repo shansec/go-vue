@@ -28,7 +28,7 @@ export const constantRoutes = [
     path: '/',
     component: Layout,
     redirect: '/dashboard',
-    hidden: true,
+    hidden: false,
     children: [
       {
         path: 'dashboard',
@@ -43,11 +43,11 @@ export const constantRoutes = [
   {
     path: '/profile',
     component: Layout,
-    redirect: '/profile/index',
+    redirect: '/profile/profile',
     hidden: true,
     children: [
       {
-        path: 'index',
+        path: 'profile',
         name: 'Profile',
         component: () => import('@/views/profile/index.vue'),
         meta: { title: '个人设置', icon: 'user-setting', affix: false }

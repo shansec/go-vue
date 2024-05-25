@@ -3,6 +3,7 @@ import Layout from '@/layout/index.vue'
 const adminRoutes = [
   {
     path: '/supervisor',
+    name: 'supervisor',
     component: Layout,
     meta: { title: '管理员', icon: 'admin', affix: false },
     children: [
