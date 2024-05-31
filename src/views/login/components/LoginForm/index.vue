@@ -34,23 +34,22 @@ const submitForm = () => {
   loading.value = true
   ruleFormRef.value.validate(async (value) => {
     if (value) {
-      try {
-        const res = await login(loginForm)
-        if (res.code === 200) {
-          const userData = res.data
-          userStore.setToken(userData.token)
-          userStore.setUserInfo(userData.user)
-          settingStore.changeThemeSetting('themeColor', userData.themeColor)
-          document.documentElement.style.setProperty('--el-color-primary', val)
-          // 存到缓存
-          storage.set('token', userData.token)
-          successMsg('登录成功')
-          await router.push({
-            path: '/'
-          })
-          loading.value = false
-        }
-      } catch (e) {
+      const res = await login(loginForm)
+      if (res.code === 200) {
+        const userData = res.data
+        userStore.setToken(userData.token)
+        userStore.setUserInfo(userData.user)
+        settingStore.changeThemeSetting('themeColor', userData.user.themeColor)
+        document.documentElement.style.setProperty(
+          '--el-color-primary',
+          userData.user.themeColor
+        )
+        // 存到缓存
+        storage.set('token', userData.token)
+        successMsg('登录成功')
+        await router.push({
+          name: 'Dashboard'
+        })
         loading.value = false
       }
     } else {
@@ -95,20 +94,20 @@ onMounted(() => {
       <el-col :span="24">
         <template v-if="!loginForm.isPhoneLogin">
           <el-form-item prop="username">
-            <el-input
-              v-model="loginForm.username"
-              :suffix-icon="UserFilled"
-              placeholder="请输入用户名"
-            />
+            <el-input v-model="loginForm.username" placeholder="请输入用户名">
+              <template #suffix>
+                <el-icon><UserFilled /></el-icon>
+              </template>
+            </el-input>
           </el-form-item>
         </template>
         <template v-else>
           <el-form-item prop="phone">
-            <el-input
-              v-model="loginForm.phone"
-              :suffix-icon="PhoneFilled"
-              placeholder="请输入手机号"
-            />
+            <el-input v-model="loginForm.phone" placeholder="请输入手机号">
+              <template #suffix>
+                <el-icon><PhoneFilled /></el-icon>
+              </template>
+            </el-input>
           </el-form-item>
         </template>
       </el-col>

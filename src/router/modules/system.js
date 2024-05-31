@@ -4,10 +4,10 @@ const systemRoutes = [
   {
     path: '/system',
     component: Layout,
-    redirect: '/system/index',
+    redirect: '/system/system',
     children: [
       {
-        path: 'index',
+        path: 'system',
         name: 'System',
         component: () => import('@/views/system/index.vue'),
         meta: { title: '服务器信息', icon: 'service-side', affix: false }

@@ -3,6 +3,7 @@ import Layout from '@/layout/index.vue'
 const adminRoutes = [
   {
     path: '/supervisor',
+    name: 'supervisor',
     component: Layout,
     meta: { title: '管理员', icon: 'admin', affix: false },
     children: [
@@ -11,6 +12,12 @@ const adminRoutes = [
         name: 'User',
         component: () => import('@/views/authorize/sys-user/index.vue'),
         meta: { title: '用户管理', icon: 'user', affix: false }
+      },
+      {
+        path: 'role',
+        name: 'Role',
+        component: () => import('@/views/authorize/sys-role/index.vue'),
+        meta: { title: '角色管理', icon: 'role', affix: false }
       },
       {
         path: 'api',

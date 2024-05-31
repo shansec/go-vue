@@ -83,16 +83,10 @@ const changeThemeColor = async (val) => {
   }
   if (userInfo.themeColor === val) return
   userInfo.themeColor = val
-  try {
-    const res = await updateUserInfo(userInfo)
-    if (res.code === 200) {
-      document.documentElement.style.setProperty('--el-color-primary', val)
-      changeTheme('themeColor', val)
-    } else {
-      errorMsg('修改主题颜色失败')
-    }
-  } catch (e) {
-    errorMsg('修改主题颜色失败')
+  const res = await updateUserInfo(userInfo)
+  if (res.code === 200) {
+    document.documentElement.style.setProperty('--el-color-primary', val)
+    changeTheme('themeColor', val)
   }
 }
 </script>

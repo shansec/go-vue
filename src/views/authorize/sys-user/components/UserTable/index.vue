@@ -134,20 +134,14 @@ const requestDept = async () => {
 const showMessage = (scope) => {
   const msg = `确定删除编号为 ${scope.row.ID} 的用户吗？`
   confirmBox(msg, '确定', '取消', 'warning').then(async () => {
-    try {
-      const param = { uuid: scope.row.uuid }
-      const res = await delUserInfo(param)
-      if (res.code === 200) {
-        successMsg(res.msg)
-        userList.value = userList.value.filter((user) => {
-          return user.uuid !== scope.row.uuid
-        })
-        total.value = userList.value.length
-      } else {
-        errorMsg('删除用户失败！')
-      }
-    } catch (e) {
-      errorMsg('删除用户失败！')
+    const param = { uuid: scope.row.uuid }
+    const res = await delUserInfo(param)
+    if (res.code === 200) {
+      successMsg(res.msg)
+      userList.value = userList.value.filter((user) => {
+        return user.uuid !== scope.row.uuid
+      })
+      total.value = userList.value.length
     }
   })
 }
@@ -203,7 +197,7 @@ const confirmCreateUser = () => {
     if (value && passEditable.value) {
       switch (type.value) {
         case 'create':
-          try {
+          {
             const res = await createUser(userForm.value)
             if (res.code === 200) {
               successMsg(res.msg)
@@ -211,15 +205,11 @@ const confirmCreateUser = () => {
               title.value = ''
               isShowDialog.value = false
               formReset()
-            } else {
-              errorMsg('添加用户失败！')
             }
-          } catch (e) {
-            errorMsg('添加用户失败！')
           }
           break
         case 'update':
-          try {
+          {
             const res = await updateUserInfo(userForm.value)
             if (res.code === 200) {
               successMsg(res.msg)
@@ -227,11 +217,7 @@ const confirmCreateUser = () => {
               title.value = ''
               isShowDialog.value = false
               formReset()
-            } else {
-              errorMsg('更新用户信息失败！')
             }
-          } catch (e) {
-            errorMsg('更新用户信息失败！')
           }
           break
         default:
@@ -276,18 +262,24 @@ onMounted(() => {
           </el-select>
         </el-form-item>
         <el-form-item>
-          <el-button type="primary" @click="inquireUser">
-            <svg-icon icon-class="table-search" />
-            查询
-          </el-button>
-          <el-button @click="resetQuery">
-            <svg-icon icon-class="table-reset" />
-            重置
-          </el-button>
-          <el-button type="primary" @click="ShowDialog">
-            <svg-icon icon-class="table-add" />
-            新增
-          </el-button>
+          <custom-el-button type="primary" @click="inquireUser">
+            <template #prefix>
+              <svg-icon icon-class="table-search" />
+            </template>
+            <template #txt> 查询 </template>
+          </custom-el-button>
+          <custom-el-button type="primary" :plain="true" @click="resetQuery">
+            <template #prefix>
+              <svg-icon icon-class="table-reset" />
+            </template>
+            <template #txt> 重置 </template>
+          </custom-el-button>
+          <custom-el-button type="primary" @click="ShowDialog">
+            <template #prefix>
+              <svg-icon icon-class="table-add" />
+            </template>
+            <template #txt> 新增 </template>
+          </custom-el-button>
         </el-form-item>
       </el-form>
     </div>

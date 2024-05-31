@@ -4,10 +4,10 @@ const autoCodeRoutes = [
   {
     path: '/sys',
     component: Layout,
-    redirect: '/sys/index',
+    redirect: '/sys/package',
     children: [
       {
-        path: 'index',
+        path: 'package',
         name: 'Package',
         component: () => import('@/views/authorize/sys-autocode/index.vue'),
         meta: { title: '自动化包', icon: 'settings', affix: false }

@@ -3,7 +3,7 @@ import { ref } from 'vue'
 import { useRouter } from 'vue-router'
 import { updateUserInfo } from '@/api/User'
 import storage from '@/utils/storage'
-import { errorMsg, successMsg } from '@/utils/message'
+import { successMsg } from '@/utils/message'
 
 const props = defineProps({
   user: {
@@ -36,17 +36,11 @@ const userInfo = ref(props.user)
 const submit = () => {
   form.value.validate(async (valid) => {
     if (valid) {
-      try {
-        const res = await updateUserInfo(userInfo.value)
-        if (res.code === 200) {
-          storage.clear()
-          successMsg(`${data.msg},请重新登录！`)
-          await router.push({ path: '/login' })
-        } else {
-          errorMsg('更新用户信息失败！')
-        }
-      } catch (e) {
-        errorMsg('更新用户信息失败！')
+      const res = await updateUserInfo(userInfo.value)
+      if (res.code === 200) {
+        storage.clear()
+        successMsg(`${data.msg},请重新登录！`)
+        await router.push({ path: '/login' })
       }
     }
   })
