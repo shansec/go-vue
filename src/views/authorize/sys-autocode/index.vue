@@ -26,6 +26,16 @@ const rules = ref({
 })
 
 const isEdit = ref(false)
+const initForm = () => {
+  if (form.value) {
+    packageFormRef.value.resetFields()
+  }
+  form.value = {
+    packageName: '',
+    label: '',
+    desc: ''
+  }
+}
 const requestPackages = async () => {
   const res = await getPackageList(queryParams.value)
   packageList.value = res.data.list
@@ -33,7 +43,7 @@ const requestPackages = async () => {
   queryParams.value.pageSize = res.data.pageSize
   total.value = res.data.total
 }
-const inquireDept = () => {
+const inquireCode = () => {
   queryParams.value.page = 1
   queryParams.value.pageSize = 10
   requestPackages()
@@ -48,24 +58,18 @@ const resetQuery = () => {
 const confirmSubmit = () => {
   packageFormRef.value.validate(async (value) => {
     if (value) {
-      try {
-        const pkg = await createPackage(form.value)
-        if (pkg.code === 200) {
-          successMsg(pkg.msg)
-          queryParams.value = {
-            page: 1,
-            pageSize: 10,
-            packageName: ''
-          }
-          isShowDialog.value = false
-          isEdit.value = false
-          packageFormRef.value.resetFields()
-          await requestPackages()
-        } else {
-          errorMsg('创建失败！')
+      const pkg = await createPackage(form.value)
+      if (pkg.code === 200) {
+        successMsg(pkg.msg)
+        queryParams.value = {
+          page: 1,
+          pageSize: 10,
+          packageName: ''
         }
-      } catch (error) {
-        errorMsg('创建失败！')
+        isShowDialog.value = false
+        isEdit.value = false
+        initForm()
+        await requestPackages()
       }
     } else {
       errorMsg('请完善必填信息')
@@ -75,21 +79,15 @@ const confirmSubmit = () => {
 const cancelDialog = () => {
   isShowDialog.value = false
   isEdit.value = false
-  packageFormRef.value.resetFields()
+  initForm()
 }
-const removeDept = (row) => {
+const removeCode = (row) => {
   const msg = '确定要删除这条记录吗？'
   confirmBox(msg, '确定删除', '取消', 'warning').then(async () => {
-    try {
-      const delPkg = await deletePackage(row)
-      if (delPkg.code === 200) {
-        successMsg(delPkg.msg)
-        await requestPackages()
-      } else {
-        errorMsg('删除失败！')
-      }
-    } catch (e) {
-      errorMsg('删除失败！')
+    const delPkg = await deletePackage(row)
+    if (delPkg.code === 200) {
+      successMsg(delPkg.msg)
+      await requestPackages()
     }
   })
 }
@@ -114,18 +112,24 @@ onMounted(() => {
               />
             </el-form-item>
             <el-form-item>
-              <el-button type="primary" @click="inquireDept">
-                <svg-icon icon-class="table-search" />
-                查询
-              </el-button>
-              <el-button @click="resetQuery">
-                <svg-icon icon-class="table-reset" />
-                重置
-              </el-button>
-              <el-button type="primary" @click="ShowDialog">
-                <svg-icon icon-class="table-add" />
-                新增
-              </el-button>
+              <custom-el-button type="primary" @click="inquireCode">
+                <template #prefix>
+                  <svg-icon icon-class="table-search" />
+                </template>
+                <template #txt> 查询 </template>
+              </custom-el-button>
+              <custom-el-button :plain="true" @click="resetQuery">
+                <template #prefix>
+                  <svg-icon icon-class="table-reset" />
+                </template>
+                <template #txt> 重置 </template>
+              </custom-el-button>
+              <custom-el-button type="primary" @click="ShowDialog">
+                <template #prefix>
+                  <svg-icon icon-class="table-add" />
+                </template>
+                <template #txt> 新增 </template>
+              </custom-el-button>
             </el-form-item>
           </el-form>
         </div>
@@ -147,7 +151,7 @@ onMounted(() => {
                   type="danger"
                   text
                   class="operate-btn"
-                  @click="removeDept(scope.row)"
+                  @click="removeCode(scope.row)"
                 >
                   <svg-icon icon-class="table-delete" />
                   删除

@@ -72,6 +72,21 @@ const defaultProps = {
 const parentId = ref('1')
 const isEdit = ref(false)
 const type = ref()
+const initForm = () => {
+  if (form.value) {
+    deptFormRef.value.resetFields()
+  }
+  form.value = {
+    deptId: 0,
+    parentId: 0,
+    deptName: '',
+    sort: 0,
+    leader: '',
+    email: '',
+    phone: '',
+    status: ''
+  }
+}
 const ShowDialog = () => {
   openDialog('create')
 }
@@ -118,7 +133,7 @@ const cancelDialog = () => {
   isShowDialog.value = false
   title.value = ''
   isEdit.value = false
-  deptReset()
+  initForm()
 }
 const changeDept = (data) => {
   openDialog('update')
@@ -138,18 +153,6 @@ const changeDept = (data) => {
     }
   })
 }
-const deptReset = () => {
-  form.value = {
-    deptId: 0,
-    parentId: 0,
-    deptName: '',
-    sort: 0,
-    leader: '',
-    email: '',
-    phone: '',
-    status: ''
-  }
-}
 const requestDeptOfTable = async () => {
   const res = await getDeptList(queryParams.value)
   deptList.value = res.data.list
@@ -168,7 +171,7 @@ const confirmSubmit = () => {
     if (value) {
       switch (type.value) {
         case 'create':
-          try {
+          {
             const res = await createDept(form.value)
             if (res.code === 200) {
               successMsg(res.msg)
@@ -181,18 +184,14 @@ const confirmSubmit = () => {
               isShowDialog.value = false
               title.value = ''
               isEdit.value = false
-              deptReset()
+              initForm()
               requestDeptOfTable()
               requestDeptOfSelect()
-            } else {
-              errorMsg('创建部门失败！')
             }
-          } catch (e) {
-            errorMsg('创建部门失败！')
           }
           break
         case 'update':
-          try {
+          {
             const res = await updateDeptInfo(form.value)
             if (res.code === 200) {
               successMsg(res.msg)
@@ -205,14 +204,10 @@ const confirmSubmit = () => {
               isShowDialog.value = false
               title.value = ''
               isEdit.value = false
-              deptReset()
+              initForm()
               requestDeptOfTable()
               requestDeptOfSelect()
-            } else {
-              errorMsg('更新部门信息失败！')
             }
-          } catch (e) {
-            errorMsg('更新部门信息失败！')
           }
           break
         default:
@@ -226,18 +221,12 @@ const confirmSubmit = () => {
 const removeDept = (data) => {
   const msg = '删除部门前，确保删除的部门不包含下级部门'
   confirmBox(msg, '确定删除', '取消', 'warning').then(async () => {
-    try {
-      const res = await delDeptInfo(data)
-      if (res.code === 200) {
-        successMsg(res.msg)
-        treeList.value = []
-        requestDeptOfTable()
-        requestDeptOfSelect()
-      } else {
-        errorMsg('删除部门信息失败！')
-      }
-    } catch (e) {
-      errorMsg('删除部门信息失败！')
+    const res = await delDeptInfo(data)
+    if (res.code === 200) {
+      successMsg(res.msg)
+      treeList.value = []
+      requestDeptOfTable()
+      requestDeptOfSelect()
     }
   })
 }
@@ -271,18 +260,24 @@ onMounted(() => {
               </el-select>
             </el-form-item>
             <el-form-item>
-              <el-button type="primary" @click="inquireDept">
-                <svg-icon icon-class="table-search" />
-                查询
-              </el-button>
-              <el-button @click="resetQuery">
-                <svg-icon icon-class="table-reset" />
-                重置
-              </el-button>
-              <el-button type="primary" @click="ShowDialog">
-                <svg-icon icon-class="table-add" />
-                新增
-              </el-button>
+              <custom-el-button type="primary" @click="inquireDept">
+                <template #prefix>
+                  <svg-icon icon-class="table-search" />
+                </template>
+                <template #txt> 查询 </template>
+              </custom-el-button>
+              <custom-el-button :plain="true" @click="resetQuery">
+                <template #prefix>
+                  <svg-icon icon-class="table-reset" />
+                </template>
+                <template #txt> 重置 </template>
+              </custom-el-button>
+              <custom-el-button type="primary" @click="ShowDialog">
+                <template #prefix>
+                  <svg-icon icon-class="table-add" />
+                </template>
+                <template #txt> 新增 </template>
+              </custom-el-button>
             </el-form-item>
           </el-form>
         </div>

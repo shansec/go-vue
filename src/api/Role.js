@@ -64,6 +64,6 @@ export const getRoleList = (pageInfo) => {
   return service({
     url: 'role/getRoleList',
     method: 'POST',
-    pageInfo
+    data: pageInfo
   })
 }

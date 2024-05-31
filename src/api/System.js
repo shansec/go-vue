@@ -10,7 +10,6 @@ import service from '@/utils/request'
 export const getSystemState = () => {
   return service({
     url: '/system/getServerInfo',
-    method: 'get',
-    donNotShowLoading: true
+    method: 'get'
   })
 }

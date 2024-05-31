@@ -31,7 +31,7 @@ const goHome = () => {
   justify-content: center;
   align-items: center;
   padding: 0 20px;
-  height: 50px;
+  height: 60px;
   background-color: #191a23;
   cursor: pointer;
 

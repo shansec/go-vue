@@ -34,29 +34,22 @@ const submitForm = () => {
   loading.value = true
   ruleFormRef.value.validate(async (value) => {
     if (value) {
-      try {
-        const res = await login(loginForm)
-        if (res.code === 200) {
-          const userData = res.data
-          userStore.setToken(userData.token)
-          userStore.setUserInfo(userData.user)
-          settingStore.changeThemeSetting(
-            'themeColor',
-            userData.user.themeColor
-          )
-          document.documentElement.style.setProperty(
-            '--el-color-primary',
-            userData.user.themeColor
-          )
-          // 存到缓存
-          storage.set('token', userData.token)
-          successMsg('登录成功')
-          await router.push({
-            name: 'Dashboard'
-          })
-          loading.value = false
-        }
-      } catch (e) {
+      const res = await login(loginForm)
+      if (res.code === 200) {
+        const userData = res.data
+        userStore.setToken(userData.token)
+        userStore.setUserInfo(userData.user)
+        settingStore.changeThemeSetting('themeColor', userData.user.themeColor)
+        document.documentElement.style.setProperty(
+          '--el-color-primary',
+          userData.user.themeColor
+        )
+        // 存到缓存
+        storage.set('token', userData.token)
+        successMsg('登录成功')
+        await router.push({
+          name: 'Dashboard'
+        })
         loading.value = false
       }
     } else {

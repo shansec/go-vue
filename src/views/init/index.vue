@@ -28,16 +28,12 @@ const rules = reactive({
 const onSubmit = () => {
   formRef.value.validate(async (value) => {
     if (value) {
-      try {
-        const init = await initDB(form)
-        if (init.code === 200) {
-          successMsg(init.msg)
-          await router.push({
-            path: '/login'
-          })
-        }
-      } catch (e) {
-        errorMsg('参数校验不通过')
+      const init = await initDB(form)
+      if (init.code === 200) {
+        successMsg(init.msg)
+        await router.push({
+          path: '/login'
+        })
       }
     } else {
       errorMsg('参数校验不通过')

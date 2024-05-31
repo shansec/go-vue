@@ -42,6 +42,17 @@ const form = ref({
   apiGroup: '',
   method: ''
 })
+const initForm = () => {
+  if (form.value) {
+    apiFormRef.value.resetFields()
+  }
+  form.value = {
+    path: '',
+    description: '',
+    apiGroup: '',
+    method: ''
+  }
+}
 const rules = ref({
   path: [{ required: true, message: 'api 路径不能为空', trigger: 'blur' }],
   description: [
@@ -71,7 +82,7 @@ const openDialog = (key) => {
   isShowDialog.value = true
 }
 
-const inquireDept = () => {
+const inquireApi = () => {
   queryParams.value.page = 1
   queryParams.value.pageSize = 10
   requestApi()
@@ -96,7 +107,7 @@ const pageDataChange = (payload) => {
 const cancelDialog = () => {
   isShowDialog.value = false
   title.value = ''
-  apiFormRef.value.resetFields()
+  initForm()
 }
 const getNextId = () => {
   return Math.max(...apiList.value.map((api) => api.ID)) + 1
@@ -114,7 +125,7 @@ const confirmSubmit = () => {
     if (value) {
       switch (type.value) {
         case 'update':
-          try {
+          {
             const res = await updateApi(form.value)
             if (res.code === 200) {
               successMsg(res.msg)
@@ -125,16 +136,12 @@ const confirmSubmit = () => {
               })
               isShowDialog.value = false
               title.value = ''
-              apiFormRef.value.resetFields()
-            } else {
-              errorMsg('修改 api 失败！')
+              initForm()
             }
-          } catch (e) {
-            errorMsg('修改 api 失败！')
           }
           break
         case 'create':
-          try {
+          {
             const res = await createApi(form.value)
             if (res.code === 200) {
               successMsg(res.msg)
@@ -142,12 +149,8 @@ const confirmSubmit = () => {
               apiList.value.push({ ...form.value })
               isShowDialog.value = false
               title.value = ''
-              apiFormRef.value.resetFields()
-            } else {
-              errorMsg('创建 api 失败！')
+              initForm()
             }
-          } catch (e) {
-            errorMsg('创建 api 失败！')
           }
           break
         default:
@@ -161,16 +164,10 @@ const confirmSubmit = () => {
 const removeApi = (data, index) => {
   const msg = '是否删除 api 记录？'
   confirmBox(msg, '确定删除', '取消', 'warning').then(async () => {
-    try {
-      const res = await deleteApi(data)
-      if (res.code === 200) {
-        successMsg(res.msg)
-        apiList.value.splice(index, 1)
-      } else {
-        errorMsg('删除 api 信息失败！')
-      }
-    } catch (e) {
-      errorMsg('删除 api 信息失败！')
+    const res = await deleteApi(data)
+    if (res.code === 200) {
+      successMsg(res.msg)
+      apiList.value.splice(index, 1)
     }
   })
 }
@@ -187,7 +184,7 @@ onMounted(() => {
 <template>
   <BasicLayout>
     <template #wrapper>
-      <div class="dept-container">
+      <div class="api-container">
         <div class="query-box">
           <el-form :model="queryParams" :inline="true">
             <el-form-item label="路径">
@@ -219,18 +216,24 @@ onMounted(() => {
               </el-select>
             </el-form-item>
             <el-form-item>
-              <el-button type="primary" @click="inquireDept">
-                <svg-icon icon-class="table-search" />
-                查询
-              </el-button>
-              <el-button @click="resetQuery">
-                <svg-icon icon-class="table-reset" />
-                重置
-              </el-button>
-              <el-button type="primary" @click="ShowDialog">
-                <svg-icon icon-class="table-add" />
-                新增
-              </el-button>
+              <custom-el-button type="primary" @click="inquireApi">
+                <template #prefix>
+                  <svg-icon icon-class="table-search" />
+                </template>
+                <template #txt> 查询 </template>
+              </custom-el-button>
+              <custom-el-button :plain="true" @click="resetQuery">
+                <template #prefix>
+                  <svg-icon icon-class="table-reset" />
+                </template>
+                <template #txt> 重置 </template>
+              </custom-el-button>
+              <custom-el-button type="primary" @click="ShowDialog">
+                <template #prefix>
+                  <svg-icon icon-class="table-add" />
+                </template>
+                <template #txt> 新增 </template>
+              </custom-el-button>
             </el-form-item>
           </el-form>
         </div>
@@ -238,7 +241,7 @@ onMounted(() => {
           :data="apiList"
           style="width: 100%"
           header-row-class-name="header-row"
-          row-key="deptId"
+          row-key="apiId"
           border
         >
           <el-table-column prop="ID" label="ID" />
@@ -347,7 +350,7 @@ onMounted(() => {
 </template>
 
 <style lang="scss">
-.dept-container {
+.api-container {
   padding: 20px;
   width: 100%;
   box-sizing: border-box;

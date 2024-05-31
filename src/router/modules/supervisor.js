@@ -14,6 +14,12 @@ const adminRoutes = [
         meta: { title: '用户管理', icon: 'user', affix: false }
       },
       {
+        path: 'role',
+        name: 'Role',
+        component: () => import('@/views/authorize/sys-role/index.vue'),
+        meta: { title: '角色管理', icon: 'role', affix: false }
+      },
+      {
         path: 'api',
         name: 'Api',
         component: () => import('@/views/authorize/sys-api/index.vue'),

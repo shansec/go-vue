@@ -22,6 +22,7 @@ import '@/assets/iconfont/iconfont.js'
 import SvgIcon from '@/components/SvgIcon/index.vue'
 import Pagination from '@/components/Pagination/index.vue'
 import BasicLayout from '@/components/BasicLayout/index.vue'
+import CustomElButton from '@/components/CustomElButton/index.vue'
 
 const app = createApp(App)
 registerEleIcon(app)
@@ -29,6 +30,7 @@ registerEleIcon(app)
 app.component('SvgIcon', SvgIcon)
 app.component('Pagination', Pagination)
 app.component('BasicLayout', BasicLayout)
+app.component('CustomElButton', CustomElButton)
 
 app.use(pinia)
 app.use(router)

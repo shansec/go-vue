@@ -23,7 +23,7 @@ export default defineConfig(({ command, mode }) => {
     },
     server: {
       https: false,
-      // port: env.VITE_CLI_PORT,
+      port: env.VITE_CLI_PORT,
       open: false,
       cors: false,
       proxy: {
