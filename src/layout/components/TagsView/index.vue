@@ -94,26 +94,27 @@ watch(route, () => {
 @import '@/style/variables.module';
 
 .tag-container {
-  // box-sizing: border-box;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  // width: 100%;
-  // height: 40px;
   padding: 0 10px;
 
   .tag-view {
     flex: 1;
 
     .el-tabs--card :deep(.el-tabs__header) {
+      display: table-cell;
       padding: 0 10px;
       margin: 0;
       height: 40px;
       box-sizing: border-box;
       border-bottom: none !important;
+      vertical-align: middle;
     }
 
     :deep(.el-tabs) {
+      --el-tabs-header-height: 32px;
+
       .el-tabs__nav {
         border: none;
       }
