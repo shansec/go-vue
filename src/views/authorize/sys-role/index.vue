@@ -3,6 +3,10 @@ import { onMounted, ref } from 'vue'
 import { getRoleList, createRole, deleteRole, updateRole } from '@/api/Role.js'
 import { successMsg, errorMsg, confirmBox } from '@/utils/message.js'
 
+defineOptions({
+  name: 'Role'
+})
+
 const roleList = ref()
 const roleTreeList = ref([])
 const total = ref(0)
@@ -178,7 +182,7 @@ onMounted(() => {
     <template #wrapper>
       <div class="role-container">
         <div class="add-btn">
-          <custom-el-button type="primary" @click="addRole">
+          <custom-el-button type="primary" @pointer="addRole">
             <template #prefix>
               <svg-icon icon-class="table-add" />
             </template>

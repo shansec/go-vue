@@ -5,17 +5,15 @@ export const useTagsSetting = defineStore({
   id: 'tagsSetting',
   state: () => ({
     tagViewValue: '/dashboard',
-    tagViews: []
+    tagViews: [],
+    keepAliveViews: []
   }),
   persist: {
-    // 开启数据缓存
     enabled: true,
     strategies: [
       {
-        // 本地存储的名称
-        key: 'tagsSetting',
-        // 本地存储的位置
-        storage: sessionStorage
+        key: 'history',
+        storage: localStorage
       }
     ]
   },
@@ -29,9 +27,12 @@ export const useTagsSetting = defineStore({
       const includeView = this.tagViews.some((v) => v.path === view.path)
       if (includeView) return
       this.tagViews.push({ ...view, title: view.meta.title || 'no-name' })
+      this.addKeepAliveView(view)
     },
     delView (path) {
+      const name = this.findNameByPath(path)
       this.tagViews = this.tagViews.filter((v) => v.path !== path)
+      this.delKeepAliveView(name)
     },
     toLastView (path) {
       const indexTag = this.tagViews.findIndex((item) => item.path === path)
@@ -42,9 +43,11 @@ export const useTagsSetting = defineStore({
       this.delView(path)
     },
     delOtherView (path) {
+      const name = this.findNameByPath(path)
       this.tagViews = this.tagViews.filter(
         (item) => item.path === path || item.meta.affix
       )
+      this.delKeepAliveView(name)
     },
     delAllView () {
       this.tagViews = this.tagViews.filter((item) => item.meta.affix)
@@ -52,6 +55,28 @@ export const useTagsSetting = defineStore({
     goHome () {
       this.tagViewValue = '/dashboard'
       router.push('/dashboard')
+    },
+    addKeepAliveView (view) {
+      if (view && view.meta.keepAlive) {
+        this.keepAliveViews.push(view.name)
+      }
+    },
+    delKeepAliveView (name) {
+      if (name && this.keepAliveViews.includes(name)) {
+        this.keepAliveViews = this.keepAliveViews.filter(
+          (item) => item !== name || name === 'Dashboard'
+        )
+      }
+    },
+    delAllKeepAliveView () {
+      this.keepAliveViews = this.keepAliveViews.filter(
+        (item) => item === 'Dashboard'
+      )
+    },
+    // 通过页面的 path 获取 页面的 name, 调用时需要注意调用位置
+    findNameByPath (path) {
+      const tag = this.tagViews.find((tag) => tag.path === path)
+      return tag ? tag.name : null
     }
   }
 })

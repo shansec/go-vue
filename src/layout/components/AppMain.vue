@@ -2,8 +2,10 @@
 import { computed } from 'vue'
 import { useWrapComponents } from '@/hooks/useWrapComponents.js'
 import { useSettingStore } from '@/store/modules/settings'
+import { useTagsSetting } from '@/store/modules/tagsView'
 
 const settingStore = useSettingStore()
+const tagsView = useTagsSetting()
 const showTags = computed(() => settingStore.showTagsView)
 </script>
 
@@ -14,7 +16,7 @@ const showTags = computed(() => settingStore.showTagsView)
   >
     <router-view v-slot="{ Component, route }">
       <transition name="fade-transform" mode="out-in">
-        <keep-alive>
+        <keep-alive :include="tagsView.keepAliveViews">
           <component
             :is="useWrapComponents(Component, route)"
             :key="route.path"

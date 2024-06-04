@@ -10,7 +10,12 @@ const systemRoutes = [
         path: 'system',
         name: 'System',
         component: () => import('@/views/system/index.vue'),
-        meta: { title: '服务器信息', icon: 'service-side', affix: false }
+        meta: {
+          title: '服务器信息',
+          icon: 'service-side',
+          affix: false,
+          keepAlive: false
+        }
       }
     ]
   }

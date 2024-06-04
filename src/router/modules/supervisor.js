@@ -11,25 +11,30 @@ const adminRoutes = [
         path: 'user',
         name: 'User',
         component: () => import('@/views/authorize/sys-user/index.vue'),
-        meta: { title: '用户管理', icon: 'user', affix: false }
+        meta: {
+          title: '用户管理',
+          icon: 'user',
+          affix: false,
+          keepAlive: true
+        }
       },
       {
         path: 'role',
         name: 'Role',
         component: () => import('@/views/authorize/sys-role/index.vue'),
-        meta: { title: '角色管理', icon: 'role', affix: false }
+        meta: { title: '角色管理', icon: 'role', affix: false, keepAlive: true }
       },
       {
         path: 'api',
         name: 'Api',
         component: () => import('@/views/authorize/sys-api/index.vue'),
-        meta: { title: 'api 管理', icon: 'api', affix: false }
+        meta: { title: 'api 管理', icon: 'api', affix: false, keepAlive: true }
       },
       {
         path: 'dept',
         name: 'Dept',
         component: () => import('@/views/authorize/sys-dept/index.vue'),
-        meta: { title: '部门管理', icon: 'tree', affix: false }
+        meta: { title: '部门管理', icon: 'tree', affix: false, keepAlive: true }
       }
     ]
   }

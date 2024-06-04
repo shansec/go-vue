@@ -26,7 +26,6 @@ const toLastView = (path) => {
   const indexTag = tagViews.value.findIndex((item) => item.path === path)
   const nextTag = tagViews.value[indexTag + 1] || tagViews.value[indexTag - 1]
   if (!nextTag) return
-  console.log(path)
   router.push(nextTag.path)
   tagsSetting.addView(nextTag)
   tagsSetting.delView(path)

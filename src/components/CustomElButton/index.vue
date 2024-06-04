@@ -56,7 +56,7 @@ const color = computed(() => settingStore.themeColor)
     :disabled="disabled"
     :color="color"
     :dark="isDark"
-    @click="() => $emit('click')"
+    @click="() => $emit('pointer')"
   >
     <slot name="prefix" />
     <slot name="txt" />

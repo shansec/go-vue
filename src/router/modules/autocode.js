@@ -10,7 +10,12 @@ const autoCodeRoutes = [
         path: 'package',
         name: 'Package',
         component: () => import('@/views/authorize/sys-autocode/index.vue'),
-        meta: { title: '自动化包', icon: 'settings', affix: false }
+        meta: {
+          title: '自动化包',
+          icon: 'settings',
+          affix: false,
+          keepAlive: true
+        }
       }
     ]
   }

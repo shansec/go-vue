@@ -1,3 +1,15 @@
+<script lang="js" setup>
+import EchartsLine from '@/views/dashboard/components/Line/index.vue'
+import DashboardTable from '@/views/dashboard/components/Table/index.vue'
+import { useWeatherInfo } from '@/views/dashboard/weather'
+
+defineOptions({
+  name: 'Dashboard'
+})
+
+const weatherInfo = useWeatherInfo()
+</script>
+
 <template>
   <div class="page">
     <div class="gva-card-box">
@@ -72,14 +84,6 @@
     </div>
   </div>
 </template>
-
-<script lang="js" setup>
-import EchartsLine from '@/views/dashboard/components/Line/index.vue'
-import DashboardTable from '@/views/dashboard/components/Table/index.vue'
-import { useWeatherInfo } from '@/views/dashboard/weather'
-
-const weatherInfo = useWeatherInfo()
-</script>
 
 <style lang="scss" scoped>
 @mixin flex-center {

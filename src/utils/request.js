@@ -43,6 +43,7 @@ service.interceptors.response.use(
       return response.data
     } else if (response.data.code === 201) {
       errorMsg(response.data.msg || decodeURI(response.headers.msg))
+      return response.data
     } else {
       if (response.data.data || response.data.data.reload) {
         errorMsg(response.data.msg || decodeURI(response.headers.msg))
