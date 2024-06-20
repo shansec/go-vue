@@ -19,6 +19,17 @@ const adminRoutes = [
         }
       },
       {
+        path: 'menus',
+        name: 'Menus',
+        component: () => import('@/views/authorize/sys-menu/index.vue'),
+        meta: {
+          title: '菜单管理',
+          icon: 'menu',
+          affix: false,
+          keepAlive: true
+        }
+      },
+      {
         path: 'role',
         name: 'Role',
         component: () => import('@/views/authorize/sys-role/index.vue'),

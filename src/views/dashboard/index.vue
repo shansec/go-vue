@@ -176,7 +176,7 @@ const weatherInfo = useWeatherInfo()
     }
   }
 
-  ::v-deep(.el-card__header) {
+  :deep(.el-card__header) {
     padding: 0;
     border-bottom: none;
   }
