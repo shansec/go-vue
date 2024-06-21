@@ -28,7 +28,7 @@
   "dependencies": {
     "@element-plus/icons-vue": "^2.1.0",
     "@vueuse/core": "^10.3.0",
-    "axios": "^1.4.0",
+    "axios": "^1.6.0",
     "echarts": "^5.4.3",
     "element-plus": "^2.3.9",
     "fuse.js": "^6.6.2",

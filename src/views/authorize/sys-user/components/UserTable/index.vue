@@ -268,7 +268,7 @@ onMounted(() => {
             </template>
             <template #txt> 查询 </template>
           </custom-el-button>
-          <custom-el-button type="primary" :plain="true" @pointer="resetQuery">
+          <custom-el-button type="primary" @pointer="resetQuery">
             <template #prefix>
               <svg-icon icon-class="table-reset" />
             </template>

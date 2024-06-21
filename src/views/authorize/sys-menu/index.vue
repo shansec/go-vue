@@ -2,6 +2,7 @@
 import { onMounted, ref } from 'vue'
 import { getMenuList, createMenu, deleteMenu, updateMenu } from '@/api/Menu.js'
 import { successMsg, errorMsg, confirmBox } from '@/utils/message.js'
+import Icon from './components/Icon/index.vue'
 
 defineOptions({
   name: 'Menus'
@@ -11,6 +12,7 @@ const menuList = ref()
 const menuTreeList = ref([])
 const total = ref(0)
 const isShowDialog = ref(false)
+const isCanEdit = ref(false)
 const title = ref()
 const type = ref()
 const queryParams = ref({
@@ -19,33 +21,53 @@ const queryParams = ref({
 })
 const menuFormRef = ref()
 const menuForm = ref({
-  menuId: 0,
-  menuName: '',
-  parentId: 0
+  parentId: 0,
+  ID: 0,
+  path: '',
+  name: '',
+  hidden: false,
+  component: '',
+  sort: 0,
+  meta: {
+    keepAlive: true,
+    title: '',
+    icon: '',
+    affix: false
+  }
 })
 const initMenuForm = () => {
   if (menuForm.value) {
     menuFormRef.value.resetFields()
   }
-  menuForm.value = { menuId: 0, menuName: '', parentId: 0 }
-}
-const mustUint = (rule, value, callback) => {
-  if (!/^[0-9]*[1-9][0-9]*$/.test(value)) {
-    return callback(new Error('请输入正整数'))
+  menuForm.value = {
+    parentId: 0,
+    ID: 0,
+    path: '',
+    name: '',
+    hidden: false,
+    component: '',
+    sort: 0,
+    meta: {
+      keepAlive: true,
+      title: '',
+      icon: '',
+      affix: false
+    }
   }
-  return callback()
 }
 const rules = ref({
-  parentId: [{ required: true, message: '父级角色不能为空', trigger: 'blur' }],
-  menuId: [
-    { required: true, message: '角色编号不能为空', trigger: 'blur' },
-    { validator: mustUint, trigger: 'blur', message: '必须为正整数' }
+  parentId: [{ required: true, message: '父级菜单不能为空', trigger: 'blur' }],
+  path: [{ required: true, message: '路由Path不能为空', trigger: 'blur' }],
+  name: [{ required: true, message: '路由Name不能为空', trigger: 'blur' }],
+  component: [{ required: true, message: '文件路径不能为空', trigger: 'blur' }],
+  'meta.title': [
+    { required: true, message: '展示名称不能为空', trigger: 'blur' }
   ],
-  menuName: [{ required: true, message: '角色名称不能为空', trigger: 'blur' }]
+  'meta.icon': [{ required: true, message: '请选择图标', trigger: 'blur' }]
 })
 const customProps = ref({
-  value: 'menuId',
-  label: 'menuName',
+  value: 'ID',
+  label: 'title',
   checkStrictly: true,
   emitPath: false
 })
@@ -62,11 +84,11 @@ const addMenu = () => {
 const openDialog = (key) => {
   switch (key) {
     case 'create':
-      title.value = '新增角色'
+      title.value = '新增菜单'
       type.value = key
       break
     case 'update':
-      title.value = '编辑角色'
+      title.value = '编辑菜单'
       type.value = key
       break
   }
@@ -78,6 +100,9 @@ const cancelDialog = () => {
   initMenuForm()
 }
 const editMenu = (row) => {
+  if (row.parentId !== 0) {
+    isCanEdit.value = true
+  }
   for (const key in menuForm.value) {
     menuForm.value[key] = row[key]
   }
@@ -85,11 +110,12 @@ const editMenu = (row) => {
   openDialog('update')
 }
 const setChildMenu = (row) => {
-  menuForm.value.parentId = row.menuId
+  console.log(row)
+  menuForm.value.parentId = row.ID
   openDialog('create')
 }
 const setOptions = () => {
-  menuTreeList.value = [{ menuId: 0, menuName: '根角色' }]
+  menuTreeList.value = [{ ID: 0, title: '根菜单' }]
   setMenuOptions(menuList.value, menuTreeList.value, false)
 }
 const setMenuOptions = (MenuData, optionsData, disabled) => {
@@ -97,22 +123,22 @@ const setMenuOptions = (MenuData, optionsData, disabled) => {
     MenuData.forEach((menu) => {
       if (menu.children && menu.children.length) {
         const option = {
-          menuId: menu.menuId,
-          menuName: menu.menuName,
-          disabled: disabled || menu.menuId === menuForm.value.menuId,
+          ID: menu.ID,
+          title: menu.meta.title,
+          disabled: disabled || menu.ID === menuForm.value.ID,
           children: []
         }
         setMenuOptions(
           menu.children,
           option.children,
-          disabled || menu.menuId === menuForm.value.menuId
+          disabled || menu.ID === menuForm.value.ID
         )
         optionsData.push(option)
       } else {
         const option = {
-          menuId: menu.menuId,
-          menuName: menu.menuName,
-          disabled: disabled || menu.menuId === menuForm.value.menuId
+          ID: menu.ID,
+          title: menu.meta.title,
+          disabled: disabled || menu.ID === menuForm.value.ID
         }
         optionsData.push(option)
       }
@@ -240,7 +266,7 @@ onMounted(() => {
                   @click="setChildMenu(scope.row)"
                 >
                   <el-icon><Plus /></el-icon>
-                  新增子角色
+                  新增子菜单
                 </el-button>
                 <el-button
                   type="danger"
@@ -266,7 +292,6 @@ onMounted(() => {
         <el-dialog
           v-model="isShowDialog"
           :title="title"
-          width="500px"
           :close-on-click-modal="false"
           :close-on-press-escape="false"
           :destroy-on-close="true"
@@ -279,38 +304,103 @@ onMounted(() => {
             label-width="120px"
           >
             <el-row>
-              <el-col :span="24">
-                <el-form-item label="父级角色" prop="parentId">
+              <el-col :span="12">
+                <el-form-item label="路由Name" prop="name">
+                  <el-input
+                    v-model="menuForm.name"
+                    placeholder="唯一英文字符串"
+                  />
+                </el-form-item>
+              </el-col>
+              <el-col :span="12">
+                <el-form-item label="路由Path" prop="path">
+                  <el-input
+                    v-model="menuForm.path"
+                    placeholder="建议与路由Name匹配，例如User --> user"
+                  />
+                </el-form-item>
+              </el-col>
+            </el-row>
+            <el-row>
+              <el-col :span="12">
+                <el-form-item label="父级菜单" prop="parentId">
                   <el-cascader
                     v-model="menuForm.parentId"
                     style="width: 100%"
                     :options="menuTreeList"
                     :props="customProps"
-                    :disabled="type === 'create'"
+                    :disabled="!isCanEdit"
                     :show-all-levels="false"
                     filterable
                   />
                 </el-form-item>
               </el-col>
+              <el-col :span="12">
+                <el-form-item label="是否隐藏" prop="hidden">
+                  <el-select
+                    v-model="menuForm.hidden"
+                    placeholder="请选择"
+                    style="width: 100%"
+                  >
+                    <el-option label="隐藏" :value="true" />
+                    <el-option label="显示" :value="false" />
+                  </el-select>
+                </el-form-item>
+              </el-col>
             </el-row>
             <el-row>
-              <el-col :span="24">
-                <el-form-item label="角色编号" prop="menuId">
+              <el-col :span="12">
+                <el-form-item label="展示名称" prop="meta.title">
                   <el-input
-                    v-model.number="menuForm.menuId"
-                    :disabled="type === 'update'"
-                    placeholder="请输入角色编号"
+                    v-model="menuForm.meta.title"
+                    placeholder="请输入展示名称"
+                  />
+                </el-form-item>
+              </el-col>
+              <el-col :span="12">
+                <el-form-item label="排序标记" prop="meta.title">
+                  <el-input-number v-model="menuForm.sort" />
+                </el-form-item>
+              </el-col>
+            </el-row>
+            <el-row>
+              <el-col :span="12">
+                <el-form-item label="图标" prop="meta.icon">
+                  <Icon :meta="menuForm.meta" style="width: 100%" />
+                </el-form-item>
+              </el-col>
+              <el-col :span="12">
+                <el-form-item label="文件路径" prop="component">
+                  <el-input
+                    v-model="menuForm.component"
+                    placeholder="页面:views/xxx/xxx.vue"
                   />
                 </el-form-item>
               </el-col>
             </el-row>
             <el-row>
-              <el-col :span="24">
-                <el-form-item label="角色名称" prop="menuName">
-                  <el-input
-                    v-model="menuForm.menuName"
-                    placeholder="请输入角色名称"
-                  />
+              <el-col :span="12">
+                <el-form-item label="KeepAlive" prop="meta.keepAlive">
+                  <el-select
+                    v-model="menuForm.meta.keepAlive"
+                    placeholder="请选择"
+                    style="width: 100%"
+                  >
+                    <el-option label="是" :value="true" />
+                    <el-option label="否" :value="false" />
+                  </el-select>
+                </el-form-item>
+              </el-col>
+              <el-col :span="12">
+                <el-form-item label="CloseTab" prop="meta.affix">
+                  <el-select
+                    v-model="menuForm.meta.affix"
+                    placeholder="请选择"
+                    style="width: 100%"
+                  >
+                    <el-option label="是" :value="true" />
+                    <el-option label="否" :value="false" />
+                  </el-select>
                 </el-form-item>
               </el-col>
             </el-row>

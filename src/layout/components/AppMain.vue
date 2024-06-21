@@ -1,6 +1,6 @@
 <script lang="js" setup>
 import { computed } from 'vue'
-import { useWrapComponents } from '@/hooks/useWrapComponents.js'
+import { useWrapComponents } from '@/hooks/use-wrap-components.js'
 import { useSettingStore } from '@/store/modules/settings'
 import { useTagsSetting } from '@/store/modules/tagsView'
 

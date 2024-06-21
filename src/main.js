@@ -1,7 +1,7 @@
 import { createApp } from 'vue'
 import ElementPlus from 'element-plus'
 import zhCn from 'element-plus/dist/locale/zh-cn.mjs'
-import { registerEleIcon } from '@/plugins/ElementIcon.js'
+import { iconIndex } from '@/plugins/index'
 // 引入黑暗模式
 import 'element-plus/theme-chalk/dark/css-vars.css'
 import 'element-plus/dist/index.css'
@@ -25,7 +25,7 @@ import BasicLayout from '@/components/BasicLayout/index.vue'
 import CustomElButton from '@/components/CustomElButton/index.vue'
 
 const app = createApp(App)
-registerEleIcon(app)
+iconIndex(app)
 
 app.component('SvgIcon', SvgIcon)
 app.component('Pagination', Pagination)
