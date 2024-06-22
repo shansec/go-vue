@@ -32,7 +32,7 @@ const goHome = () => {
   align-items: center;
   padding: 0 20px;
   height: 60px;
-  background-color: #191a23;
+  // background-color: #191a23;
   cursor: pointer;
 
   img {

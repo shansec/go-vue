@@ -17,9 +17,9 @@ watch(
   () => showTags.value,
   (value) => {
     if (value) {
-      headerType.value.height = '90px'
+      headerType.value.height = '99px'
     } else {
-      headerType.value.height = '50px'
+      headerType.value.height = '59px'
     }
   }
 )
@@ -52,7 +52,7 @@ watch(
   top: 0;
   right: 0;
   z-index: 998;
-  height: 90px;
+  height: 99px;
   background-color: #fff;
   box-shadow: 0 1px 4px #00152914;
   transition: width 0.28s ease;
@@ -61,7 +61,7 @@ watch(
     display: flex;
     justify-content: space-between;
     align-items: center;
-    height: 50px;
+    height: 59px;
     border-bottom: 1px solid #eee;
   }
 }

@@ -2,6 +2,7 @@
 import { onMounted, ref } from 'vue'
 import { getRoleList, createRole, deleteRole, updateRole } from '@/api/Role.js'
 import { successMsg, errorMsg, confirmBox } from '@/utils/message.js'
+import Menus from './components/Menus/index.vue'
 
 defineOptions({
   name: 'Role'
@@ -11,6 +12,8 @@ const roleList = ref()
 const roleTreeList = ref([])
 const total = ref(0)
 const isShowDialog = ref(false)
+const isShowDrawer = ref(false)
+const tabActiveName = ref('menus')
 const title = ref()
 const type = ref()
 const queryParams = ref({
@@ -87,6 +90,9 @@ const editRole = (row) => {
 const setChildRole = (row) => {
   roleForm.value.parentId = row.roleId
   openDialog('create')
+}
+const setPermiss = (id) => {
+  isShowDrawer.value = true
 }
 const setOptions = () => {
   roleTreeList.value = [{ roleId: 0, roleName: '根角色' }]
@@ -205,10 +211,10 @@ onMounted(() => {
                   type="primary"
                   text
                   class="operate-btn"
-                  @click="editRole(scope.row)"
+                  @click="setPermiss(scope.row.roleId)"
                 >
-                  <el-icon><Edit /></el-icon>
-                  编辑
+                  <el-icon><Setting /></el-icon>
+                  设置权限
                 </el-button>
                 <el-button
                   type="primary"
@@ -218,6 +224,15 @@ onMounted(() => {
                 >
                   <el-icon><Plus /></el-icon>
                   新增子角色
+                </el-button>
+                <el-button
+                  type="primary"
+                  text
+                  class="operate-btn"
+                  @click="editRole(scope.row)"
+                >
+                  <el-icon><Edit /></el-icon>
+                  编辑
                 </el-button>
                 <el-button
                   type="danger"
@@ -297,6 +312,19 @@ onMounted(() => {
             <el-button @click="cancelDialog">取 消</el-button>
           </div>
         </el-dialog>
+        <el-drawer
+          v-model="isShowDrawer"
+          :show-close="false"
+          :with-header="false"
+          size="40%"
+          title="角色配置"
+        >
+          <el-tabs v-model="tabActiveName" type="card">
+            <el-tab-pane label="菜单配置" name="menus">
+              <Menus />
+            </el-tab-pane>
+          </el-tabs>
+        </el-drawer>
       </div>
     </template>
   </BasicLayout>

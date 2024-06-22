@@ -181,7 +181,7 @@ const confirmSubmit = () => {
   })
 }
 const removeMenu = (data) => {
-  const msg = '删除角色之前确保该角色下不含有子角色'
+  const msg = '此操作会删除所有角色下该菜单，是否删除'
   confirmBox(msg, '确定删除', '取消', 'warning').then(async () => {
     const res = await deleteMenu(data)
     if (res.code === 200) {
@@ -241,7 +241,7 @@ onMounted(() => {
               {{ scope.row.hidden ? '隐藏' : '显示' }}
             </template>
           </el-table-column>
-          <el-table-column prop="parentId" label="父节点" width="100" />
+          <el-table-column prop="parentId" label="父节点" width="90" />
           <el-table-column prop="component" label="文件路径" min-width="180">
             <template #default="scope">
               {{ scope.row.component ? scope.row.component : '/' }}

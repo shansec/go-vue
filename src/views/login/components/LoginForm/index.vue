@@ -66,9 +66,9 @@ const requestCaptcha = async () => {
   captcha.value = res.data
   loginForm.captchaId = res.data.captchaId
 }
-const triLoginMethod = () => {
-  loginForm.isPhoneLogin = !loginForm.isPhoneLogin
-}
+// const triLoginMethod = () => {
+//   loginForm.isPhoneLogin = !loginForm.isPhoneLogin
+// }
 
 onMounted(() => {
   requestCaptcha()
@@ -136,11 +136,11 @@ onMounted(() => {
         />
       </el-col>
     </el-row>
-    <div class="trigger-box">
-      <span @click="triLoginMethod">{{
-        loginForm.isPhoneLogin ? '账号登录' : '手机号登录'
-      }}</span>
-    </div>
+    <!--    <div class="trigger-box">-->
+    <!--      <span @click="triLoginMethod">{{-->
+    <!--        loginForm.isPhoneLogin ? '账号登录' : '手机号登录'-->
+    <!--      }}</span>-->
+    <!--    </div>-->
     <custom-el-button
       :loading="loading"
       type="primary"
