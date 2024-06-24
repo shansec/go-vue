@@ -9,7 +9,7 @@ const settingStore = useSettingStore()
 const showTags = computed(() => settingStore.showTagsView)
 const collapsed = computed(() => settingStore.collapsed)
 const headerType = ref({
-  height: '90px',
+  height: '99px',
   width: 'calc(100% - 210px)'
 })
 

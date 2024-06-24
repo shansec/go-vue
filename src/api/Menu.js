@@ -67,3 +67,35 @@ export const getMenuList = (pageInfo) => {
     data: pageInfo
   })
 }
+
+// @Summary 获取树状菜单
+// @Description 获取树状菜单
+// @Tags SysBaseMenu
+// @Produce json
+// @Param   menuInfo body req.GetMenuByName true "获取树状菜单"
+// @Success 200 {object} response.Response{data=response.NoPageResult, msg=string}	"获取树状菜单"
+// @Failure 400 {object} response.Response "请求参数验证失败"
+// @Failure 500 {object} response.Response   "获取树状菜单失败"
+// @Router /menu/getMenuTree [POST]
+export const getMenuTree = (data) => {
+  return service({
+    url: 'menu/getMenuTree',
+    method: 'POST',
+    data
+  })
+}
+
+export const getRoleMenu = () => {
+  return service({
+    url: '/menu/getRoleMenu',
+    method: 'GET'
+  })
+}
+
+export const getSpecialRoleMenu = (data) => {
+  return service({
+    url: '/menu/getSpecialRoleMenu',
+    method: 'POST',
+    data
+  })
+}

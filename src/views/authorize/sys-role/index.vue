@@ -16,6 +16,7 @@ const isShowDrawer = ref(false)
 const tabActiveName = ref('menus')
 const title = ref()
 const type = ref()
+const curRoleId = ref(0)
 const queryParams = ref({
   page: 1,
   pageSize: 10
@@ -92,6 +93,7 @@ const setChildRole = (row) => {
   openDialog('create')
 }
 const setPermiss = (id) => {
+  curRoleId.value = id
   isShowDrawer.value = true
 }
 const setOptions = () => {
@@ -313,6 +315,7 @@ onMounted(() => {
           </div>
         </el-dialog>
         <el-drawer
+          v-if="isShowDrawer"
           v-model="isShowDrawer"
           :show-close="false"
           :with-header="false"
@@ -321,7 +324,7 @@ onMounted(() => {
         >
           <el-tabs v-model="tabActiveName" type="card">
             <el-tab-pane label="菜单配置" name="menus">
-              <Menus />
+              <Menus :role-id="curRoleId" />
             </el-tab-pane>
           </el-tabs>
         </el-drawer>
