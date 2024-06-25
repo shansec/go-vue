@@ -85,6 +85,14 @@ export const getMenuTree = (data) => {
   })
 }
 
+// @Summary 获取当前登录角色菜单
+// @Description 获取当前登录角色菜单
+// @Tags SysBaseMenu
+// @Produce json
+// @Success 200 {object} response.Response{data=response.NoPageResult, msg=string}	"获取当前登录角色菜单"
+// @Failure 400 {object} response.Response "请求参数验证失败"
+// @Failure 500 {object} response.Response   "获取当前登录角色菜单失败"
+// @Router /menu/getRoleMenu [POST]
 export const getRoleMenu = () => {
   return service({
     url: '/menu/getRoleMenu',
@@ -92,6 +100,14 @@ export const getRoleMenu = () => {
   })
 }
 
+// @Summary 获取指定角色菜单
+// @Description 获取指定角色菜单
+// @Tags SysBaseMenu
+// @Produce json
+// @Success 200 {object} response.Response{data=response.NoPageResult, msg=string}	"获取指定角色菜单"
+// @Failure 400 {object} response.Response "请求参数验证失败"
+// @Failure 500 {object} response.Response   "获取指定角色菜单失败"
+// @Router /menu/getSpecialRoleMenu [POST]
 export const getSpecialRoleMenu = (data) => {
   return service({
     url: '/menu/getSpecialRoleMenu',

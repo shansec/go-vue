@@ -27,7 +27,6 @@ watch(
 watch(
   () => collapsed.value,
   (value) => {
-    console.log(value)
     if (value) {
       headerType.value.width = 'calc(100% - 60px)'
     } else {

@@ -1,19 +1,4 @@
-<template>
-  <div class="commit-table">
-    <div class="commit-table-title">更新日志</div>
-    <div class="log">
-      <div v-for="(item, key) in dataTimeline" :key="key" class="log-item">
-        <div class="flex-1 flex key-box">
-          <span class="key" :class="key < 3 && 'top'">{{ key + 1 }}</span>
-        </div>
-        <div class="flex-5 flex message">{{ item.message }}</div>
-        <div class="flex-3 flex form">{{ item.from }}</div>
-      </div>
-    </div>
-  </div>
-</template>
-
-<script setup>
+<script lang="js" setup>
 import { Commits } from '@/api/Github'
 import { formatTimeToStr } from '@/utils/date.js'
 import { onMounted, ref } from 'vue'
@@ -45,10 +30,24 @@ onMounted(() => {
 })
 </script>
 
+<template>
+  <div class="commit-table">
+    <div class="commit-table-title">更新日志</div>
+    <div class="log">
+      <div v-for="(item, key) in dataTimeline" :key="key" class="log-item">
+        <div class="flex-1 flex key-box">
+          <span class="key" :class="key < 3 && 'top'">{{ key + 1 }}</span>
+        </div>
+        <div class="flex-5 flex message">{{ item.message }}</div>
+        <div class="flex-3 flex form">{{ item.from }}</div>
+      </div>
+    </div>
+  </div>
+</template>
+
 <style lang="scss" scoped>
 .commit-table {
   height: 400px;
-  background-color: #fff;
 
   &-title {
     font-weight: 600;
@@ -82,13 +81,8 @@ onMounted(() => {
         border-radius: 50%;
       }
 
-      .message {
-        color: rgb(0 0 0 / 65%);
-      }
-
       .form {
         margin-left: 12px;
-        color: rgb(0 0 0 / 65%);
       }
 
       .flex {

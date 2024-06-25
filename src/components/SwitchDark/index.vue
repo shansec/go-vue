@@ -7,12 +7,6 @@ const settingStore = useSettingStore()
 // 主题设置
 const isDark = ref(settingStore.isDark)
 const switchDark = () => {
-  const body = document.documentElement
-  if (isDark.value) {
-    body.setAttribute('class', 'dark')
-  } else {
-    body.setAttribute('class', '')
-  }
   settingStore.changeDark(isDark.value)
 }
 </script>

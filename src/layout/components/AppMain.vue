@@ -12,7 +12,7 @@ const showTags = computed(() => settingStore.showTagsView)
 <template>
   <div
     class="app-main"
-    :style="showTags ? 'padding-top: 90px' : 'padding-top: 50px'"
+    :style="showTags ? 'padding-top: 99px' : 'padding-top: 59px'"
   >
     <router-view v-slot="{ Component, route }">
       <transition name="fade-transform" mode="out-in">

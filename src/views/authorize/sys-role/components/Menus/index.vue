@@ -1,6 +1,8 @@
 <script lang="js" setup>
 import { onMounted, ref, watch } from 'vue'
 import { getMenuTree, getSpecialRoleMenu } from '@/api/Menu'
+import { addRoleMenu } from '@/api/Role'
+import { infoMsg } from '@/utils/message'
 
 defineOptions({
   name: 'Menus'
@@ -18,6 +20,7 @@ const menuTree = ref()
 const menuTreeList = ref()
 const filterText = ref()
 const electedMenuId = ref([])
+const menuSelected = ref()
 const menuProps = ref({
   label: (data, node) => data.meta.title,
   children: 'children'
@@ -31,6 +34,19 @@ watch(filterText, (val) => {
   menuTree.value.filter(val)
 })
 
+const nodeSelect = () => {
+  const menuChecked = menuTree.value.getCheckedNodes(false, true)
+  menuSelected.value = menuChecked
+}
+
+const addRelation = () => {
+  if (!menuSelected.value) {
+    infoMsg('角色权限无修改，无需保存')
+  } else {
+    addRoleMenu()
+  }
+}
+
 const requestMenuTree = async () => {
   const treeData = await getMenuTree()
   if (treeData.code === 200) {
@@ -41,10 +57,13 @@ const requestRoleMenu = async () => {
   const roleMenu = await getSpecialRoleMenu({ roleId: props.roleId })
   if (roleMenu.code === 200) {
     const menuList = roleMenu.data.list
-    menuList.forEach((menu) => {
-      electedMenuId.value.push(menu.ID)
+    const menuListTemp = []
+    menuList.forEach((item) => {
+      if (!menuList.some((same) => same.parentId === item.ID)) {
+        menuListTemp.push(Number(item.ID))
+      }
     })
-    console.log(electedMenuId.value)
+    electedMenuId.value = menuListTemp
   }
 }
 onMounted(() => {
@@ -62,7 +81,7 @@ onMounted(() => {
         clearable
         class="cus-input"
       />
-      <el-button type="primary">确 定</el-button>
+      <el-button type="primary" @click="addRelation">确 定</el-button>
     </div>
     <div class="tree-content">
       <el-scrollbar>
@@ -72,9 +91,11 @@ onMounted(() => {
           :props="menuProps"
           :default-checked-keys="electedMenuId"
           :filter-node-method="filterNode"
+          node-key="ID"
           default-expand-all
           highlight-current
           show-checkbox
+          @check="nodeSelect"
         />
       </el-scrollbar>
     </div>
@@ -92,5 +113,13 @@ onMounted(() => {
       width: 50%;
     }
   }
+
+  .tree-content {
+    margin-top: 10px;
+  }
+}
+
+:deep(.el-scrollbar) {
+  border: none !important;
 }
 </style>

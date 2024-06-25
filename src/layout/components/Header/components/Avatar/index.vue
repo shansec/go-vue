@@ -17,7 +17,7 @@ const logout = () => {
       // 退出登录清除存储的数据
       storage.clear()
       // 设置 token 为空
-      userStore.setInfoToNUll()
+      userStore.initInfo()
       router.replace('/login')
       successMsg('退出登录成功')
     })

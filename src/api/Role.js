@@ -67,3 +67,11 @@ export const getRoleList = (pageInfo) => {
     data: pageInfo
   })
 }
+
+export const addRoleMenu = (data) => {
+  return service({
+    url: 'role/addRoleMenu',
+    method: 'POST',
+    data
+  })
+}

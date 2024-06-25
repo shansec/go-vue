@@ -1,9 +1,3 @@
-<template>
-  <div class="dashboard-line-box">
-    <div class="dashboard-line-title">访问趋势</div>
-    <div ref="echart" class="dashboard-line" />
-  </div>
-</template>
 <script setup>
 import * as echarts from 'echarts'
 import { nextTick, onMounted, onUnmounted, ref, shallowRef } from 'vue'
@@ -96,12 +90,19 @@ onUnmounted(() => {
   chart.value = null
 })
 </script>
+
+<template>
+  <div class="dashboard-line-box">
+    <div class="dashboard-line-title">访问趋势</div>
+    <div ref="echart" class="dashboard-line" />
+  </div>
+</template>
+
 <style lang="scss" scoped>
 .dashboard-line-box {
   .dashboard-line {
     width: 100%;
     height: 360px;
-    background-color: #fff;
   }
 
   .dashboard-line-title {

@@ -1,82 +1,100 @@
 import { defineStore } from 'pinia'
 import router from '@/router/index.js'
+import { ref } from 'vue'
 
-export const useTagsSetting = defineStore({
-  id: 'tagsSetting',
-  state: () => ({
-    tagViewValue: '/dashboard',
-    tagViews: [],
-    keepAliveViews: []
-  }),
-  persist: {
-    enabled: true,
-    strategies: [
-      {
-        key: 'history',
-        storage: localStorage
-      }
-    ]
-  },
-  getters: {},
-  actions: {
-    setButtonMenu (val) {
-      this.tagViewValue = val
-    },
-    addView (view) {
-      this.setButtonMenu(view.path)
-      const includeView = this.tagViews.some((v) => v.path === view.path)
+export const useTagsSetting = defineStore(
+  'tagsSetting',
+  () => {
+    const tagViewValue = ref('/dashboard')
+    const tagViews = ref([])
+    const keepAliveViews = ref([])
+
+    const setButtonMenu = (val) => {
+      tagViewValue.value = val
+    }
+    const addView = (view) => {
+      setButtonMenu(view.path)
+      const includeView = tagViews.value.some((v) => v.path === view.path)
       if (includeView) return
-      this.tagViews.push({ ...view, title: view.meta.title || 'no-name' })
-      this.addKeepAliveView(view)
-    },
-    delView (path) {
-      const name = this.findNameByPath(path)
-      this.tagViews = this.tagViews.filter((v) => v.path !== path)
-      this.delKeepAliveView(name)
-    },
-    toLastView (path) {
-      const indexTag = this.tagViews.findIndex((item) => item.path === path)
-      const nextTag = this.tagViews[indexTag + 1] || this.tagViews[indexTag - 1]
+      tagViews.value.push({ ...view, title: view.meta.title || 'no-name' })
+      addKeepAliveView(view)
+    }
+    const delView = (path) => {
+      const name = findNameByPath(path)
+      tagViews.value = tagViews.value.filter((v) => v.path !== path)
+      delKeepAliveView(name)
+    }
+    const toLastView = (path) => {
+      const indexTag = tagViews.value.findIndex((item) => item.path === path)
+      const nextTag =
+        tagViews.value[indexTag + 1] || tagViews.value[indexTag - 1]
       if (!nextTag) return
       router.push(nextTag.path)
-      this.addView(nextTag)
-      this.delView(path)
-    },
-    delOtherView (path) {
-      const name = this.findNameByPath(path)
-      this.tagViews = this.tagViews.filter(
+      addView(nextTag)
+      delView(path)
+    }
+    const delOtherView = (path) => {
+      const name = findNameByPath(path)
+      tagViews.value = tagViews.value.filter(
         (item) => item.path === path || item.meta.affix
       )
-      this.delKeepAliveView(name)
-    },
-    delAllView () {
-      this.tagViews = this.tagViews.filter((item) => item.meta.affix)
-    },
-    goHome () {
-      this.tagViewValue = '/dashboard'
+      delKeepAliveView(name)
+    }
+    const delAllView = () => {
+      tagViews.value = tagViews.value.filter((item) => item.meta.affix)
+    }
+    const goHome = () => {
+      tagViewValue.value = '/dashboard'
       router.push('/dashboard')
-    },
-    addKeepAliveView (view) {
+    }
+    const addKeepAliveView = (view) => {
       if (view && view.meta.keepAlive) {
-        this.keepAliveViews.push(view.name)
+        keepAliveViews.value.push(view.name)
       }
-    },
-    delKeepAliveView (name) {
-      if (name && this.keepAliveViews.includes(name)) {
-        this.keepAliveViews = this.keepAliveViews.filter(
+    }
+    const delKeepAliveView = (name) => {
+      if (name && keepAliveViews.value.includes(name)) {
+        keepAliveViews.value = keepAliveViews.value.filter(
           (item) => item !== name || name === 'Dashboard'
         )
       }
-    },
-    delAllKeepAliveView () {
-      this.keepAliveViews = this.keepAliveViews.filter(
+    }
+    const delAllKeepAliveView = () => {
+      keepAliveViews.value = keepAliveViews.value.filter(
         (item) => item === 'Dashboard'
       )
-    },
-    // 通过页面的 path 获取 页面的 name, 调用时需要注意调用位置
-    findNameByPath (path) {
-      const tag = this.tagViews.find((tag) => tag.path === path)
+    }
+    const findNameByPath = (path) => {
+      const tag = tagViews.value.find((tag) => tag.path === path)
       return tag ? tag.name : null
     }
+
+    return {
+      tagViewValue,
+      tagViews,
+      keepAliveViews,
+      setButtonMenu,
+      addView,
+      delView,
+      delAllView,
+      goHome,
+      addKeepAliveView,
+      delKeepAliveView,
+      delAllKeepAliveView,
+      findNameByPath,
+      toLastView,
+      delOtherView
+    }
+  },
+  {
+    persist: {
+      enabled: true,
+      strategies: [
+        {
+          key: 'history',
+          storage: localStorage
+        }
+      ]
+    }
   }
-})
+)
