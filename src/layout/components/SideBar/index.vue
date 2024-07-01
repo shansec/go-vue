@@ -1,16 +1,18 @@
 <script lang="js" setup>
 import { computed } from 'vue'
 import { useRoute } from 'vue-router'
-import { constantRoutes } from '@/router/index.js'
+// import { constantRoutes } from '@/router/index.js'
 import { useSettingStore } from '@/store/modules/settings.js'
+import { useRouterStore } from '@/store/modules/router.js'
 import SubItem from '@/layout/components/SideBar/components/SubItem/index.vue'
 import Logo from '@/layout/components/SideBar/components/Logo/index.vue'
 
 const route = useRoute()
 const settingStore = useSettingStore()
+const routerStore = useRouterStore()
 const collapsed = computed(() => settingStore.collapsed)
 const showLogo = computed(() => settingStore.showLogo)
-
+const routers = routerStore.asyncRouter[0].children
 const activeMenu = computed(() => {
   const { meta, path } = route
   if (meta.activeMenu) {
@@ -38,10 +40,10 @@ const activeMenu = computed(() => {
         :collapse="collapsed"
       >
         <SubItem
-          v-for="route in constantRoutes"
+          v-for="route in routers"
           :key="route.path"
           :item="route"
-          :base-path="route.path"
+          :base-path="'/layout/' + route.path"
         />
       </el-menu>
     </el-scrollbar>

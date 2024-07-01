@@ -1,60 +1,98 @@
 import router from '@/router'
 import { useUserStore } from '@/store/modules/user'
-import { useSettingStore } from '@/store/modules/settings.js'
+import { useRouterStore } from './store/modules/router.js'
 import NProgress from 'nprogress'
 import 'nprogress/nprogress.css'
 import getPageTitle from '@/utils/get-page-title'
-import pinia from '@/store'
-import { Message } from '@element-plus/icons-vue'
-import storage from '@/utils/storage'
-import { awaitWrap } from '@/utils/await'
-import { getUserInfo } from '@/api/User'
 
 NProgress.configure({ showSpinner: false })
 
-const whiteList = ['/login', '/init']
+const whiteList = ['Login', 'Init']
+
+const getRouter = async (userStore) => {
+  const routerStore = useRouterStore()
+  await routerStore.setAsyncRouter()
+  await userStore.getAsyncUserInfo()
+  const asyncRouters = routerStore.asyncRouter
+  asyncRouters.forEach((asyncRouter) => {
+    router.addRoute(asyncRouter)
+  })
+}
 
 router.beforeEach(async (to, from) => {
+  console.log('to', to)
+  console.log('from', from)
+  const routerStore = useRouterStore()
   NProgress.start()
+  const userStore = useUserStore()
+  to.meta.matched = [...to.matched]
+  const token = userStore.token
+  // 在白名单中的判断情况
   document.title = getPageTitle(to.meta.title)
-  const userStore = useUserStore(pinia)
-  const settingStore = useSettingStore()
-  const hasToken = storage.get('token')
-  if (hasToken) {
-    if (to.path === '/login') {
-      NProgress.done()
-      return { name: 'Dashboard' }
-    } else {
-      const hasRoles = userStore.roles && userStore.roles.length > 0
-      if (hasRoles) {
-        return true
-      } else {
-        const [err, data] = await awaitWrap(getUserInfo())
-        if (data !== null) {
-          const user = data.data.user
-          userStore.setUserInfo(user)
-          settingStore.changeThemeSetting('themeColor', user.themeColor)
-          document.documentElement.style.setProperty(
-            '--el-color-primary',
-            user.themeColor
-          )
+  if (to.meta.client) {
+    return true
+  }
+  if (whiteList.indexOf(to.name) > -1) {
+    if (token) {
+      if (!routerStore.asyncRouterFlag && whiteList.indexOf(from.name) < 0) {
+        await getRouter(userStore)
+      }
+      // token 可以解析但是却是不存在的用户 id 或角色 id 会导致无限调用
+      if (userStore.userInfo.sysRole.defaultRouter != null) {
+        if (router.hasRoute(userStore.userInfo.sysRole.defaultRouter)) {
+          return { name: userStore.userInfo.sysRole.defaultRouter }
         } else {
-          Message.error(err || 'has Error')
-          NProgress.done()
-          return { name: 'Login' }
+          return { path: '/layout/404' }
+        }
+      } else {
+        // 强制退出账号
+        userStore.initInfo()
+        return {
+          name: 'Login'
+        }
+      }
+    } else {
+      return true
+    }
+  } else {
+    // 不在白名单中并且已经登录的时候
+    if (token) {
+      // 添加flag防止多次获取动态路由和栈溢出
+      if (!routerStore.asyncRouterFlag && whiteList.indexOf(from.name) < 0) {
+        await getRouter(userStore)
+        if (userStore.token) {
+          if (router.hasRoute(userStore.userInfo.sysRole.defaultRouter)) {
+            return { ...to, replace: true }
+          } else {
+            return { path: '/layout/404' }
+          }
+        } else {
+          return {
+            name: 'Login'
+          }
+        }
+      } else {
+        if (to.matched.length) {
+          return true
+        } else {
+          return { path: '/layout/404' }
         }
       }
     }
-  } else {
-    if (whiteList.indexOf(to.path) !== -1) {
-      return true
-    } else {
-      NProgress.done()
-      return { name: 'Login' }
+    // 不在白名单中并且未登录的时候
+    if (!token) {
+      return {
+        name: 'Login'
+      }
     }
   }
 })
 
 router.afterEach(() => {
   NProgress.done()
+})
+
+router.onError(() => {
+  // 路由发生错误后销毁进度条
+  NProgress.remove()
 })

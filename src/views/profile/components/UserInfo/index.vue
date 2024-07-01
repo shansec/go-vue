@@ -40,13 +40,13 @@ const submit = () => {
       if (res.code === 200) {
         storage.clear()
         successMsg(`${data.msg},请重新登录！`)
-        await router.push({ path: '/login' })
+        await router.push({ name: 'Login' })
       }
     }
   })
 }
 const close = () => {
-  router.push({ path: '/dashboard' })
+  router.push({ name: 'Dashboard' })
 }
 </script>
 

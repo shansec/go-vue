@@ -12,8 +12,15 @@ const matchRoute = computed(() =>
  * @param item 路由信息
  */
 const handleLink = (item) => {
+  const childLen = item.children.length
+  let path = ''
+  if (!childLen) {
+    path = item.path
+  } else {
+    path = item.children[0].path
+  }
   router.push({
-    path: item.path
+    path: path
   })
 }
 </script>
@@ -23,18 +30,18 @@ const handleLink = (item) => {
     <el-breadcrumb-item
       v-if="matchRoute[0].meta.title !== '首页'"
       key="homepage"
-      :to="{ path: '/dashboard' }"
+      :to="{ name: 'Dashboard' }"
     >
       <div class="breadcrumb-item">
         <span class="breadcrumb-title">首页</span>
       </div>
     </el-breadcrumb-item>
-    <el-breadcrumb-item
-      v-for="item in matchRoute"
-      :key="item.name"
-      :to="{ path: item.path }"
-    >
-      <span @click="handleLink(item)">{{ item.meta.title }}</span>
-    </el-breadcrumb-item>
+    <template v-for="item in matchRoute">
+      <el-breadcrumb-item v-if="item.path != '/layout'" :key="item.name">
+        <span class="pointer" @click="handleLink(item)">{{
+          item.meta.title
+        }}</span>
+      </el-breadcrumb-item>
+    </template>
   </el-breadcrumb>
 </template>

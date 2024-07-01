@@ -61,7 +61,7 @@ export const updateUserInfo = (data) => {
 // @Produce json
 // @Success 200 {object} response.Response{data=systemRes.SysUserResponse, msg=string} "获取用户信息"
 // @Router /user/getUserInfo [GET]
-export const getUserInfo = () => {
+export const requestUserInfo = () => {
   return service({
     url: '/user/getUserInfo',
     method: 'GET'

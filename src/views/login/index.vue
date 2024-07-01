@@ -13,7 +13,7 @@ const toInitialize = async () => {
     infoMsg(init.msg)
   } else {
     await router.push({
-      path: '/init'
+      name: 'Init'
     })
   }
 }

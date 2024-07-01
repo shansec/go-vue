@@ -320,7 +320,6 @@ onMounted(() => {
           :show-close="false"
           :with-header="false"
           size="40%"
-          title="角色配置"
         >
           <el-tabs v-model="tabActiveName" type="card">
             <el-tab-pane label="菜单配置" name="menus">

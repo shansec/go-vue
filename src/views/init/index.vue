@@ -32,7 +32,7 @@ const onSubmit = () => {
       if (init.code === 200) {
         successMsg(init.msg)
         await router.push({
-          path: '/login'
+          name: 'Login'
         })
       }
     } else {

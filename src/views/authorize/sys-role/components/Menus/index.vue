@@ -2,7 +2,7 @@
 import { onMounted, ref, watch } from 'vue'
 import { getMenuTree, getSpecialRoleMenu } from '@/api/Menu'
 import { addRoleMenu } from '@/api/Role'
-import { infoMsg } from '@/utils/message'
+import { infoMsg, successMsg } from '@/utils/message'
 
 defineOptions({
   name: 'Menus'
@@ -29,24 +29,26 @@ const filterNode = (value, data) => {
   if (!value) return true
   return data.meta.title.indexOf(value) !== -1
 }
-
 watch(filterText, (val) => {
   menuTree.value.filter(val)
 })
-
 const nodeSelect = () => {
   const menuChecked = menuTree.value.getCheckedNodes(false, true)
   menuSelected.value = menuChecked
 }
-
-const addRelation = () => {
+const addRelation = async () => {
   if (!menuSelected.value) {
     infoMsg('角色权限无修改，无需保存')
   } else {
-    addRoleMenu()
+    const addRes = await addRoleMenu({
+      roleId: props.roleId,
+      menus: menuSelected.value
+    })
+    if (addRes.code === 200) {
+      successMsg(addRes.msg)
+    }
   }
 }
-
 const requestMenuTree = async () => {
   const treeData = await getMenuTree()
   if (treeData.code === 200) {
