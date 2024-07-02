@@ -3,7 +3,11 @@ import { onMounted, ref } from 'vue'
 import userAvatar from './components/UserAvatar/index.vue'
 import userInfo from './components/UserInfo/index.vue'
 import resetPwd from './components/ResetPwd/index.vue'
-import { getUserInfo } from '@/api/User'
+import { requestUserInfo } from '@/api/User'
+
+defineOptions({
+  name: 'Profile'
+})
 
 const user = ref({})
 const activeTab = ref('userinfo')
@@ -11,7 +15,7 @@ const roleName = ref(null)
 const deptName = ref(null)
 
 const getUser = async () => {
-  const res = await getUserInfo()
+  const res = await requestUserInfo()
   user.value = res.data.user
   roleName.value = user.value.sysRole.roleName
   deptName.value = '技术部'

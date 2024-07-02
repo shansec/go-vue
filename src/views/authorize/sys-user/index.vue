@@ -1,6 +1,10 @@
 <script lang="js" setup>
 import UserTable from '@/views/authorize/sys-user/components/UserTable/index.vue'
 import DepartTree from '@/views/authorize/sys-user/components/DepartTree/index.vue'
+
+defineOptions({
+  name: 'User'
+})
 </script>
 
 <template>

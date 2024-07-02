@@ -13,7 +13,7 @@ const toInitialize = async () => {
     infoMsg(init.msg)
   } else {
     await router.push({
-      path: '/init'
+      name: 'Init'
     })
   }
 }
@@ -28,9 +28,13 @@ const toInitialize = async () => {
       </div>
       <div class="login-form">
         <LoginForm />
-        <el-button type="primary" class="login_btn" @click="toInitialize">
-          初始化
-        </el-button>
+        <custom-el-button
+          type="primary"
+          class="login_btn"
+          @pointer="toInitialize()"
+        >
+          <template #txt> <span>初始化</span> </template>
+        </custom-el-button>
       </div>
     </div>
   </div>

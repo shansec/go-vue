@@ -5,9 +5,10 @@ import { useRouter } from 'vue-router'
 import path from 'path-browserify'
 import Fuse from 'fuse.js'
 
-import { echartsRouter } from '@/router/modules/echarts.js'
+import { useRouterStore } from '@/store/modules/router.js'
 
 const router = useRouter()
+const routerStore = useRouterStore()
 const search = ref('')
 const isShowSearch = ref(false)
 const searchPool = ref([])
@@ -51,7 +52,7 @@ watch(searchPool, (list) => {
  * @param basePath 路径
  * @param prefixTitle 标题
  */
-const generateRoutes = (routes, basePath = '/', prefixTitle = []) => {
+const generateRoutes = (routes, basePath = '/layout', prefixTitle = []) => {
   let filterRoutes = []
 
   for (const route of routes) {
@@ -93,7 +94,9 @@ const handleSearch = () => {
 }
 
 onMounted(() => {
-  searchPool.value = generateRoutes(JSON.parse(JSON.stringify(echartsRouter)))
+  searchPool.value = generateRoutes(
+    JSON.parse(JSON.stringify(routerStore.asyncRouter[0].children))
+  )
 })
 
 // 搜索框的远程搜索方法
@@ -124,8 +127,8 @@ const change = (val) => {
 <template>
   <div class="search">
     <el-tooltip content="菜单搜索" placement="bottom">
-      <el-icon style="font-size: 20px">
-        <i class="iconfont icon-sousuo" @click="handleSearch" />
+      <el-icon :size="24" @click="handleSearch">
+        <svg-icon icon-class="table-search" />
       </el-icon>
     </el-tooltip>
     <el-dialog

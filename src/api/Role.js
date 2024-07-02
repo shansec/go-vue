@@ -67,3 +67,20 @@ export const getRoleList = (pageInfo) => {
     data: pageInfo
   })
 }
+
+// @Summary 角色设置菜单权限
+// @Description 角色设置菜单权限
+// @Tags SysRole
+// @Produce json
+// @Param   info body req.MenuRoleInfo true "角色设置菜单权限"
+// @Success 200 {object} response.Response{msg=string}	"角色设置菜单权限"
+// @Failure 400 {object} response.Response "请求参数验证失败"
+// @Failure 500 {object} response.Response "角色设置菜单权限失败"
+// @Router /role/addRoleMenu [POST]
+export const addRoleMenu = (data) => {
+  return service({
+    url: 'role/addRoleMenu',
+    method: 'POST',
+    data
+  })
+}

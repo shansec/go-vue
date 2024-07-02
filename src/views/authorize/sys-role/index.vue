@@ -2,13 +2,21 @@
 import { onMounted, ref } from 'vue'
 import { getRoleList, createRole, deleteRole, updateRole } from '@/api/Role.js'
 import { successMsg, errorMsg, confirmBox } from '@/utils/message.js'
+import Menus from './components/Menus/index.vue'
+
+defineOptions({
+  name: 'Role'
+})
 
 const roleList = ref()
 const roleTreeList = ref([])
 const total = ref(0)
 const isShowDialog = ref(false)
+const isShowDrawer = ref(false)
+const tabActiveName = ref('menus')
 const title = ref()
 const type = ref()
+const curRoleId = ref(0)
 const queryParams = ref({
   page: 1,
   pageSize: 10
@@ -83,6 +91,10 @@ const editRole = (row) => {
 const setChildRole = (row) => {
   roleForm.value.parentId = row.roleId
   openDialog('create')
+}
+const setPermiss = (id) => {
+  curRoleId.value = id
+  isShowDrawer.value = true
 }
 const setOptions = () => {
   roleTreeList.value = [{ roleId: 0, roleName: '根角色' }]
@@ -178,7 +190,7 @@ onMounted(() => {
     <template #wrapper>
       <div class="role-container">
         <div class="add-btn">
-          <custom-el-button type="primary" @click="addRole">
+          <custom-el-button type="primary" @pointer="addRole">
             <template #prefix>
               <svg-icon icon-class="table-add" />
             </template>
@@ -201,10 +213,10 @@ onMounted(() => {
                   type="primary"
                   text
                   class="operate-btn"
-                  @click="editRole(scope.row)"
+                  @click="setPermiss(scope.row.roleId)"
                 >
-                  <el-icon><Edit /></el-icon>
-                  编辑
+                  <el-icon><Setting /></el-icon>
+                  设置权限
                 </el-button>
                 <el-button
                   type="primary"
@@ -214,6 +226,15 @@ onMounted(() => {
                 >
                   <el-icon><Plus /></el-icon>
                   新增子角色
+                </el-button>
+                <el-button
+                  type="primary"
+                  text
+                  class="operate-btn"
+                  @click="editRole(scope.row)"
+                >
+                  <el-icon><Edit /></el-icon>
+                  编辑
                 </el-button>
                 <el-button
                   type="danger"
@@ -293,6 +314,19 @@ onMounted(() => {
             <el-button @click="cancelDialog">取 消</el-button>
           </div>
         </el-dialog>
+        <el-drawer
+          v-if="isShowDrawer"
+          v-model="isShowDrawer"
+          :show-close="false"
+          :with-header="false"
+          size="40%"
+        >
+          <el-tabs v-model="tabActiveName" type="card">
+            <el-tab-pane label="菜单配置" name="menus">
+              <Menus :role-id="curRoleId" />
+            </el-tab-pane>
+          </el-tabs>
+        </el-drawer>
       </div>
     </template>
   </BasicLayout>

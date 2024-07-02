@@ -113,7 +113,6 @@ html.dark {
       }
     }
 
-    /* tagviews */
     .tag-container {
       box-sizing: border-box;
       background: var(--el-bg-color) !important;
@@ -167,8 +166,6 @@ html.dark {
       background: none !important;
 
       .basic-layout {
-        border: 1px solid #4c4d4f;
-
         .header-row {
           & > th {
             background: none !important;

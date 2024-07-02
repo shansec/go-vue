@@ -14,7 +14,7 @@ const router = useRouter()
 const settingStore = useSettingStore()
 const isCollaps = computed(() => settingStore.collapsed)
 const goHome = () => {
-  router.push({ path: '/' })
+  router.push({ name: 'Dashboard' })
 }
 </script>
 
@@ -32,7 +32,7 @@ const goHome = () => {
   align-items: center;
   padding: 0 20px;
   height: 60px;
-  background-color: #191a23;
+  // background-color: #191a23;
   cursor: pointer;
 
   img {

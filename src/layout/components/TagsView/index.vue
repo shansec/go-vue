@@ -7,7 +7,7 @@ import MoreButton from '@/layout/components/TagsView/components/MoreButton/index
 const route = useRoute()
 const router = useRouter()
 const tagsSetting = useTagsSetting()
-const tagViews = computed(() => tagsSetting.tagViews)
+const tagViewList = computed(() => tagsSetting.tagViewList)
 
 const addTag = () => {
   const { name } = route
@@ -23,15 +23,16 @@ const isActive = (path) => {
   return path === route.path
 }
 const toLastView = (path) => {
-  const indexTag = tagViews.value.findIndex((item) => item.path === path)
-  const nextTag = tagViews.value[indexTag + 1] || tagViews.value[indexTag - 1]
+  const indexTag = tagViewList.value.findIndex((item) => item.path === path)
+  const nextTag =
+    tagViewList.value[indexTag + 1] || tagViewList.value[indexTag - 1]
   if (!nextTag) return
-  console.log(path)
   router.push(nextTag.path)
   tagsSetting.addView(nextTag)
   tagsSetting.delView(path)
 }
 const removeTab = (path) => {
+  console.log(path)
   if (isActive(path)) {
     toLastView(path)
   } else {
@@ -45,7 +46,7 @@ const tabClick = (tabItem) => {
 
 const editableTabsValue = computed({
   get: () => {
-    return tagsSetting.tagViewValue
+    return tagsSetting.currentTagPath
   },
   set: (val) => {
     tagsSetting.setButtonMenu(val)
@@ -71,7 +72,7 @@ watch(route, () => {
         @tab-remove="removeTab"
       >
         <el-tab-pane
-          v-for="item in tagViews"
+          v-for="item in tagViewList"
           :key="item.name"
           :path="item.path"
           :label="item.title"
@@ -94,26 +95,27 @@ watch(route, () => {
 @import '@/style/variables.module';
 
 .tag-container {
-  // box-sizing: border-box;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  // width: 100%;
-  // height: 40px;
   padding: 0 10px;
 
   .tag-view {
     flex: 1;
 
     .el-tabs--card :deep(.el-tabs__header) {
+      display: table-cell;
       padding: 0 10px;
       margin: 0;
       height: 40px;
       box-sizing: border-box;
       border-bottom: none !important;
+      vertical-align: middle;
     }
 
     :deep(.el-tabs) {
+      --el-tabs-header-height: 32px;
+
       .el-tabs__nav {
         border: none;
       }

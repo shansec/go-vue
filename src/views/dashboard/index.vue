@@ -1,239 +1,242 @@
-<template>
-  <div class="page">
-    <div class="gva-card-box">
-      <div class="gva-card gva-top-card">
-        <div class="gva-top-card-left">
-          <div class="gva-top-card-left-title">
-            早上好，管理员，请开始一天的工作吧
-          </div>
-          <div class="gva-top-card-left-dot">{{ weatherInfo }}</div>
-          <el-row class="my-8 w-[500px] flex-align">
-            <el-col :span="8" :xs="24" :sm="8">
-              <div class="flex items-center">
-                <el-icon class="dashboard-icon">
-                  <sort />
-                </el-icon>
-                今日流量 (3035)
-              </div>
-            </el-col>
-            <el-col :span="8" :xs="24" :sm="8">
-              <div class="flex items-center">
-                <el-icon class="dashboard-icon">
-                  <avatar />
-                </el-icon>
-                总用户数 (1001)
-              </div>
-            </el-col>
-            <el-col :span="8" :xs="24" :sm="8">
-              <div class="flex items-center">
-                <el-icon class="dashboard-icon">
-                  <comment />
-                </el-icon>
-                好评率 (99%)
-              </div>
-            </el-col>
-          </el-row>
-          <div>
-            <div class="gva-top-card-left-item">
-              前端模块：
-              <a
-                style="color: #409eff"
-                target="view_window"
-                href="https://github.com/shansec/go-vue"
-              >https://github.com/shansec/go-vue</a>
-            </div>
-            <div class="gva-top-card-left-item">
-              后端模块：
-              <a
-                style="color: #409eff"
-                target="view_window"
-                href="https://github.com/shansec/go-vue-admin"
-              >https://github.com/shansec/go-vue-admin</a>
-            </div>
-          </div>
-        </div>
-        <img src="@/assets/dashboard.png" class="gva-top-card-right" alt />
-      </div>
-    </div>
-    <div class="gva-card-box">
-      <div class="gva-card">
-        <div class="gva-card-title">数据统计</div>
-        <div class="p-4">
-          <el-row :gutter="20">
-            <el-col :xs="24" :sm="18">
-              <echarts-line />
-            </el-col>
-            <el-col :xs="24" :sm="6">
-              <dashboard-table />
-            </el-col>
-          </el-row>
-        </div>
-      </div>
-    </div>
-  </div>
-</template>
-
 <script lang="js" setup>
 import EchartsLine from '@/views/dashboard/components/Line/index.vue'
 import DashboardTable from '@/views/dashboard/components/Table/index.vue'
 import { useWeatherInfo } from '@/views/dashboard/weather'
 
+defineOptions({
+  name: 'Dashboard'
+})
+
 const weatherInfo = useWeatherInfo()
 </script>
 
+<template>
+  <BasicLayout bg-color="transparent">
+    <template #wrapper>
+      <el-card class="card-box">
+        <div class="card top-card">
+          <div class="top-card-left">
+            <div class="top-card-left-title">
+              早上好，管理员，请开始一天的工作吧
+            </div>
+            <div class="top-card-left-dot">{{ weatherInfo }}</div>
+            <el-row class="my-8 w-[500px] flex-align">
+              <el-col :span="8" :xs="24" :sm="8">
+                <div class="flex items-center">
+                  <el-icon class="dashboard-icon">
+                    <sort />
+                  </el-icon>
+                  今日流量 (3035)
+                </div>
+              </el-col>
+              <el-col :span="8" :xs="24" :sm="8">
+                <div class="flex items-center">
+                  <el-icon class="dashboard-icon">
+                    <avatar />
+                  </el-icon>
+                  总用户数 (1001)
+                </div>
+              </el-col>
+              <el-col :span="8" :xs="24" :sm="8">
+                <div class="flex items-center">
+                  <el-icon class="dashboard-icon">
+                    <comment />
+                  </el-icon>
+                  好评率 (99%)
+                </div>
+              </el-col>
+            </el-row>
+            <div>
+              <div class="top-card-left-item">
+                前端模块：
+                <a
+                  style="color: #409eff"
+                  target="view_window"
+                  href="https://github.com/shansec/go-vue"
+                >https://github.com/shansec/go-vue</a>
+              </div>
+              <div class="top-card-left-item">
+                后端模块：
+                <a
+                  style="color: #409eff"
+                  target="view_window"
+                  href="https://github.com/shansec/go-vue-admin"
+                >https://github.com/shansec/go-vue-admin</a>
+              </div>
+            </div>
+          </div>
+          <img src="@/assets/dashboard.png" class="top-card-right" alt />
+        </div>
+      </el-card>
+      <el-card>
+        <div class="card-box">
+          <div class="card">
+            <div class="card-title">数据统计</div>
+            <div class="p-4">
+              <el-row :gutter="20">
+                <el-col :xs="24" :sm="18">
+                  <echarts-line />
+                </el-col>
+                <el-col :xs="24" :sm="6">
+                  <dashboard-table />
+                </el-col>
+              </el-row>
+            </div>
+          </div>
+        </div>
+      </el-card>
+    </template>
+  </BasicLayout>
+</template>
+
 <style lang="scss" scoped>
+:deep(.el-card__body) {
+  padding: 0;
+}
+
 @mixin flex-center {
   display: flex;
   align-items: center;
 }
 
-.page {
-  padding: 0;
-  width: 100%;
-  background: #f0f2f5;
+.card-box {
+  //padding: 12px 16px;
+  margin-bottom: 30px;
 
-  .gva-card-box {
-    //padding: 12px 16px;
-    margin-bottom: 30px;
-
-    & + .gva-card-box {
-      padding-top: 0;
-    }
+  & + .card-box {
+    padding-top: 0;
   }
+}
 
-  .gva-card {
-    overflow: hidden;
-    padding: 26px 30px;
-    height: auto;
-    background-color: #fff;
-    border-radius: 2px;
-    box-shadow: 0 0 7px 1px rgb(0 0 0 / 3%);
-    box-sizing: border-box;
+.card {
+  overflow: hidden;
+  padding: 26px 30px;
+  height: auto;
+  border-radius: 2px;
+  box-sizing: border-box;
 
-    .gva-card-title {
-      margin-bottom: 10px;
-      font-size: 20px;
-    }
+  .card-title {
+    margin-bottom: 10px;
+    font-size: 20px;
   }
+}
 
-  .gva-top-card {
-    justify-content: space-between;
-    height: 260px;
-    color: #777;
+.top-card {
+  justify-content: space-between;
+  height: 260px;
+  // color: #777;
 
-    @include flex-center;
+  @include flex-center;
 
-    &-left {
-      display: flex;
-      height: 100%;
-      flex-direction: column;
+  &-left {
+    display: flex;
+    height: 100%;
+    flex-direction: column;
 
-      &-title {
-        font-size: 22px;
-        color: #343844;
-      }
+    &-title {
+      font-size: 22px;
+      // color: #343844;
+    }
 
-      &-dot {
-        margin-top: 24px;
-        font-size: 16px;
-        color: #6b7687;
-      }
+    &-dot {
+      margin-top: 24px;
+      font-size: 16px;
+      // color: #6b7687;
+    }
 
-      .flex-align {
-        margin-top: 10px;
+    .flex-align {
+      margin-top: 10px;
 
-        .items-center {
-          display: flex;
-          align-items: center;
-        }
-      }
-
-      &-rows {
+      .items-center {
+        display: flex;
         align-items: center;
-        // margin-top: 15px;
-        margin-top: 18px;
-        width: 600px;
-        color: #6b7687;
       }
+    }
 
-      &-item {
-        + .gva-top-card-left-item {
-          margin-top: 14px;
-        }
+    &-rows {
+      align-items: center;
+      margin-top: 18px;
+      width: 600px;
+      // color: #6b7687;
+    }
 
+    &-item {
+      + .top-card-left-item {
         margin-top: 14px;
       }
-    }
 
-    &-right {
-      margin-top: 28px;
-      width: 600px;
-      height: 600px;
+      margin-top: 14px;
     }
   }
 
-  ::v-deep(.el-card__header) {
-    padding: 0;
-    border-bottom: none;
+  &-right {
+    margin-top: 28px;
+    width: 600px;
+    height: 600px;
   }
+}
 
-  .card-header {
-    padding-bottom: 20px;
-    border-bottom: 1px solid #e8e8e8;
-  }
+:deep(.el-card__header) {
+  padding: 0;
+  border-bottom: none;
+}
 
-  .quick-entrance-title {
-    width: 100%;
-    height: 30px;
-    font-size: 22px;
-    color: #333;
-    border-bottom: 1px solid #eee;
-  }
+.card-header {
+  padding-bottom: 20px;
+  border-bottom: 1px solid #e8e8e8;
+}
 
-  .quick-entrance-items {
-    @include flex-center;
+.quick-entrance-title {
+  width: 100%;
+  height: 30px;
+  font-size: 22px;
+  color: #333;
+  border-bottom: 1px solid #eee;
+}
 
-    justify-content: center;
+.quick-entrance-items {
+  @include flex-center;
+
+  justify-content: center;
+  text-align: center;
+  color: #333;
+
+  .quick-entrance-item {
+    padding: 16px 28px;
+    margin-top: -16px;
+    margin-bottom: -16px;
+    height: auto;
     text-align: center;
-    color: #333;
+    border-radius: 4px;
+    transition: all 0.2s;
+    cursor: pointer;
 
-    .quick-entrance-item {
-      padding: 16px 28px;
-      margin-top: -16px;
-      margin-bottom: -16px;
-      height: auto;
-      text-align: center;
-      border-radius: 4px;
-      transition: all 0.2s;
-      cursor: pointer;
+    &:hover {
+      box-shadow: 0 0 7px 0 rgb(217 217 217 / 55%);
+    }
+    // align-items: center;
+    &-icon {
+      justify-content: center;
+      margin: 0 auto;
+      width: 50px;
+      height: 50px !important;
+      border-radius: 8px;
 
-      &:hover {
-        box-shadow: 0 0 7px 0 rgb(217 217 217 / 55%);
-      }
-      // align-items: center;
-      &-icon {
-        justify-content: center;
-        margin: 0 auto;
-        width: 50px;
-        height: 50px !important;
-        border-radius: 8px;
+      @include flex-center;
 
-        @include flex-center;
-
-        i {
-          font-size: 24px;
-        }
-      }
-
-      p {
-        margin-top: 10px;
+      i {
+        font-size: 24px;
       }
     }
-  }
 
-  .echart-box {
-    padding: 14px;
+    p {
+      margin-top: 10px;
+    }
   }
+}
+
+.echart-box {
+  padding: 14px;
 }
 
 .dashboard-icon {
@@ -252,10 +255,10 @@ const weatherInfo = useWeatherInfo()
 
 //小屏幕不显示右侧，将登录框居中
 @media (width <= 750px) {
-  .gva-card {
+  .card {
     padding: 20px 10px !important;
 
-    .gva-top-card {
+    .top-card {
       height: auto;
 
       &-left {

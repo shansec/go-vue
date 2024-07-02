@@ -2,6 +2,7 @@
 import CollapseIcon from '@/layout/components/Header/components/CollapseIcon/index.vue'
 import BreadCrumb from '@/layout/components/Header/components/BreadCrumb/index.vue'
 import Setting from '@/layout/components/Header/components/Setting/index.vue'
+import Search from '@/layout/components/Header/components/Search/index.vue'
 import ScreenFull from '@/layout/components/Header/components/ScreenFull/index.vue'
 import Avatar from '@/layout/components/Header/components/Avatar/index.vue'
 </script>
@@ -12,7 +13,7 @@ import Avatar from '@/layout/components/Header/components/Avatar/index.vue'
     <BreadCrumb />
   </div>
   <div class="m-tool-right">
-    <!--    <Search class="item-children" />-->
+    <Search class="item-children" />
     <ScreenFull class="item-children" />
     <Setting class="item-children" />
     <Avatar class="item-children" />

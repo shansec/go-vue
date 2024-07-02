@@ -3,6 +3,10 @@ import { onMounted, ref } from 'vue'
 import { createPackage, getPackageList, deletePackage } from '@/api/AutoCode'
 import { errorMsg, successMsg, confirmBox } from '@/utils/message'
 
+defineOptions({
+  name: 'Package'
+})
+
 const packageList = ref()
 const total = ref(0)
 
@@ -112,19 +116,19 @@ onMounted(() => {
               />
             </el-form-item>
             <el-form-item>
-              <custom-el-button type="primary" @click="inquireCode">
+              <custom-el-button type="primary" @pointer="inquireCode">
                 <template #prefix>
                   <svg-icon icon-class="table-search" />
                 </template>
                 <template #txt> 查询 </template>
               </custom-el-button>
-              <custom-el-button :plain="true" @click="resetQuery">
+              <custom-el-button :plain="true" @pointer="resetQuery">
                 <template #prefix>
                   <svg-icon icon-class="table-reset" />
                 </template>
                 <template #txt> 重置 </template>
               </custom-el-button>
-              <custom-el-button type="primary" @click="ShowDialog">
+              <custom-el-button type="primary" @pointer="ShowDialog">
                 <template #prefix>
                   <svg-icon icon-class="table-add" />
                 </template>

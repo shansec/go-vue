@@ -3,7 +3,7 @@ import { getSystemState } from '@/api/System'
 import { onUnmounted, ref } from 'vue'
 
 defineOptions({
-  name: 'State'
+  name: 'System'
 })
 
 const timer = ref(null)

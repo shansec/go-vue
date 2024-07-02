@@ -3,6 +3,10 @@ import { onMounted, ref } from 'vue'
 import { getApiList, createApi, deleteApi, updateApi } from '@/api/Api'
 import { errorMsg, successMsg, confirmBox } from '@/utils/message'
 
+defineOptions({
+  name: 'Api'
+})
+
 const apiList = ref()
 const total = ref(0)
 const methods = ref([
@@ -216,19 +220,19 @@ onMounted(() => {
               </el-select>
             </el-form-item>
             <el-form-item>
-              <custom-el-button type="primary" @click="inquireApi">
+              <custom-el-button type="primary" @pointer="inquireApi">
                 <template #prefix>
                   <svg-icon icon-class="table-search" />
                 </template>
                 <template #txt> 查询 </template>
               </custom-el-button>
-              <custom-el-button :plain="true" @click="resetQuery">
+              <custom-el-button :plain="true" @pointer="resetQuery">
                 <template #prefix>
                   <svg-icon icon-class="table-reset" />
                 </template>
                 <template #txt> 重置 </template>
               </custom-el-button>
-              <custom-el-button type="primary" @click="ShowDialog">
+              <custom-el-button type="primary" @pointer="ShowDialog">
                 <template #prefix>
                   <svg-icon icon-class="table-add" />
                 </template>

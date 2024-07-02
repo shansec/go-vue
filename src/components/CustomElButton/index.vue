@@ -48,7 +48,7 @@ const color = computed(() => settingStore.themeColor)
   <el-button
     :size="size"
     :type="type"
-    :plain="plain"
+    :plain="false"
     :text="text"
     :round="round"
     :circle="circle"
@@ -56,10 +56,17 @@ const color = computed(() => settingStore.themeColor)
     :disabled="disabled"
     :color="color"
     :dark="isDark"
-    @click="() => $emit('click')"
+    @click="() => $emit('pointer')"
   >
-    <slot name="prefix" />
-    <slot name="txt" />
-    <slot name="suffix" />
+    <div :class="isDark ? '' : 'icon-color'">
+      <slot name="prefix" />
+      <slot name="txt" />
+      <slot name="suffix" />
+    </div>
   </el-button>
 </template>
+<style scoped lang="scss">
+.icon-color {
+  color: #fff;
+}
+</style>
