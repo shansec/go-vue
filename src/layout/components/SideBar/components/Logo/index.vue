@@ -14,7 +14,7 @@ const router = useRouter()
 const settingStore = useSettingStore()
 const isCollaps = computed(() => settingStore.collapsed)
 const goHome = () => {
-  router.push({ path: '/' })
+  router.push({ name: 'Dashboard' })
 }
 </script>
 

@@ -28,7 +28,7 @@ const logout = () => {
 // 弹出修改密码弹出层
 const modifyDialogShow = () => {
   router.push({
-    path: '/profile'
+    name: 'Profile'
   })
 }
 </script>

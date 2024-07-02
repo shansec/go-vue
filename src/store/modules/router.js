@@ -7,20 +7,39 @@ const notLayoutRouterArr = []
 
 const formatRouter = (routers, parent) => {
   const routerRes = []
+
+  // 遍历路由器列表
   routers &&
     routers.forEach((item) => {
-      const router = {
+      const baseRouter = {
         path: item.path,
         name: item.name,
         hidden: item.hidden,
         component: item.component,
         meta: item.meta,
-        children:
-          item.children && item.children.length > 0
-            ? formatRouter(item.children, item)
-            : []
+        children: []
       }
-      routerRes.push(router)
+
+      const hasSingleChild =
+        Array.isArray(item.children) && item.children.length === 1
+      if (hasSingleChild) {
+        const child = item.children[0]
+        Object.assign(baseRouter, {
+          path: child.path,
+          name: child.name,
+          hidden: child.hidden,
+          component: child.component,
+          meta: child.meta
+        })
+      }
+
+      baseRouter.children =
+        Array.isArray(item.children) && item.children.length > 1
+          ? formatRouter(item.children, item)
+          : []
+
+      // 将处理后的路由添加到结果数组
+      routerRes.push(baseRouter)
     })
   return routerRes
 }

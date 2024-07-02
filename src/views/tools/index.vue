@@ -10,7 +10,7 @@ defineOptions({
 <template>
   <router-view v-slot="{ Component }">
     <transition mode="out-in" name="el-fade-in-linear">
-      <keep-alive :include="tagsStore.keepAliveViews">
+      <keep-alive :include="tagsStore.keepAliveRouters">
         <component :is="Component" />
       </keep-alive>
     </transition>

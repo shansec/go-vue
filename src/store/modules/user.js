@@ -8,7 +8,7 @@ import { ElLoading } from 'element-plus'
 import router from '@/router/index.js'
 
 export const useUserStore = defineStore('userStore', () => {
-  const token = ref('')
+  const token = ref(storage.get('token') || '')
   const userInfo = ref({})
 
   const getToken = computed(() => token.value)

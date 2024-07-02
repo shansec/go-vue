@@ -20,8 +20,6 @@ const getRouter = async (userStore) => {
 }
 
 router.beforeEach(async (to, from) => {
-  console.log('to', to)
-  console.log('from', from)
   const routerStore = useRouterStore()
   NProgress.start()
   const userStore = useUserStore()

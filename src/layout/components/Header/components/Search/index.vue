@@ -5,9 +5,10 @@ import { useRouter } from 'vue-router'
 import path from 'path-browserify'
 import Fuse from 'fuse.js'
 
-import { constantRoutes } from '@/router/index.js'
+import { useRouterStore } from '@/store/modules/router.js'
 
 const router = useRouter()
+const routerStore = useRouterStore()
 const search = ref('')
 const isShowSearch = ref(false)
 const searchPool = ref([])
@@ -51,7 +52,7 @@ watch(searchPool, (list) => {
  * @param basePath 路径
  * @param prefixTitle 标题
  */
-const generateRoutes = (routes, basePath = '/', prefixTitle = []) => {
+const generateRoutes = (routes, basePath = '/layout', prefixTitle = []) => {
   let filterRoutes = []
 
   for (const route of routes) {
@@ -93,7 +94,9 @@ const handleSearch = () => {
 }
 
 onMounted(() => {
-  searchPool.value = generateRoutes(JSON.parse(JSON.stringify(constantRoutes)))
+  searchPool.value = generateRoutes(
+    JSON.parse(JSON.stringify(routerStore.asyncRouter[0].children))
+  )
 })
 
 // 搜索框的远程搜索方法

@@ -5,29 +5,30 @@ import { ref } from 'vue'
 export const useTagsSetting = defineStore(
   'tagsSetting',
   () => {
-    const tagViewValue = ref('/dashboard')
-    const tagViews = ref([])
-    const keepAliveViews = ref([])
+    const DASHBOARD_NAME = 'Dashboard'
+    const currentTagPath = ref('/layout/dashboard')
+    const tagViewList = ref([])
+    const keepAliveRouters = ref([])
 
     const setButtonMenu = (val) => {
-      tagViewValue.value = val
+      currentTagPath.value = val
     }
     const addView = (view) => {
       setButtonMenu(view.path)
-      const includeView = tagViews.value.some((v) => v.path === view.path)
+      const includeView = tagViewList.value.some((v) => v.path === view.path)
       if (includeView) return
-      tagViews.value.push({ ...view, title: view.meta.title || 'no-name' })
+      tagViewList.value.push({ ...view, title: view.meta.title || 'no-name' })
       addKeepAliveView(view)
     }
     const delView = (path) => {
       const name = findNameByPath(path)
-      tagViews.value = tagViews.value.filter((v) => v.path !== path)
+      tagViewList.value = tagViewList.value.filter((v) => v.path !== path)
       delKeepAliveView(name)
     }
     const toLastView = (path) => {
-      const indexTag = tagViews.value.findIndex((item) => item.path === path)
+      const indexTag = tagViewList.value.findIndex((item) => item.path === path)
       const nextTag =
-        tagViews.value[indexTag + 1] || tagViews.value[indexTag - 1]
+        tagViewList.value[indexTag + 1] || tagViewList.value[indexTag - 1]
       if (!nextTag) return
       router.push(nextTag.path)
       addView(nextTag)
@@ -35,44 +36,44 @@ export const useTagsSetting = defineStore(
     }
     const delOtherView = (path) => {
       const name = findNameByPath(path)
-      tagViews.value = tagViews.value.filter(
+      tagViewList.value = tagViewList.value.filter(
         (item) => item.path === path || item.meta.affix
       )
       delKeepAliveView(name)
     }
     const delAllView = () => {
-      tagViews.value = tagViews.value.filter((item) => item.meta.affix)
+      tagViewList.value = tagViewList.value.filter((item) => item.meta.affix)
     }
     const goHome = () => {
-      tagViewValue.value = '/dashboard'
-      router.push('/dashboard')
+      currentTagPath.value = '/layout/dashboard'
+      router.push({ name: DASHBOARD_NAME })
     }
     const addKeepAliveView = (view) => {
       if (view && view.meta.keepAlive) {
-        keepAliveViews.value.push(view.name)
+        keepAliveRouters.value.push(view.name)
       }
     }
     const delKeepAliveView = (name) => {
-      if (name && keepAliveViews.value.includes(name)) {
-        keepAliveViews.value = keepAliveViews.value.filter(
-          (item) => item !== name || name === 'Dashboard'
+      if (name && keepAliveRouters.value.includes(name)) {
+        keepAliveRouters.value = keepAliveRouters.value.filter(
+          (item) => item !== name || name === DASHBOARD_NAME
         )
       }
     }
     const delAllKeepAliveView = () => {
-      keepAliveViews.value = keepAliveViews.value.filter(
-        (item) => item === 'Dashboard'
+      keepAliveRouters.value = keepAliveRouters.value.filter(
+        (item) => item === DASHBOARD_NAME
       )
     }
     const findNameByPath = (path) => {
-      const tag = tagViews.value.find((tag) => tag.path === path)
+      const tag = tagViewList.value.find((tag) => tag.path === path)
       return tag ? tag.name : null
     }
 
     return {
-      tagViewValue,
-      tagViews,
-      keepAliveViews,
+      currentTagPath,
+      tagViewList,
+      keepAliveRouters,
       setButtonMenu,
       addView,
       delView,
