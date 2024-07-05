@@ -1,6 +1,6 @@
 <script lang="js" setup>
 import { computed } from 'vue'
-import { MyHeader, Sidebar, Main } from './components/index.js'
+import { MHeader, Sidebar, Main } from './index'
 import ThemeSetting from '@/components/ThemeSetting/index.vue'
 import { useSettingStore } from '@/store/modules/settings.js'
 
@@ -17,7 +17,7 @@ const classObj = computed(() => {
   <div class="container-layout" :class="classObj">
     <Sidebar />
     <div class="main-container">
-      <MyHeader />
+      <MHeader />
       <Main />
       <ThemeSetting />
     </div>
