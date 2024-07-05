@@ -1,7 +1,15 @@
 <script lang="js" setup>
 import { computed, ref, watch } from 'vue'
 import { useSettingStore } from '@/store/modules/settings.js'
-import { DynamicTags, Setting, CollapseIcon, BreadCrumb, ScreenFull, Avatar, Search } from '../components/index'
+import {
+  DynamicTags,
+  Setting,
+  CollapseIcon,
+  BreadCrumb,
+  ScreenFull,
+  Avatar,
+  Search
+} from '../components/index'
 
 const settingStore = useSettingStore()
 const showTags = computed(() => settingStore.showTagsView)
