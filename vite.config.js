@@ -42,7 +42,7 @@ export default defineConfig(({ command, mode }) => {
       cors: false,
       proxy: {
         [env.VITE_BASE_API]: {
-          target: `${env.VITE_BASE_PATH}${env.VITE_ROUTER_PREFIX}`,
+          target: `${env.VITE_BASE_PATH}:${env.VITE_SERVER_PORT}/${env.VITE_ROUTER_PREFIX}`,
           changeOrigin: true,
           rewrite: (path) =>
             path.replace(new RegExp('^' + env.VITE_BASE_API), '')

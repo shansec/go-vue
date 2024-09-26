@@ -2,8 +2,8 @@ module.exports = {
   extends: [
     'stylelint-config-standard',
     'stylelint-config-prettier',
-    'stylelint-config-recommended-scss',
-    'stylelint-config-standard-vue'
+    'stylelint-config-standard-vue',
+    'stylelint-config-recommended-scss'
   ],
   plugins: ['stylelint-order'],
   // 不同格式的文件指定自定义语法
@@ -29,6 +29,7 @@ module.exports = {
   rules: {
     'no-descending-specificity': null,
     'at-rule-no-unknown': null,
+    'scss/at-rule-no-unknown': null,
     "selector-class-pattern": null,
     "property-no-unknown": null,
     'selector-pseudo-element-no-unknown': [

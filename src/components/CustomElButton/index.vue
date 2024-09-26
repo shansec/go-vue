@@ -48,7 +48,7 @@ const color = computed(() => settingStore.themeColor)
   <el-button
     :size="size"
     :type="type"
-    :plain="false"
+    :plain="plain"
     :text="text"
     :round="round"
     :circle="circle"

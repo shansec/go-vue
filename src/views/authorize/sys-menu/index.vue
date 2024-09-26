@@ -224,7 +224,7 @@ onMounted(() => {
         >
           <el-table-column prop="ID" label="ID" width="100" />
           <el-table-column prop="meta.title" label="展示名称" />
-          <el-table-column prop="meta" label="图标">
+          <el-table-column prop="meta" label="图标" width="180">
             <template #default="scope">
               <div class="icon">
                 <el-icon :size="20">
@@ -406,8 +406,8 @@ onMounted(() => {
             </el-row>
           </el-form>
           <div slot="footer" class="dialog-footer">
-            <el-button type="primary" @click="confirmSubmit">确 定</el-button>
             <el-button @click="cancelDialog">取 消</el-button>
+            <el-button type="primary" @click="confirmSubmit">确 定</el-button>
           </div>
         </el-dialog>
       </div>

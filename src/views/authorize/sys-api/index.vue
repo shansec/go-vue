@@ -248,11 +248,11 @@ onMounted(() => {
           row-key="apiId"
           border
         >
-          <el-table-column prop="ID" label="ID" />
+          <el-table-column prop="ID" label="ID" width="100" />
           <el-table-column prop="path" label="api路径" />
           <el-table-column prop="description" label="api中文描述" />
           <el-table-column prop="apiGroup" label="api所属组" />
-          <el-table-column prop="method" label="method" />
+          <el-table-column prop="method" label="method" width="150" />
           <el-table-column label="操作">
             <template #default="scope">
               <div class="operate-box">
