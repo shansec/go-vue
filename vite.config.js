@@ -59,6 +59,14 @@ export default defineConfig(({ command, mode }) => {
       sourcemap: true,
       chunkSizeWarningLimit: 2000,
       reportCompressedSize: false
+    },
+    css: {
+      preprocessorOptions: {
+        scss: {
+          // 自定义的主题色
+          additionalData: `@use "@/style/element/index.scss" as *;`
+        }
+      }
     }
   }
 })

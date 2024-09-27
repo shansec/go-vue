@@ -239,7 +239,7 @@ onMounted(() => {
 </script>
 
 <template>
-  <div class="table">
+  <div>
     <div class="query-box">
       <el-form :model="queryParams" :inline="true" label-width="70px">
         <el-form-item label="用户昵称">
@@ -262,33 +262,22 @@ onMounted(() => {
           </el-select>
         </el-form-item>
         <el-form-item>
-          <custom-el-button type="primary" @pointer="inquireUser">
-            <template #prefix>
-              <svg-icon icon-class="table-search" />
-            </template>
-            <template #txt> 查询 </template>
-          </custom-el-button>
-          <custom-el-button type="primary" @pointer="resetQuery">
-            <template #prefix>
-              <svg-icon icon-class="table-reset" />
-            </template>
-            <template #txt> 重置 </template>
-          </custom-el-button>
-          <custom-el-button type="primary" @pointer="ShowDialog">
-            <template #prefix>
-              <svg-icon icon-class="table-add" />
-            </template>
-            <template #txt> 新增 </template>
-          </custom-el-button>
+          <el-button type="primary" @click="inquireUser">
+            <svg-icon icon-class="table-search" />
+            查询
+          </el-button>
+          <el-button plain @click="resetQuery">
+            <svg-icon icon-class="table-reset" />
+            重置
+          </el-button>
+          <el-button type="primary" @click="ShowDialog">
+            <svg-icon icon-class="table-add" />
+            新增
+          </el-button>
         </el-form-item>
       </el-form>
     </div>
-    <el-table
-      :data="userList"
-      border
-      style="width: 100%"
-      header-row-class-name="header-row"
-    >
+    <el-table :data="userList" border style="width: 100%">
       <el-table-column prop="ID" label="编号" width="100" />
       <el-table-column prop="userName" label="登录名" />
       <el-table-column prop="nickName" label="昵称" />
@@ -496,15 +485,6 @@ onMounted(() => {
   </div>
 </template>
 <style lang="scss">
-.header-row {
-  height: 55px;
-  color: #909399;
-
-  & > th {
-    background: #f8f8f9 !important;
-  }
-}
-
 .operate-box {
   display: flex;
   justify-content: flex-start;

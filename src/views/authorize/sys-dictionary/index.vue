@@ -72,6 +72,9 @@ const openDialog = (key) => {
   }
   dialogFormVisible.value = true
 }
+const selectDictionary = (id) => {
+  selectID.value = id
+}
 const updateDictionaryFunc = async (row) => {
   const res = await getDictionary({ ID: row.ID, status: row.status })
   if (res.code === 200) {
@@ -131,16 +134,17 @@ onMounted(() => {
           <div class="w-64 bg-white p-4">
             <div class="flex justify-between items-center">
               <span class="text font-bold">字典列表</span>
-              <custom-el-button type="primary" @pointer="addDictionary">
-                <template #txt> 新增 </template>
-              </custom-el-button>
+              <el-button type="primary" @click="addDictionary">
+                新增
+              </el-button>
             </div>
-            <el-scrollbar class="mt-4 h-4/5">
+            <el-scrollbar class="mt-4" style="height: calc(100vh - 220px)">
               <div
                 v-for="dictionary in dictionaryData"
                 :key="dictionary.ID"
                 class="rounded flex justify-between items-center px-2 py-4 cursor-pointer mt-2 hover:bg-blue-50 group bg-gray-50"
                 :class="selectID === dictionary.ID && 'active'"
+                @click="selectDictionary(dictionary.ID)"
               >
                 <span class="max-w-[160px] truncate">{{
                   dictionary.name
@@ -173,7 +177,7 @@ onMounted(() => {
             </el-scrollbar>
           </div>
           <div class="flex-1 bg-white">
-            <DictionaryDetail />
+            <DictionaryDetail :dictionary-i-d="selectID" />
           </div>
         </div>
         <el-dialog
@@ -235,6 +239,11 @@ onMounted(() => {
   .dict-box {
     width: 100%;
     height: 100%;
+
+    .active {
+      color: #fff;
+      background-color: var(--el-color-primary) !important;
+    }
   }
 }
 </style>

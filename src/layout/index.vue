@@ -25,7 +25,8 @@ const classObj = computed(() => {
 </template>
 
 <style lang="scss" scoped>
-@import '@/style/index';
+@import '@/style/variables.module';
+@import '@/style/sidebar';
 
 .container-layout {
   width: 100%;

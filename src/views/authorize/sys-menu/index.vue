@@ -208,20 +208,12 @@ onMounted(() => {
     <template #wrapper>
       <div class="menu-container">
         <div class="add-btn">
-          <custom-el-button type="primary" @pointer="addMenu">
-            <template #prefix>
-              <svg-icon icon-class="table-add" />
-            </template>
-            <template #txt> 新增菜单 </template>
-          </custom-el-button>
+          <el-button type="primary" @click="addMenu">
+            <svg-icon icon-class="table-add" />
+            新增菜单
+          </el-button>
         </div>
-        <el-table
-          :data="menuList"
-          style="width: 100%"
-          header-row-class-name="header-row"
-          row-key="ID"
-          border
-        >
+        <el-table :data="menuList" style="width: 100%" row-key="ID" border>
           <el-table-column prop="ID" label="ID" width="100" />
           <el-table-column prop="meta.title" label="展示名称" />
           <el-table-column prop="meta" label="图标" width="180">
@@ -422,15 +414,6 @@ onMounted(() => {
 
   .add-btn {
     margin-bottom: 10px;
-  }
-
-  .header-row {
-    height: 55px;
-    color: #909399;
-
-    & > th {
-      background: #f8f8f9 !important;
-    }
   }
 
   .icon {

@@ -190,20 +190,12 @@ onMounted(() => {
     <template #wrapper>
       <div class="role-container">
         <div class="add-btn">
-          <custom-el-button type="primary" @pointer="addRole">
-            <template #prefix>
-              <svg-icon icon-class="table-add" />
-            </template>
-            <template #txt> 新增角色 </template>
-          </custom-el-button>
+          <el-button type="primary" @click="addRole">
+            <svg-icon icon-class="table-add" />
+            新增角色
+          </el-button>
         </div>
-        <el-table
-          :data="roleList"
-          style="width: 100%"
-          header-row-class-name="header-row"
-          row-key="roleId"
-          border
-        >
+        <el-table :data="roleList" style="width: 100%" row-key="roleId" border>
           <el-table-column prop="roleId" label="角色编号" />
           <el-table-column prop="roleName" label="角色名称" />
           <el-table-column label="操作">
@@ -339,15 +331,6 @@ onMounted(() => {
 
   .add-btn {
     margin-bottom: 10px;
-  }
-
-  .header-row {
-    height: 55px;
-    color: #909399;
-
-    & > th {
-      background: #f8f8f9 !important;
-    }
   }
 
   .operate-box {

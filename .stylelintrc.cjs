@@ -29,6 +29,7 @@ module.exports = {
   rules: {
     'no-descending-specificity': null,
     'at-rule-no-unknown': null,
+    "no-duplicate-selectors": null,
     'scss/at-rule-no-unknown': null,
     "selector-class-pattern": null,
     "property-no-unknown": null,

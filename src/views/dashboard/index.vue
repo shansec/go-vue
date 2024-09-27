@@ -20,7 +20,7 @@ const weatherInfo = useWeatherInfo()
               早上好，管理员，请开始一天的工作吧
             </div>
             <div class="top-card-left-dot">{{ weatherInfo }}</div>
-            <el-row class="my-8 w-[500px] flex-align">
+            <el-row class="w-[500px] flex-align">
               <el-col :span="8" :xs="24" :sm="8">
                 <div class="flex items-center">
                   <el-icon class="dashboard-icon">

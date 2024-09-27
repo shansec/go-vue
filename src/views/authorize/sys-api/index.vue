@@ -220,34 +220,22 @@ onMounted(() => {
               </el-select>
             </el-form-item>
             <el-form-item>
-              <custom-el-button type="primary" @pointer="inquireApi">
-                <template #prefix>
-                  <svg-icon icon-class="table-search" />
-                </template>
-                <template #txt> 查询 </template>
-              </custom-el-button>
-              <custom-el-button :plain="true" @pointer="resetQuery">
-                <template #prefix>
-                  <svg-icon icon-class="table-reset" />
-                </template>
-                <template #txt> 重置 </template>
-              </custom-el-button>
-              <custom-el-button type="primary" @pointer="ShowDialog">
-                <template #prefix>
-                  <svg-icon icon-class="table-add" />
-                </template>
-                <template #txt> 新增 </template>
-              </custom-el-button>
+              <el-button type="primary" @click="inquireApi">
+                <svg-icon icon-class="table-search" />
+                查询
+              </el-button>
+              <el-button @click="resetQuery">
+                <svg-icon icon-class="table-reset" />
+                重置
+              </el-button>
+              <el-button type="primary" @click="ShowDialog">
+                <svg-icon icon-class="table-add" />
+                新增
+              </el-button>
             </el-form-item>
           </el-form>
         </div>
-        <el-table
-          :data="apiList"
-          style="width: 100%"
-          header-row-class-name="header-row"
-          row-key="apiId"
-          border
-        >
+        <el-table :data="apiList" style="width: 100%" row-key="apiId" border>
           <el-table-column prop="ID" label="ID" width="100" />
           <el-table-column prop="path" label="api路径" />
           <el-table-column prop="description" label="api中文描述" />
@@ -358,15 +346,6 @@ onMounted(() => {
   padding: 20px;
   width: 100%;
   box-sizing: border-box;
-
-  .header-row {
-    height: 55px;
-    color: #909399;
-
-    & > th {
-      background: #f8f8f9 !important;
-    }
-  }
 
   .operate-box {
     display: flex;
