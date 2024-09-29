@@ -8,16 +8,16 @@ import { createSvgIconsPlugin } from 'vite-plugin-svg-icons'
 export default defineConfig(({ command, mode }) => {
   const env = loadEnv(mode, process.cwd(), '')
 
+  const isCodeInspectorEnabled = env.VITE_POSITION === 'open'
+
   return {
     plugins: [
       vue(),
       createSvgIconsPlugin({
-        // 需要自动导入的 svg 文件目录（可自行修改）我的路径如下图所示
         iconDirs: [path.resolve(process.cwd(), 'src/icons/svg')],
-        // 执行icon name的格式（可自行修改）
         symbolId: 'icon-[name]'
       }),
-      env.VITE_POSITION === 'open' &&
+      isCodeInspectorEnabled &&
         codeInspectorPlugin({ bundler: 'vite', hotKeys: ['shiftKey'] }),
       legacyPlugin({
         targets: [
@@ -59,14 +59,6 @@ export default defineConfig(({ command, mode }) => {
       sourcemap: true,
       chunkSizeWarningLimit: 2000,
       reportCompressedSize: false
-    },
-    css: {
-      preprocessorOptions: {
-        scss: {
-          // 自定义的主题色
-          additionalData: `@use "@/style/element/index.scss" as *;`
-        }
-      }
     }
   }
 })

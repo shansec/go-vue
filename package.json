@@ -43,6 +43,7 @@
     "pinia-plugin-persist": "^1.0.0",
     "sass": "^1.57.1",
     "tailwindcss": "^3.4.13",
+    "unplugin-element-plus": "^0.8.0",
     "vue": "^3.3.4",
     "vue-cropper": "^1.1.1",
     "vue-router": "^4.2.4"
@@ -70,6 +71,8 @@
     "stylelint-config-standard-vue": "^1.0.0",
     "stylelint-order": "^6.0.3",
     "stylelint-scss": "^5.1.0",
+    "unplugin-auto-import": "^0.18.3",
+    "unplugin-vue-components": "^0.27.4",
     "vite": "^4.4.5",
     "vite-plugin-svg-icons": "^2.0.1",
     "vue-tsc": "^1.8.5"

@@ -1,4 +1,5 @@
-@import "./variables.module";
+//@import "./variables.module";
+@use './variables.module';
 
 .sidebar-container {
   position: fixed;
