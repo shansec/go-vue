@@ -2,7 +2,7 @@
 import { computed, onMounted, watch } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { useTagsSetting } from '@/store/modules/tagsView.js'
-import MoreButton from '@/layout/components/TagsView/components/MoreButton/index.vue'
+import MoreButton from '../MoreButton/index.vue'
 
 const route = useRoute()
 const router = useRouter()

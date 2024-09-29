@@ -8,3 +8,8 @@ import zhCn from 'element-plus/dist/locale/zh-cn.mjs'
     </el-config-provider>
   </div>
 </template>
+<style lang="scss">
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+</style>

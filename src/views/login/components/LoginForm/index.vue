@@ -120,14 +120,14 @@ onMounted(() => {
     <!--        loginForm.isPhoneLogin ? '账号登录' : '手机号登录'-->
     <!--      }}</span>-->
     <!--    </div>-->
-    <custom-el-button
+    <el-button
       :loading="loading"
       type="primary"
       class="login_btn"
-      @pointer="submitForm"
+      @click="submitForm"
     >
-      <template #txt> <span>登录</span> </template>
-    </custom-el-button>
+      登录
+    </el-button>
   </el-form>
 </template>
 <style lang="scss" scoped>

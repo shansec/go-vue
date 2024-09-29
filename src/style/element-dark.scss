@@ -1,49 +1,38 @@
 /* 暗黑模式自定义样式 */
 html.dark {
-  /* 自定义深色背景颜色 */
-
-  /* --el-bg-color: #141414; */
-
-  /* --el-bg-color-overlay: #1d1e1f; */
-
   --zb-border-light: 1px solid #4c4d4f;
+  --background-color: none;
+  --primary-color: #fff;
+  --secondary-color: #999;
+  --hover-color: #263445;
+  --active-color: #060708;
 
   body {
-    background: none;
+    background: var(--background-color);
   }
 
-  /* 编辑器 */
+  /* 编辑器 & 富文本 */
   .w-e-toolbar,
   .w-e-text-container,
-  .w-e-menu-panel {
-    background: none !important;
-  }
-
-  /* 富文本 */
+  .w-e-menu-panel,
   .md {
-    background: none !important;
+    background: var(--background-color) !important;
   }
 
   #app {
     .sidebar-container {
       background: var(--el-bg-color) !important;
 
-      & .el-menu .el-sub-menu > .el-sub-menu__title,
-      & .el-sub-menu .el-menu-item {
+      .el-menu .el-sub-menu > .el-sub-menu__title,
+      .el-sub-menu .el-menu-item {
         background-color: var(--el-bg-color) !important;
 
         &:hover {
-          background-color: #263445 !important;
+          background-color: var(--hover-color) !important;
         }
 
         &.is-active {
-          background-color: #060708 !important;
-        }
-      }
-
-      .el-sub-menu__title {
-        &:hover {
-          background-color: var(--el-bg-color) !important;
+          background-color: var(--active-color) !important;
         }
       }
 
@@ -51,7 +40,7 @@ html.dark {
         background-color: var(--el-bg-color) !important;
 
         &:hover {
-          background-color: #263445 !important;
+          background-color: var(--hover-color) !important;
         }
       }
     }
@@ -59,43 +48,37 @@ html.dark {
 
   .sidebar-logo-container {
     box-sizing: border-box;
-    background: none;
+    background: var(--background-color);
     border: var(--zb-border-light);
   }
 
-  .el-drawer__header {
-    span {
-      color: var(--el-text-color-primary) !important;
-    }
-  }
-
+  .el-drawer__header span,
   .theme-item {
     color: var(--el-text-color-primary) !important;
   }
 
-  .el-table__header th {
-    font-weight: bold;
-    color: white;
+  .el-table .is-leaf {
+    background: #141414 !important;
+
+    .cell {
+      color: var(--primary-color) !important;
+    }
   }
 
   .footer-layout {
-    color: white;
-    background: none;
+    color: var(--primary-color);
+    background: var(--background-color);
   }
 
   .zb-pro-table {
-    .header {
-      background: none !important;
-      border: var(--zb-border-light);
-    }
-
+    .header,
     .footer {
-      background: none !important;
+      background: var(--background-color) !important;
       border: var(--zb-border-light);
     }
 
     .el-table__header th {
-      color: white !important;
+      color: var(--primary-color) !important;
     }
   }
 
@@ -116,9 +99,7 @@ html.dark {
     .tag-container {
       box-sizing: border-box;
       background: var(--el-bg-color) !important;
-      border-top: none;
-      border-bottom: var(--zb-border-light);
-      border-left: none;
+      border: none;
     }
   }
 
@@ -127,51 +108,32 @@ html.dark {
     color: var(--el-text-color-primary) !important;
     background-color: var(--el-bg-color) !important;
 
-    .echarts-map {
+    .echarts-map,
+    .app-echarts {
       background: var(--el-bg-color) !important;
     }
 
-    .app-echarts {
-      background: none;
-    }
-
     .app-container {
-      .header {
-        background: none;
-      }
-
+      .header,
       .footer {
-        background: none;
+        background: var(--background-color);
       }
     }
 
-    .m-container-layout {
-      .m-container-layout-inner {
-        color: var(--el-text-color-primary) !important;
-        background: none;
-      }
+    .m-container-layout .m-container-layout-inner {
+      color: var(--el-text-color-primary) !important;
+      background: var(--background-color);
     }
 
     .item-group-item {
       color: #ccc;
-      background: none !important;
+      background: var(--background-color) !important;
       border: var(--zb-border-light);
     }
 
-    .app-container-inner {
-      background: none;
-    }
-
+    .app-container-inner,
     .app-main-inner {
-      background: none !important;
-
-      .basic-layout {
-        .header-row {
-          & > th {
-            background: none !important;
-          }
-        }
-      }
+      background: var(--background-color);
     }
   }
 

@@ -2,7 +2,7 @@
 import { ref } from 'vue'
 import { resolve } from 'path-browserify'
 import { isExternal } from '@/utils/validate.js'
-import SubItem from '@/layout/components/SideBar/components/SubItem/index.vue'
+import SubItem from '@/layout/components/SubItem/index.vue'
 
 const props = defineProps({
   item: {

@@ -1,9 +1,15 @@
 <script lang="js" setup>
 import { computed, ref, watch } from 'vue'
 import { useSettingStore } from '@/store/modules/settings.js'
-
-import DynamicTags from '@/layout/components/TagsView/index.vue'
-import Index from '@/layout/components/Header/components/index.vue'
+import {
+  DynamicTags,
+  Setting,
+  CollapseIcon,
+  BreadCrumb,
+  ScreenFull,
+  Avatar,
+  Search
+} from '../components/index'
 
 const settingStore = useSettingStore()
 const showTags = computed(() => settingStore.showTagsView)
@@ -39,7 +45,16 @@ watch(
 <template>
   <div class="m-layout-header" :style="headerType">
     <div class="m-header-inner">
-      <Index />
+      <div class="m-tool-left">
+        <CollapseIcon />
+        <BreadCrumb />
+      </div>
+      <div class="m-tool-right">
+        <Search class="item-children" />
+        <ScreenFull class="item-children" />
+        <Setting class="item-children" />
+        <Avatar class="item-children" />
+      </div>
     </div>
     <DynamicTags v-if="showTags" />
   </div>
@@ -62,6 +77,23 @@ watch(
     align-items: center;
     height: 59px;
     border-bottom: 1px solid #eee;
+
+    .m-tool-left {
+      display: flex;
+      justify-content: flex-start;
+      align-items: center;
+    }
+
+    .m-tool-right {
+      display: flex;
+      align-items: center;
+      height: 100%;
+
+      .item-children {
+        margin-right: 15px;
+        height: 100%;
+      }
+    }
   }
 }
 </style>

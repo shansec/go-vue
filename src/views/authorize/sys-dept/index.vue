@@ -264,34 +264,22 @@ onMounted(() => {
               </el-select>
             </el-form-item>
             <el-form-item>
-              <custom-el-button type="primary" @pointer="inquireDept">
-                <template #prefix>
-                  <svg-icon icon-class="table-search" />
-                </template>
-                <template #txt> 查询 </template>
-              </custom-el-button>
-              <custom-el-button :plain="true" @pointer="resetQuery">
-                <template #prefix>
-                  <svg-icon icon-class="table-reset" />
-                </template>
-                <template #txt> 重置 </template>
-              </custom-el-button>
-              <custom-el-button type="primary" @pointer="ShowDialog">
-                <template #prefix>
-                  <svg-icon icon-class="table-add" />
-                </template>
-                <template #txt> 新增 </template>
-              </custom-el-button>
+              <el-button type="primary" @click="inquireDept">
+                <svg-icon icon-class="table-search" />
+                查询
+              </el-button>
+              <el-button plain @click="resetQuery">
+                <svg-icon icon-class="table-reset" />
+                重置
+              </el-button>
+              <el-button plain @click="ShowDialog">
+                <svg-icon icon-class="table-add" />
+                新增
+              </el-button>
             </el-form-item>
           </el-form>
         </div>
-        <el-table
-          :data="deptList"
-          style="width: 100%"
-          header-row-class-name="header-row"
-          row-key="deptId"
-          border
-        >
+        <el-table :data="deptList" style="width: 100%" row-key="deptId" border>
           <el-table-column prop="deptName" label="部门名称" />
           <el-table-column prop="sort" label="排序" />
           <el-table-column prop="status" label="状态">
@@ -452,15 +440,6 @@ onMounted(() => {
   padding: 20px;
   width: 100%;
   box-sizing: border-box;
-
-  .header-row {
-    height: 55px;
-    color: #909399;
-
-    & > th {
-      background: #f8f8f9 !important;
-    }
-  }
 
   .operate-box {
     display: flex;

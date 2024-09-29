@@ -28,13 +28,9 @@ const toInitialize = async () => {
       </div>
       <div class="login-form">
         <LoginForm />
-        <custom-el-button
-          type="primary"
-          class="login_btn"
-          @pointer="toInitialize()"
-        >
-          <template #txt> <span>初始化</span> </template>
-        </custom-el-button>
+        <el-button type="primary" class="login_btn" @click="toInitialize()">
+          初始化
+        </el-button>
       </div>
     </div>
   </div>
